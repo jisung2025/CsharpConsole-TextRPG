@@ -6,6 +6,7 @@ namespace TextRPG
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Text RPG Start");
         }
     }
 }
