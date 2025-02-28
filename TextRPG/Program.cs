@@ -9,6 +9,7 @@ namespace TextRPG
     {
         private static void Main(string[] args)
         {
+            tutorial = false;
             Console.WriteLine("Text RPG Start");
             Console.WriteLine("Press escape to exit...");
             var start = Console.ReadKey(intercept: true);
@@ -16,7 +17,7 @@ namespace TextRPG
             {
                 Console.WriteLine("Text RPG End");
             }
-            else if (start.Key == ConsoleKey.Enter)
+            else
             {
                 FixTitle();
             }
@@ -33,6 +34,12 @@ namespace TextRPG
             public int Def = 0;
             public int ADef = 0;
             public int Gold = 0;
+            public int MAtk = 0;
+            public int skill1 = 0;
+            public int skill2 = 0;
+            public int skill3 = 0;
+            public int skill4 = 0;
+            public int cooltime;
             public Armor armor = Armor.None;
             public WeaponType weapon = WeaponType.Fist;
 
@@ -40,13 +47,28 @@ namespace TextRPG
         public class Backpack
         {
             public bool Leather = false;
-            public bool Chainmail = false;
+            public bool Chainmail = true;
             public bool Fullplate = false;
             public bool God = false;
             public bool wood = false;
             public bool stone = false;
             public bool iron = false;
             public bool god = false;
+            public bool just = false;
+            public bool crystal = false;
+            public bool dia = false;
+            public bool gods = false;
+            public bool strong = false;
+            public bool amsal = false;
+            public bool fireball = false;
+            public bool godcom = false;
+            public bool heal = false;
+            public bool vamp = false;
+            public bool revival = false;
+            public bool tstrong = false;
+            public bool weapon = false;
+            public bool skill = false;
+            public bool armor = true;
         }
         public class Achievement
         {
@@ -70,137 +92,342 @@ namespace TextRPG
             god
         }
         private static bool created = false;
+        private static bool tutorial = false;
         private static Character player = new Character();
         private static Achievement AC = new Achievement();
         private static Backpack backpack = new Backpack();
         public static void Shop()
         {
             Console.Clear();
-            Console.WriteLine("상점");
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
+            Console.WriteLine(@"상점                        .___  ___   .");
+            Console.WriteLine($"보유 골드:{player.Gold}     | +| |  || |");
+            Console.WriteLine(@"         /_____________\   /|__|-|__||-/|");
+            Console.WriteLine(@"        /  ___/     /   \  ===========_-      ");
+            Console.WriteLine(@"        |  \_/ (ll)  o  |            ");
+            Console.WriteLine(@"         \/   ______    /            ________   ");
+            Console.WriteLine(@"          -_  \||||/  _-     /\     /  _  _  \   ");
+            Console.WriteLine(@"            \        /      ||||    \_| || |_|      ");
+            Console.WriteLine(@"    _-----_ _       _ _---_ |/O|     __      __   ");
+            Console.WriteLine(@"   /       \_       _/     \| ||    /  \____/  \     ");
+            Console.WriteLine(@"  /   /   /          \     \=====  |  ___      |");
+            Console.WriteLine(@" /___//__/_,          \     \<|>   |==| |--    |");
+            Console.WriteLine(@"(_______(__/            //_/       |___________|  ");
+            Console.WriteLine(@"=======================|/_/        ");
             Console.WriteLine(" ________________    ____________    ____________");
             Console.WriteLine("/|구매하기(enter)|  /|판매하기(e)|  /|떠나기(esc)|");
-            var buy = Console.ReadKey(intercept: true);
-            var sell = Console.ReadKey(intercept: true);
-            var leave = Console.ReadKey(intercept: true);
-            if (buy.Key == ConsoleKey.Enter)
+            var Buy = Console.ReadKey();
+            if (Buy.Key == ConsoleKey.Enter)
             {
                 Console.Clear();
-                Console.WriteLine("상점");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine(" ________    ________    ____________");
-                Console.WriteLine("/|갑옷(1)|  /|무기(2)|  /|돌아가기(esc)|");
-                var armor = Console.ReadKey(intercept: true);
-                var weapon = Console.ReadKey(intercept: true);
-                var back = Console.ReadKey(intercept: true);
-                if (armor.Key == ConsoleKey.D1)
+                Console.WriteLine(@"상점                        .___  ___   .");
+                Console.WriteLine($"보유 골드:{player.Gold}     | +| |  || |");
+                Console.WriteLine(@"         /_____________\   /|__|-|__||-/|");
+                Console.WriteLine(@"        /  ___/     /   \  ===========_-      ");
+                Console.WriteLine(@"        |  \_/ (ll)  o  |            ");
+                Console.WriteLine(@"         \/   ______    /            ________   ");
+                Console.WriteLine(@"          -_  \||||/  _-     /\     /  _  _  \   ");
+                Console.WriteLine(@"            \        /      ||||    \_| || |_|      ");
+                Console.WriteLine(@"    _-----_ _       _ _---_ |/O|     __      __   ");
+                Console.WriteLine(@"   /       \_       _/     \| ||    /  \____/  \     ");
+                Console.WriteLine(@"  /   /   /          \     \=====  |  ___      |");
+                Console.WriteLine(@" /___//__/_,          \     \<|>   |==| |--    |");
+                Console.WriteLine(@"(_______(__/            //_/       |___________|  ");
+                Console.WriteLine(@"=======================|/_/        ");
+                Console.WriteLine(" ________    ________    ________     _____________");
+                Console.WriteLine("/|갑옷(1)|  /|무기(2)|  /|스킬(3)|  /|돌아가기(esc)|");
+                if (Buy.Key == ConsoleKey.D1)
                 {
                     Console.Clear();
-                    Console.WriteLine("상점");
-                    Console.WriteLine("가죽갑옷(100)");
-                    Console.WriteLine("사슬갑옷(4000)");
-                    Console.WriteLine("풀플레이트갑옷(100000)");
-                    Console.WriteLine("신의 갑옷(999999999)");
-                    Console.WriteLine("\n");
+                    Console.WriteLine("상점                       "+   "  ___________________");
+                    Console.WriteLine($"보유골드:{player.Gold}    "+  @" /  제품에 하자가?   \");
+                    Console.WriteLine(@"[1]가죽갑옷(3000)         " + @"| 환불은 절대 안돼!   |");
+                    Console.WriteLine(@"[1]가죽갑옷(3000)         " + @"\    ________________/");
+                    Console.WriteLine(@"[2]사슬갑옷(75000)        "+  @"  \ /");
+                    Console.WriteLine(@"[3]풀플레이트갑옷(1500000)"+  @"  |/");
+                    Console.WriteLine("[4]순금 전신 갑옷(2000000000)");
+                    Console.WriteLine("[5]축복받은 갑옷(1000000000)");
                     Console.WriteLine(" _______________      ______________");
                     Console.WriteLine("/|선택하기(번호)|    /|돌아가기(esc)|");
-                    var leather = Console.ReadKey(intercept: true);
-                    var chain = Console.ReadKey(intercept: true);
-                    var fullplate = Console.ReadKey(intercept: true);
-                    var god = Console.ReadKey(intercept: true);
-                    back = Console.ReadKey(intercept: true);
-                    if (leather.Key == ConsoleKey.D1)
+                    Buy = Console.ReadKey(intercept: true);
+                    if (Buy.Key == ConsoleKey.D1)
                     {
-                        if (player.Gold >= 100)
+                        if (player.Gold >= 3000)
                         {
-                            player.Gold -= 100;
+                            player.Gold -= 3000;
                             backpack.Leather = true;
                         }
                     }
-                    else if (chain.Key == ConsoleKey.D2)
+                    else if (Buy.Key == ConsoleKey.D2)
                     {
-                        if (player.Gold >= 4000)
+                        if (player.Gold >= 75000)
                         {
-                            player.Gold -= 4000;
+                            player.Gold -= 75000;
                             backpack.Chainmail = true;
                         }
                     }
-                    else if (fullplate.Key == ConsoleKey.D3)
+                    else if (Buy.Key == ConsoleKey.D3)
                     {
-                        if (player.Gold >= 100000)
+                        if (player.Gold >= 1500000)
                         {
-                            player.Gold -= 100000;
+                            player.Gold -= 1500000;
                             backpack.Fullplate = true;
                         }
                     }
-                    else if (god.Key == ConsoleKey.D4)
+                    else if (Buy.Key == ConsoleKey.D4)
                     {
-                        if (player.Gold >= 999999999)
+                        if (player.Gold >= 2000000000)
                         {
-                            player.Gold -= 999999999;
+                            player.Gold -= 2000000000;
                             backpack.God = true;
                         }
                     }
-                    else if (back.Key == ConsoleKey.Escape)
+                    else if (Buy.Key == ConsoleKey.Escape)
                     {
                         Shop();
                     }
+                    else
+                    {
+                        FixTitle();
+                    }
                 }
-                else if (weapon.Key == ConsoleKey.D2)
+                else if (Buy.Key == ConsoleKey.D2)
                 {
                     Console.Clear();
-                    Console.WriteLine("상점");
-                    Console.WriteLine("나무검(100)");
-                    Console.WriteLine("돌검(4000)");
-                    Console.WriteLine("철검(100000)");
-                    Console.WriteLine("신의 검(999999999)");
+                    Console.WriteLine("상점"+   "  ___________________");
+                    Console.WriteLine($"보유골드:{player.Gold}" + @" /  제품에 하자가?   \");
+                    Console.WriteLine("[1]나무 검(3000)" + @"| 환불은 절대 안돼!   |");
+                    Console.WriteLine("[2]돌 검(75000)" + @"\    ________________/");
+                    Console.WriteLine("[3]철 검(1500000)" + @"  \ /");
+                    Console.WriteLine("[4]신의 검(2000000000)" + @"  |/");
                     Console.WriteLine("\n");
-                    Console.WriteLine(" _______________      ______________");
-                    Console.WriteLine("/|선택하기(번호)|    /|돌아가기(esc)|");
-                    var wood = Console.ReadKey(intercept: true);
-                    var stone = Console.ReadKey(intercept: true);
-                    var iron = Console.ReadKey(intercept: true);
-                    var god = Console.ReadKey(intercept: true);
-                    back = Console.ReadKey(intercept: true);
-                    if (wood.Key == ConsoleKey.D1)
+                    Console.WriteLine(" _______________    _________     ______________");
+                    Console.WriteLine("/|선택하기(번호)|  /|다음(->)|   /|돌아가기(esc)|");
+                    Buy = Console.ReadKey(intercept: true);
+                    if (Buy.Key == ConsoleKey.D1)
                     {
-                        if (player.Gold >= 100)
+                        if (player.Gold >= 3000)
                         {
-                            player.Gold -= 100;
+                            player.Gold -= 3000;
                             backpack.wood = true;
                         }
                     }
-                    else if (stone.Key == ConsoleKey.D2)
+                    else if (Buy.Key == ConsoleKey.D2)
                     {
-                        if (player.Gold >= 4000)
+                        if (player.Gold >= 75000)
                         {
-                            player.Gold -= 4000;
+                            player.Gold -= 75000;
                             backpack.stone = true;
                         }
                     }
-                    else if (iron.Key == ConsoleKey.D3)
+                    else if (Buy.Key == ConsoleKey.D3)
                     {
-                        if (player.Gold >= 100000)
+                        if (player.Gold >= 1500000)
                         {
-                            player.Gold -= 100000;
+                            player.Gold -= 1500000;
                             backpack.iron = true;
                         }
                     }
-                    else if (god.Key == ConsoleKey.D4)
+                    else if (Buy.Key == ConsoleKey.D4)
                     {
-                        if (player.Gold >= 999999999)
+                        if (player.Gold >= 2000000000)
                         {
-                            player.Gold -= 999999999;
+                            player.Gold -= 2000000000;
                             backpack.god = true;
                         }
                     }
-                    else if (back.Key == ConsoleKey.Escape)
+                    else if (Buy.Key == ConsoleKey.Escape)
                     {
                         Shop();
                     }
-
+                    else if (Buy.Key == ConsoleKey.RightArrow)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("상점");
+                        Console.WriteLine($"보유골드:{player.Gold}");
+                        Console.WriteLine("[1]일반 스태프(3000)");
+                        Console.WriteLine("[2]크리스탈 스태프(75000)");
+                        Console.WriteLine("[3]다이아몬드 스태프(1500000)");
+                        Console.WriteLine("[4]신의 스태프(2000000000)");
+                        Console.WriteLine("\n");
+                        Console.WriteLine(" _______________    _________     ______________");
+                        Console.WriteLine("/|선택하기(번호)|  /|다음(->)|   /|돌아가기(esc)|");
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.D1)
+                        {
+                            if (backpack.just == false)
+                            {
+                                if (player.Gold >= 3000)
+                                {
+                                    player.Gold -= 3000;
+                                    backpack.just = true;
+                                    Console.WriteLine("구매 완료");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("보유 골드가 부족합니다");
+                                }
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("!보유중입니다!");
+                                Console.ResetColor();
+                            }
+                            Buy = Console.ReadKey(intercept: true);
+                        }
+                        else if (Buy.Key == ConsoleKey.D2)
+                        {   
+                            if(backpack.crystal == false)
+                            {
+                                if (player.Gold >= 75000)
+                                {
+                                    player.Gold -= 75000;
+                                    backpack.crystal = true;
+                                    Console.WriteLine("구매 완료");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("보유 골드가 부족합니다");
+                                }
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("!보유중입니다!");
+                                Console.ResetColor();
+                            }
+                            Buy = Console.ReadKey(intercept: true);
+                        }
+                        else if (Buy.Key == ConsoleKey.D3)
+                        {
+                            if (backpack.dia == false)
+                            {
+                                if (player.Gold >= 1500000)
+                                {
+                                    player.Gold -= 1500000;
+                                    backpack.dia = true;
+                                    Console.WriteLine("구매 완료");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("보유 골드가 부족합니다");
+                                }
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("!보유중입니다!");
+                                Console.ResetColor();
+                            }
+                            Buy = Console.ReadKey(intercept: true);
+                        }
+                        else if (Buy.Key == ConsoleKey.D4)
+                        {
+                            if (backpack.gods == false)
+                            {
+                                if (player.Gold >= 2000000000)
+                                {
+                                    player.Gold -= 2000000000;
+                                    backpack.gods = true;
+                                    Console.WriteLine("구매 완료");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("보유 골드가 부족합니다");
+                                }
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("!보유중입니다!");
+                                Console.ResetColor();
+                            }
+                        }
+                        else if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            FixTitle();
+                        }
+                        Buy = Console.ReadKey();
+                        if (Buy.Key != ConsoleKey.Delete)
+                        {
+                            Shop();
+                        }
+                    }
+                    else
+                    {
+                        FixTitle();
+                    }
+                }
+                else if (Buy.Key == ConsoleKey.D3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("상점");
+                    Console.WriteLine($"보유골드:{player.Gold}");
+                    Console.WriteLine("강타(20000)");
+                    Console.WriteLine("암살(1000000)");
+                    Console.WriteLine("파이어볼(80000)");
+                    Console.WriteLine("강림(2000000000)");
+                    Console.WriteLine("\n");
+                    Console.WriteLine(" _______________    _________    ______________");
+                    Console.WriteLine("/|선택하기(번호)|  /|다음(->)|  /|돌아가기(esc)|");
+                    Buy = Console.ReadKey(intercept: true);
+                    if (Buy.Key == ConsoleKey.D1)
+                    {
+                        if (player.Gold >= 20000)
+                        {
+                            player.Gold -= 20000;
+                            backpack.wood = true;
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D2)
+                    {
+                        if (player.Gold >= 1000000)
+                        {
+                            player.Gold -= 1000000;
+                            backpack.stone = true;
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D3)
+                    {
+                        if (player.Gold >= 80000)
+                        {
+                            player.Gold -= 80000;
+                            backpack.iron = true;
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D4)
+                    {
+                        if (player.Gold >= 2000000000)
+                        {
+                            player.Gold -= 2000000000;
+                            backpack.god = true;
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.RightArrow)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("상점");
+                        Console.WriteLine($"보유골드:{player.Gold}");
+                        Console.WriteLine("[1]힐(20000)");
+                        Console.WriteLine("[2]흡혈(1000000)");
+                        Console.WriteLine("[3]부활(2000000000)");
+                        Console.WriteLine("[4]힘 강화(20000000)");
+                        Console.WriteLine("\n");
+                        Console.WriteLine(" _______________    _________    ______________");
+                        Console.WriteLine("/|선택하기(번호)|  /|다음(->)|  /|돌아가기(esc)|");
+                    }
+                    else if (Buy.Key == ConsoleKey.Escape)
+                    {
+                        Shop();
+                    }
+                    else
+                    {
+                        FixTitle();
+                    }
                 }
             }
         }
@@ -223,6 +450,7 @@ namespace TextRPG
                 int SlimeDef = 0;
                 int SlimeCurrentHp = SlimeHp;
                 int PlayerCurrentHp = player.Hp;
+                player.cooltime = 0;
                 while (true)
                 {
                     if (SlimeCurrentHp > 0)
@@ -391,7 +619,7 @@ namespace TextRPG
                                             SlimeCurrentHp -= ((player.Atk + player.WAtk) - SlimeDef);
                                         }
                                     }
-                                    if (attack.Key == ConsoleKey.Escape)
+                                    else if (attack.Key == ConsoleKey.Escape)
                                     {
                                         Battle();
                                         loop = false;
@@ -526,25 +754,28 @@ namespace TextRPG
                                                 Console.WriteLine("\n");
                                                 Console.WriteLine(" ______________     ____________");
                                                 Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                var next = Console.ReadKey();
+                                                if (next.Key == ConsoleKey.Escape)
                                                 {
                                                     Battle();
                                                     loop_3 = false;
                                                 }
 
-                                                else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
+                                                else if (next.Key == ConsoleKey.Enter)
                                                 {
                                                     Console.WriteLine("이 앞은 보스 슬라임 킹(추천레벨 10+)이 존재합니다.");
                                                     Console.WriteLine("정말 들어가시겠습니까?");
+                                                    Console.WriteLine("(Hp 전체 회복, 쿨타임 초기화)");
                                                     Console.WriteLine("\n");
                                                     Console.WriteLine(" ________________    ______________");
                                                     Console.WriteLine("/|들어가기(enter)|  /|돌아가기(esc)|");
-                                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                    next = Console.ReadKey();
+                                                    if (next.Key == ConsoleKey.Escape)
                                                     {
                                                         Battle();
                                                         loop_3 = false;
                                                     }
-                                                    else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
+                                                    else if (next.Key == ConsoleKey.Enter)
                                                     {
                                                         Console.Clear();
                                                         Console.ForegroundColor = ConsoleColor.Green;
@@ -618,11 +849,11 @@ namespace TextRPG
                                                         Console.ResetColor();
                                                         Thread.Sleep(800);
                                                         Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
                                                         Console.WriteLine(@" ");
                                                         Console.WriteLine(@"              ");
                                                         Console.WriteLine(@"     /\/\/\/\");
                                                         Console.WriteLine(@"    /////\\\\\");
+                                                        Console.ForegroundColor = ConsoleColor.Green;
                                                         Console.WriteLine(@"   |          |");
                                                         Console.Write(@" _/  ");
                                                         Console.ForegroundColor = ConsoleColor.Red;
@@ -667,18 +898,19 @@ namespace TextRPG
                                                         Console.ResetColor();
                                                         Thread.Sleep(1000);
                                                         Console.Clear();
-                                                        int SlimeKingHp = 5000;
-                                                        int SlimeKingAtk = 250 + 500;
-                                                        int SlimeKingDef = 500;
+                                                        int SlimeKingHp = 3000;
+                                                        int SlimeKingAtk = 50 + 100;
+                                                        int SlimeKingDef = 0;
                                                         int SlimeKingCurrentHp = SlimeKingHp;
-                                                        int PlayerKingCurrentHp = player.Hp;
+                                                        PlayerCurrentHp = player.Hp;
                                                         int CoolTime = 1;
+                                                        player.cooltime = 0;
                                                         bool loop_4 = true;
                                                         while (loop_4 == true)
                                                         {
                                                             if (SlimeKingCurrentHp > 0)
                                                             {
-                                                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerKingCurrentHp}/{player.Hp}");
+                                                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
                                                                 Console.WriteLine("보스의 방1");
                                                                 Console.WriteLine("슬라임 킹");
                                                                 Console.WriteLine($"Hp:{SlimeKingCurrentHp}/{SlimeKingHp}");
@@ -765,7 +997,8 @@ namespace TextRPG
                                                                 }
                                                                 Console.WriteLine(" ____________    ____________");
                                                                 Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
+                                                                var sk = Console.ReadKey();
+                                                                if (sk.Key == ConsoleKey.Enter)
                                                                 {
                                                                     if (player.Def + player.ADef > SlimeKingAtk)
                                                                     {
@@ -802,7 +1035,7 @@ namespace TextRPG
                                                                             {
                                                                                 SlimeKingCurrentHp -= ((player.Atk + player.WAtk) - SlimeKingDef);
                                                                             }
-                                                                            CoolTime -= 1;
+                                                                            CoolTime += 1;
                                                                             Console.Clear();
 
                                                                         }
@@ -812,18 +1045,15 @@ namespace TextRPG
                                                                         }
                                                                     }
                                                                 }
-                                                                else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                                else if (sk.Key == ConsoleKey.Escape)
                                                                 {
-                                                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                    {
-                                                                        Battle();
-                                                                        loop_4 = false;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        FixTitle();
-                                                                        loop_4 = false;
-                                                                    }
+                                                                    Battle();
+                                                                    loop_4 = false;
+                                                                }
+                                                                else
+                                                                {
+                                                                    FixTitle();
+                                                                    loop_4 = false;
                                                                 }
                                                             }
                                                             if (SlimeKingCurrentHp <= 0)
@@ -978,6 +1208,7 @@ namespace TextRPG
                                 }
                             }
                         }
+                        else
                         {
                             FixTitle();
                         }
@@ -1882,55 +2113,153 @@ namespace TextRPG
         }
         public static void Equip()
         {
-            Console.Clear();
-            Console.WriteLine("장비");
-            Console.WriteLine("\n");
-            var availableArmors = new List<(Armor armor, int addDef, string name)>();
-            if (backpack.Leather) availableArmors.Add((Armor.Leather, 50, "가죽갑옷"));
-            if (backpack.Chainmail) availableArmors.Add((Armor.Chainmail, 750, "사슬갑옷"));
-            if (backpack.Fullplate) availableArmors.Add((Armor.Fullplate, 20000, "풀플레이트갑옷"));
-            if (backpack.God) availableArmors.Add((Armor.God, 150000, "신의 갑옷"));
-            if (availableArmors.Count == 0)
+            Console.WriteLine("가방");
+            if (backpack.weapon == true)
             {
-                Console.WriteLine("장비가 없습니다.");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine(" ______________");
-                Console.WriteLine("/|돌아가기(esc)|");
-                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                Console.WriteLine(" ________");
+                Console.WriteLine("/|무기(w)|");
+            }
+            if (backpack.armor == true)
+            {
+                Console.WriteLine(" ________");
+                Console.WriteLine("/|갑옷(a)|");
+            }
+            if (backpack.skill == true)
+            {
+                Console.WriteLine(" ________");
+                Console.WriteLine("/|스킬(s)|");
+            }
+            var equip = Console.ReadKey();
+            if (backpack.weapon == true)
+            {
+                if (equip.Key == ConsoleKey.W)
                 {
-                    FixTitle();
+                    int num = 0;
+                    int w1 = 0;
+                    int w2 = 0;
+                    int w3 = 0;
+                    int w4 = 0;
+                    int w5 = 0;
+                    int w6 = 0;
+                    int w7 = 0;
+                    int w8 = 0;
+                    if (backpack.wood == true)
+                    {
+                        num++;
+                        w1 = num;
+                        Console.WriteLine($"[{w1}]나무 검");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w2 = num;
+                        Console.WriteLine($"[{w2}]돌 검");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w3 = num;
+                        Console.WriteLine($"[{w3}]철 검");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w4 = num;
+                        Console.WriteLine($"[{w4}]신의 검");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w5 = num;
+                        Console.WriteLine($"[{w5}]일반 스태프");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w6 = num;
+                        Console.WriteLine($"[{w6}]크리스탈 스태프");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w7 = num;
+                        Console.WriteLine($"[{w7}]다이아몬드 스태프");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        w8 = num;
+                        Console.WriteLine($"[{w8}]신의 스태프");
+                    }
+                    var select = Console.ReadKey();
+                    if (select.Key == ConsoleKey.D1)
+                    {
+                        if (num > 0)
+                        {
+                            if (w1 == 1)
+                            {
+                                Console.WriteLine("나무 검");
+                                Console.WriteLine("공격력 + 100 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     조잡한 성능. 나무검에게 뭘 바라나? ");
+                                Console.WriteLine("     고작 나무검의 성능을 뛰어나게 만들 수 있는 능력자면  ");
+                                Console.WriteLine("     나무검을 안만들었다. 몽둥이나 다름없다. ");
+                            }
+                            if (w2 == 2)
+                            {
+                                Console.WriteLine("돌 검");
+                                Console.WriteLine("공격력 + 100 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
+                                Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
+                            }
+                            if (w3 == 3)
+                            {
+                                Console.WriteLine("철 검");
+                                Console.WriteLine("공격력 + 100 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     검이라고 봐줄만한 검. ");
+                                Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                            }
+                            if (w4 == 4)
+                            {
+
+                            }
+                            if (w5 == 5)
+                            {
+
+                            }
+                            if (w6 == 6)
+                            {
+
+                            }
+                            if (w7 == 7)
+                            {
+
+                            }
+                            if (w8 == 8)
+                            {
+
+                            }
+                        }
+                    }
+
                 }
             }
-            for (int i = 0; i < availableArmors.Count; i++)
+            if (backpack.armor == true)
             {
-                Console.WriteLine($"{i + 1}. {availableArmors[i].name}");
+                if (equip.Key == ConsoleKey.A)
+                {
+
+                }
             }
-            Console.WriteLine(" ________________    ______________");
-            Console.WriteLine("/|장비착용(번호)|  /|돌아가기(esc)|");
-            Console.WriteLine();
-            var key = Console.ReadKey(intercept: true);
-            if (key.Key == ConsoleKey.Escape)
+            if (backpack.skill == true)
             {
-                FixTitle();
+                if (equip.Key == ConsoleKey.S)
+                {
+
+                }
             }
-            int selection = key.KeyChar - '0';
-            if (selection < 1 || selection > availableArmors.Count)
-            {
-                Console.WriteLine("\n잘못된 입력입니다. 다시 시도하세요.");
-                Console.ReadKey(intercept: true);
-                Equip();
-            }
-            var selected = availableArmors[selection - 1];
-            player.ADef = selected.addDef;
-            player.armor = selected.armor;
-            Console.WriteLine($"\n{selected.name} 장착됨. 추가 방어력: {selected.addDef}");
-            Console.WriteLine("아무 키나 누르면 돌아갑니다.");
-            Console.ReadKey(intercept: true);
-            FixTitle();
         }
         public static void LvUp()
         {
@@ -1979,7 +2308,7 @@ namespace TextRPG
                         Console.WriteLine("레벨업!");
                         player.Exp -= player.Lv * 10;
                         player.Lv += 1;
-                        player.Hp += 100;
+                        player.Hp += 100; // 10lv은  1000,500,100,50
                         player.Mp += 50;
                         player.Atk += 10;
                         player.Def += 5;
@@ -2304,7 +2633,12 @@ namespace TextRPG
             {
                 player.name = Console.ReadLine();
                 created = true;
+                if (tutorial == false)
+                {
+                    Console.WriteLine("튜토리얼을 하시겠습니까?");
+                }
             }
+            player.MAtk = (int)player.Atk / 2;
             Console.Clear();
             Console.WriteLine(@" ________________________________");
             Console.WriteLine(@"/ |                              |");
@@ -2475,7 +2809,7 @@ namespace TextRPG
                     Console.WriteLine("Hp: " + player.Hp);
                     Console.WriteLine("Mp: " + player.Mp);
                     Console.WriteLine("Atk: " + player.Atk + $"({player.Atk + player.WAtk})");
-                    Console.WriteLine("Def: " + player.Def + $"({player.Def} + {player.ADef})");
+                    Console.WriteLine("Def: " + player.Def + $"({player.Def + player.ADef})");
                     Console.WriteLine("Gold: " + player.Gold);
                     Console.WriteLine("Armor: " + player.armor);
                     Console.WriteLine("Weapon: " + player.weapon);
