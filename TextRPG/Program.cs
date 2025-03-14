@@ -7,9 +7,10 @@ namespace TextRPG
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             tutorial = false;
+            Console.WriteLine(int.MaxValue);
             Console.WriteLine("Text RPG Start");
             Console.WriteLine("Press escape to exit...");
             var start = Console.ReadKey(intercept: true);
@@ -104,9 +105,9 @@ namespace TextRPG
             Console.WriteLine(@"         /_____________\   /|__|-|__||-/|");
             Console.WriteLine(@"        /  ___/     /   \  ===========_-      ");
             Console.WriteLine(@"        |  \_/ (ll)  o  |            ");
-            Console.WriteLine(@"         \/   ______    /            ________   ");
-            Console.WriteLine(@"          -_  \||||/  _-     /\     /  _  _  \   ");
-            Console.WriteLine(@"            \        /      ||||    \_| || |_|      ");
+            Console.WriteLine(@"         \/   ______    /             ________   ");
+            Console.WriteLine(@"          -_  \||||/  _-     /\      /  _  _  \   ");
+            Console.WriteLine(@"            \        /      ||||     \_| || |_|      ");
             Console.WriteLine(@"    _-----_ _       _ _---_ |/O|     __      __   ");
             Console.WriteLine(@"   /       \_       _/     \| ||    /  \____/  \     ");
             Console.WriteLine(@"  /   /   /          \     \=====  |  ___      |");
@@ -124,9 +125,9 @@ namespace TextRPG
                 Console.WriteLine(@"         /_____________\   /|__|-|__||-/|");
                 Console.WriteLine(@"        /  ___/     /   \  ===========_-      ");
                 Console.WriteLine(@"        |  \_/ (ll)  o  |            ");
-                Console.WriteLine(@"         \/   ______    /            ________   ");
-                Console.WriteLine(@"          -_  \||||/  _-     /\     /  _  _  \   ");
-                Console.WriteLine(@"            \        /      ||||    \_| || |_|      ");
+                Console.WriteLine(@"         \/   ______    /             ________   ");
+                Console.WriteLine(@"          -_  \||||/  _-     /\      /  _  _  \   ");
+                Console.WriteLine(@"            \        /      ||||     \_| || |_|      ");
                 Console.WriteLine(@"    _-----_ _       _ _---_ |/O|     __      __   ");
                 Console.WriteLine(@"   /       \_       _/     \| ||    /  \____/  \     ");
                 Console.WriteLine(@"  /   /   /          \     \=====  |  ___      |");
@@ -138,12 +139,12 @@ namespace TextRPG
                 if (Buy.Key == ConsoleKey.D1)
                 {
                     Console.Clear();
-                    Console.WriteLine("상점                       "+   "  ___________________");
-                    Console.WriteLine($"보유골드:{player.Gold}    "+  @" /  제품에 하자가?   \");
-                    Console.WriteLine(@"[1]가죽갑옷(3000)         " + @"| 환불은 절대 안돼!   |");
-                    Console.WriteLine(@"[1]가죽갑옷(3000)         " + @"\    ________________/");
-                    Console.WriteLine(@"[2]사슬갑옷(75000)        "+  @"  \ /");
-                    Console.WriteLine(@"[3]풀플레이트갑옷(1500000)"+  @"  |/");
+                    Console.WriteLine("상점                       ");
+                    Console.WriteLine($"보유골드:{player.Gold}    ");
+                    Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
+                    Console.WriteLine("[1]가죽갑옷(3000)         ");
+                    Console.WriteLine("[2]사슬갑옷(75000)        ");
+                    Console.WriteLine("[3]풀플레이트갑옷(1500000)");
                     Console.WriteLine("[4]순금 전신 갑옷(2000000000)");
                     Console.WriteLine("[5]축복받은 갑옷(1000000000)");
                     Console.WriteLine(" _______________      ______________");
@@ -193,12 +194,13 @@ namespace TextRPG
                 else if (Buy.Key == ConsoleKey.D2)
                 {
                     Console.Clear();
-                    Console.WriteLine("상점"+   "  ___________________");
-                    Console.WriteLine($"보유골드:{player.Gold}" + @" /  제품에 하자가?   \");
-                    Console.WriteLine("[1]나무 검(3000)" + @"| 환불은 절대 안돼!   |");
-                    Console.WriteLine("[2]돌 검(75000)" + @"\    ________________/");
-                    Console.WriteLine("[3]철 검(1500000)" + @"  \ /");
-                    Console.WriteLine("[4]신의 검(2000000000)" + @"  |/");
+                    Console.WriteLine("상점");
+                    Console.WriteLine($"보유골드:{player.Gold}");
+                    Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
+                    Console.WriteLine("[1]나무 검(75000)");
+                    Console.WriteLine("[2]돌 검(1500000)");
+                    Console.WriteLine("[3]철 검(300000000)");
+                    Console.WriteLine("[4]신의 검(1000000000)");
                     Console.WriteLine("\n");
                     Console.WriteLine(" _______________    _________     ______________");
                     Console.WriteLine("/|선택하기(번호)|  /|다음(->)|   /|돌아가기(esc)|");
@@ -244,9 +246,10 @@ namespace TextRPG
                         Console.Clear();
                         Console.WriteLine("상점");
                         Console.WriteLine($"보유골드:{player.Gold}");
-                        Console.WriteLine("[1]일반 스태프(3000)");
-                        Console.WriteLine("[2]크리스탈 스태프(75000)");
-                        Console.WriteLine("[3]다이아몬드 스태프(1500000)");
+                        Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
+                        Console.WriteLine("[1]일반 스태프(150000)");
+                        Console.WriteLine("[2]크리스탈 스태프(30000000)");
+                        Console.WriteLine("[3]다이아몬드 스태프(60000000)");
                         Console.WriteLine("[4]신의 스태프(2000000000)");
                         Console.WriteLine("\n");
                         Console.WriteLine(" _______________    _________     ______________");
@@ -367,6 +370,7 @@ namespace TextRPG
                     Console.Clear();
                     Console.WriteLine("상점");
                     Console.WriteLine($"보유골드:{player.Gold}");
+                    Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
                     Console.WriteLine("강타(20000)");
                     Console.WriteLine("암살(1000000)");
                     Console.WriteLine("파이어볼(80000)");
@@ -412,6 +416,7 @@ namespace TextRPG
                         Console.Clear();
                         Console.WriteLine("상점");
                         Console.WriteLine($"보유골드:{player.Gold}");
+                        Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
                         Console.WriteLine("[1]힐(20000)");
                         Console.WriteLine("[2]흡혈(1000000)");
                         Console.WriteLine("[3]부활(2000000000)");
@@ -894,7 +899,7 @@ namespace TextRPG
                                                         Thread.Sleep(800);
                                                         Console.Clear();
                                                         Console.BackgroundColor = ConsoleColor.White;
-                                                        Console.WriteLine("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ");
+                                                        Console.WriteLine("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ");
                                                         Console.ResetColor();
                                                         Thread.Sleep(1000);
                                                         Console.Clear();
@@ -995,8 +1000,8 @@ namespace TextRPG
                                                                     Console.WriteLine(@"____\");
                                                                     Console.ResetColor();
                                                                 }
-                                                                Console.WriteLine(" ____________    ____________");
-                                                                Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
+                                                                Console.WriteLine(" ____________  ");
+                                                                Console.WriteLine("/|공격(enter)| ");
                                                                 var sk = Console.ReadKey();
                                                                 if (sk.Key == ConsoleKey.Enter)
                                                                 {
@@ -1013,13 +1018,13 @@ namespace TextRPG
                                                                             {
                                                                                 SlimeKingCurrentHp -= ((player.Atk + player.WAtk) - SlimeKingDef);
                                                                             }
-                                                                            CoolTime -= 1;
-                                                                            Console.Clear();
-
+                                                                            CoolTime --;
+                                                                            Console.Clear();        
                                                                         }
                                                                         else
                                                                         {
-                                                                            SlimeCurrentHp -= 0;
+                                                                            SlimeKingCurrentHp -= 0;    
+                                                                            CoolTime ++;
                                                                         }
                                                                     }
                                                                     else
@@ -1035,25 +1040,20 @@ namespace TextRPG
                                                                             {
                                                                                 SlimeKingCurrentHp -= ((player.Atk + player.WAtk) - SlimeKingDef);
                                                                             }
-                                                                            CoolTime += 1;
+                                                                            CoolTime --;
                                                                             Console.Clear();
-
                                                                         }
                                                                         else
                                                                         {
                                                                             SlimeCurrentHp -= 0;
+                                                                            CoolTime++;
                                                                         }
                                                                     }
                                                                 }
-                                                                else if (sk.Key == ConsoleKey.Escape)
-                                                                {
-                                                                    Battle();
-                                                                    loop_4 = false;
-                                                                }
                                                                 else
                                                                 {
-                                                                    FixTitle();
-                                                                    loop_4 = false;
+                                                                    Console.Clear();
+                                                                    Console.WriteLine("잘못된 입력");
                                                                 }
                                                             }
                                                             if (SlimeKingCurrentHp <= 0)
@@ -1237,9 +1237,9 @@ namespace TextRPG
                     else
                     {
                         Console.Clear();
-                        int WolfHp = 10000;
-                        int WolfAtk = 1000;
-                        int WolfDef = 500;
+                        int WolfHp = 2500;
+                        int WolfAtk = 500;
+                        int WolfDef = 250;
                         int WolfCurrentHp = WolfHp;
                         int PlayerCurrentHp = player.Hp;
                         while (true)
@@ -1251,19 +1251,19 @@ namespace TextRPG
                                 Console.WriteLine("늑대");
                                 Console.WriteLine($"Hp:{WolfCurrentHp}/{WolfHp}");
                                 Console.WriteLine($"공격력:{WolfAtk} 방어력:{WolfDef}");
-                                if (30 < WolfCurrentHp && WolfCurrentHp < 100)
+                                if ((WolfHp/ 10) * 3 < WolfCurrentHp && WolfCurrentHp < WolfHp)
                                 {
                                     Console.WriteLine(@" /\---/\");
                                     Console.WriteLine(@"<  /_\  >");
                                     Console.WriteLine(@" <__U__>  ");
                                 }
-                                else if (WolfCurrentHp == 100)
+                                else if (WolfCurrentHp == WolfHp)
                                 {
                                     Console.WriteLine(@" /\---/\");
                                     Console.WriteLine(@"<  O_O  >");
                                     Console.WriteLine(@" <__U__>  ");
                                 }
-                                else if (WolfCurrentHp <= 30)
+                                else if (WolfCurrentHp <= ( WolfHp/ 10) * 3)
                                 {
                                     Console.WriteLine(@" /\---/\");
                                     Console.WriteLine(@"<  X_X  >");
@@ -1347,7 +1347,7 @@ namespace TextRPG
                                 else if (enter.Key == ConsoleKey.Enter)
                                 {
                                     Console.Clear();
-                                    WolfHp += 100;
+                                    WolfHp += WolfHp;
                                     WolfCurrentHp = WolfHp;
                                     WolfAtk += 1;
                                     WolfDef += 1;
@@ -1360,19 +1360,19 @@ namespace TextRPG
                                             Console.WriteLine("늑대");
                                             Console.WriteLine($"Hp:{WolfCurrentHp}/{WolfHp}");
                                             Console.WriteLine($"공격력:{WolfAtk} 방어력:{WolfDef}");
-                                            if (30 < WolfCurrentHp && WolfCurrentHp < 100)
+                                            if ((WolfHp / 10) * 3 < WolfCurrentHp && WolfCurrentHp < WolfHp)
                                             {
                                                 Console.WriteLine(@" /\---/\");
                                                 Console.WriteLine(@"<  /_\  >");
                                                 Console.WriteLine(@" <__U__>  ");
                                             }
-                                            else if (WolfCurrentHp == 100)
+                                            else if (WolfCurrentHp == WolfHp)
                                             {
                                                 Console.WriteLine(@" /\---/\");
                                                 Console.WriteLine(@"<  O_O  >");
                                                 Console.WriteLine(@" <__U__>  ");
                                             }
-                                            else if (WolfCurrentHp <= 30)
+                                            else if (WolfCurrentHp <= (WolfHp / 10) * 3)
                                             {
                                                 Console.WriteLine(@" /\---/\");
                                                 Console.WriteLine(@"<  X_X  >");
@@ -1468,24 +1468,24 @@ namespace TextRPG
                                                         Console.WriteLine("늑대");
                                                         Console.WriteLine($"Hp:{WolfCurrentHp}/{WolfHp}");
                                                         Console.WriteLine($"공격력:{WolfAtk} 방어력:{WolfDef}");
-                                                        if (30 < WolfCurrentHp && WolfCurrentHp < 100)
-                                                        {
-                                                            Console.WriteLine(@" /\---/\");
-                                                            Console.WriteLine(@"<  /_\  >");
-                                                            Console.WriteLine(@" <__U__>  ");
-                                                        }
-                                                        else if (WolfCurrentHp == 100)
-                                                        {
-                                                            Console.WriteLine(@" /\---/\");
-                                                            Console.WriteLine(@"<  O_O  >");
-                                                            Console.WriteLine(@" <__U__>  ");
-                                                        }
-                                                        else if (WolfCurrentHp <= 30)
-                                                        {
-                                                            Console.WriteLine(@" /\---/\");
-                                                            Console.WriteLine(@"<  X_X  >");
-                                                            Console.WriteLine(@" <__U__>  ");
-                                                        }
+                                            if ((WolfHp / 10) * 3 < WolfCurrentHp && WolfCurrentHp < WolfHp)
+                                            {
+                                                Console.WriteLine(@" /\---/\");
+                                                Console.WriteLine(@"<  /_\  >");
+                                                Console.WriteLine(@" <__U__>  ");
+                                            }
+                                            else if (WolfCurrentHp == WolfHp)
+                                            {
+                                                Console.WriteLine(@" /\---/\");
+                                                Console.WriteLine(@"<  O_O  >");
+                                                Console.WriteLine(@" <__U__>  ");
+                                            }
+                                            else if (WolfCurrentHp <= (WolfHp / 10) * 3)
+                                            {
+                                                Console.WriteLine(@" /\---/\");
+                                                Console.WriteLine(@"<  X_X  >");
+                                                Console.WriteLine(@" <__U__>  ");
+                                            }
                                                         Console.WriteLine(" ____________    ____________");
                                                         Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
                                                         var attack = Console.ReadKey(intercept: true);
@@ -1886,7 +1886,7 @@ namespace TextRPG
                                                                 Thread.Sleep(1000);
                                                                 Console.Clear();
                                                                 Console.BackgroundColor = ConsoleColor.White;
-                                                                Console.WriteLine("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ");
+                                                                Console.WriteLine("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ");
                                                                 Console.ResetColor();
                                                                 Thread.Sleep(1000);
                                                                 while (true)
@@ -1901,16 +1901,16 @@ namespace TextRPG
                                                                         Console.ForegroundColor = ConsoleColor.Yellow;
                                                                         Console.WriteLine("턴마다 공격력 증가");
                                                                         Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                        if (1500 < LunaWolfCurrentHp && LunaWolfCurrentHp < 5000)
+                                                                        if ((LunaWolfHp/10)*3 < LunaWolfCurrentHp && LunaWolfCurrentHp < LunaWolfHp)
                                                                         {
                                                                             Console.WriteLine(@"|\--------/|");
                                                                             Console.Write(@"| ");
-                                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                                             Console.Write(@"|\    /|");
                                                                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                                                                             Console.WriteLine(@" |");
                                                                             Console.Write(@"\ ");
-                                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                                             Console.Write(@"\.\  /./");
                                                                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                                                                             Console.WriteLine(@" / _");
@@ -1930,16 +1930,16 @@ namespace TextRPG
                                                                             Console.WriteLine(@" \ |   _/ ");
                                                                             Console.WriteLine(@"  /\/\/\| |");
                                                                         }
-                                                                        else if (LunaWolfCurrentHp == 5000)
+                                                                        else if (LunaWolfCurrentHp == LunaWolfHp)
                                                                         {
                                                                             Console.WriteLine(@"|\--------/|");
                                                                             Console.Write(@"| ");
-                                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                                             Console.Write(@"__    __");
                                                                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                                                                             Console.WriteLine(@"/| ");
                                                                             Console.Write(@"\ ");
-                                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                                             Console.Write(@"\.\  /./");
                                                                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                                                                             Console.WriteLine(@" / _");
@@ -1951,20 +1951,20 @@ namespace TextRPG
                                                                             Console.WriteLine(@" \ |   _/ ");
                                                                             Console.WriteLine(@"  /\/\/\| |");
                                                                         }
-                                                                        else if (LunaWolfCurrentHp <= 1500)
+                                                                        else if (LunaWolfCurrentHp <= (LunaWolfHp / 10) * 3)
                                                                         {
                                                                             Console.WriteLine(@"|\--------/|");
                                                                             Console.Write(@"| ");
                                                                             Console.ForegroundColor = ConsoleColor.Red;
                                                                             Console.Write(@"///");
-                                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                                             Console.Write(@"   /|");
                                                                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                                                                             Console.WriteLine(@" |");
                                                                             Console.Write(@"\ ");
                                                                             Console.ForegroundColor = ConsoleColor.Red;
                                                                             Console.Write(@"|||");
-                                                                            Console.ForegroundColor = ConsoleColor.White;
+                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                                             Console.Write(@"  /./");
                                                                             Console.ForegroundColor = ConsoleColor.DarkBlue;
                                                                             Console.WriteLine(@" / _");
@@ -2103,7 +2103,665 @@ namespace TextRPG
                 }
                 else if (start.Key == ConsoleKey.RightArrow)
                 {
-                    FixTitle();
+                    Console.Clear();
+                    Console.WriteLine("「<--(esc)」");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("     뱀의 사당(레벨제한:21)");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("\n");
+                    Console.WriteLine(" ____________      __________");
+                    Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
+                    if (start.Key == ConsoleKey.Enter)
+                    {
+                        if (player.Lv < 11)
+                        {
+                            Console.WriteLine("레벨이 부족합니다");
+                            Battle();
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            int SoBeliveHp = 10000;
+                            int SoBeliveAtk = 1000;
+                            int SoBeliveDef = 500;
+                            int SoBeliveCurrentHp = SoBeliveHp;
+                            int PlayerCurrentHp = player.Hp;
+                            while (true)
+                            {
+                                if (SoBeliveCurrentHp > 0)
+                                {
+                                    Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
+                                    Console.WriteLine("뱀의 사당1");
+                                    Console.WriteLine("광신도");
+                                    Console.WriteLine($"Hp:{SoBeliveCurrentHp}/{SoBeliveHp}");
+                                    Console.WriteLine($"공격력:{SoBeliveAtk} 방어력:{SoBeliveDef}");
+                                    if (30 < SoBeliveCurrentHp && SoBeliveCurrentHp < 100)
+                                    {
+                                        Console.WriteLine(@"   ___");
+                                        Console.WriteLine(@"  /+++\");
+                                        Console.WriteLine(@" /=====\");
+                                        Console.WriteLine(@"(__\_/__)");
+                                        Console.WriteLine(@" \=====/  ");
+                                        Console.WriteLine(@"  \___/  ");
+                                    }
+                                    else if (SoBeliveCurrentHp == 100)
+                                    {
+                                        Console.WriteLine(@"   ___");
+                                        Console.WriteLine(@"  /+++\");
+                                        Console.WriteLine(@" /=====\");
+                                        Console.WriteLine(@"(  =_=  )");
+                                        Console.WriteLine(@" \-----/  ");
+                                        Console.WriteLine(@"  \___/  ");
+                                    }
+                                    else if (SoBeliveCurrentHp <= 30)
+                                    {
+                                        Console.WriteLine(@"   ___");
+                                        Console.WriteLine(@"  /+++\");
+                                        Console.WriteLine(@" /=====\");
+                                        Console.WriteLine(@"(__0_0__)");
+                                        Console.WriteLine(@" \=====/  ");
+                                        Console.WriteLine(@"  \___/  ");
+                                    }
+                                    Console.WriteLine(" ____________    ____________");
+                                    Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
+                                    var attack = Console.ReadKey(intercept: true);
+                                    if (attack.Key == ConsoleKey.Enter)
+                                    {
+                                        if (player.Def + player.ADef > SoBeliveAtk)
+                                        {
+                                            PlayerCurrentHp -= 1;
+                                            if (player.Atk + player.WAtk < SoBeliveDef)
+                                            {
+                                                SoBeliveCurrentHp -= 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            SoBeliveCurrentHp -= ((player.Atk + player.WAtk) - SoBeliveDef);
+                                            if (player.Atk + player.WAtk < SoBeliveDef)
+                                            {
+                                                SoBeliveCurrentHp -= 1;
+                                            }
+                                            else
+                                            {
+                                                PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
+                                            }
+                                        }
+
+                                        Console.Clear();
+                                    }
+                                    else if (attack.Key == ConsoleKey.Escape)
+                                    {
+                                        Battle();
+                                        break;
+                                    }
+                                }
+                                else if (PlayerCurrentHp <= 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("패배하였습니다.");
+                                    player.Gold -= SoBeliveHp / 2;
+                                    Console.WriteLine($"{SoBeliveHp / 2}골드를 잃었습니다.");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine(" ______________");
+                                    Console.WriteLine("/|돌아가기(esc)|");
+                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                    {
+                                        FixTitle();
+                                        break;
+                                    }
+                                }
+                                else if (SoBeliveCurrentHp <= 0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("광신도를 물리쳤습니다.");
+                                    player.Exp += SoBeliveHp / 10;
+                                    player.Gold += SoBeliveHp;
+                                    Console.WriteLine($"경험치{SoBeliveHp / 10}  획득");
+                                    Console.WriteLine($"골드 {SoBeliveHp} 획득");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine("\n");
+                                    Console.WriteLine(" ______________      ___________");
+                                    Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
+                                    var enter = Console.ReadKey(intercept: true);
+                                    if (enter.Key == ConsoleKey.Escape)
+                                    {
+                                        Battle();
+                                        break;
+                                    }
+                                    else if (enter.Key == ConsoleKey.Enter)
+                                    {
+                                        Console.Clear();
+                                        SoBeliveHp += 100;
+                                        SoBeliveCurrentHp = SoBeliveHp;
+                                        SoBeliveAtk += 1;
+                                        SoBeliveDef += 1;
+                                        while (true)
+                                        {
+                                            if (SoBeliveCurrentHp > 0)
+                                            {
+                                                Console.WriteLine("뱀의 사당2");
+                                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
+                                                Console.WriteLine("광신도");
+                                                Console.WriteLine($"Hp:{SoBeliveCurrentHp}/{SoBeliveHp}");
+                                                Console.WriteLine($"공격력:{SoBeliveAtk} 방어력:{SoBeliveDef}");
+                                                if (30 < SoBeliveCurrentHp && SoBeliveCurrentHp < 100)
+                                                {
+                                                    Console.WriteLine(@" /\---/\");
+                                                    Console.WriteLine(@"<  /_\  >");
+                                                    Console.WriteLine(@" <__U__>  ");
+                                                }
+                                                else if (SoBeliveCurrentHp == 100)
+                                                {
+                                                    Console.WriteLine(@" /\---/\");
+                                                    Console.WriteLine(@"<  O_O  >");
+                                                    Console.WriteLine(@" <__U__>  ");
+                                                }
+                                                else if (SoBeliveCurrentHp <= 30)
+                                                {
+                                                    Console.WriteLine(@" /\---/\");
+                                                    Console.WriteLine(@"<  X_X  >");
+                                                    Console.WriteLine(@" <__U__>  ");
+                                                }
+                                                Console.WriteLine(" ____________    ____________");
+                                                Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
+                                                var attack = Console.ReadKey(intercept: true);
+                                                if (attack.Key == ConsoleKey.Enter)
+                                                {
+                                                    if (player.Def + player.ADef > SoBeliveAtk)
+                                                    {
+                                                        PlayerCurrentHp -= 1;
+                                                        if (player.Atk + player.WAtk < SoBeliveDef)
+                                                        {
+                                                            SoBeliveCurrentHp -= 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        SoBeliveCurrentHp -= ((player.Atk + player.WAtk) - SoBeliveDef);
+                                                        if (player.Atk + player.WAtk < SoBeliveDef)
+                                                        {
+                                                            SoBeliveCurrentHp -= 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
+                                                        }
+                                                    }
+                                                    Console.Clear();
+                                                }
+                                                else if (attack.Key == ConsoleKey.Escape)
+                                                {
+                                                    Battle();
+                                                    break;
+                                                }
+                                            }
+                                            else if (PlayerCurrentHp <= 0)
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("패배하였습니다.");
+                                                player.Gold -= SoBeliveHp / 2;
+                                                Console.WriteLine($"{SoBeliveHp / 2}골드를 잃었습니다.");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine(" ______________");
+                                                Console.WriteLine("/|돌아가기(esc)|");
+                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                {
+                                                    FixTitle();
+                                                    break;
+                                                }
+                                            }
+                                            else if (SoBeliveCurrentHp <= 0)
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("광신도를 물리쳤습니다.");
+                                                player.Exp += SoBeliveHp / 20;
+                                                player.Gold += SoBeliveHp;
+                                                Console.WriteLine($"경험치{SoBeliveHp / 20}  획득");
+                                                Console.WriteLine($"골드 {SoBeliveHp} 획득");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine("\n");
+                                                Console.WriteLine(" ______________      ___________");
+                                                Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
+                                                enter = Console.ReadKey(intercept: true);
+                                                if (enter.Key == ConsoleKey.Escape)
+                                                {
+                                                    Battle();
+                                                    break;
+                                                }
+                                                else if (enter.Key == ConsoleKey.Enter)
+                                                {
+                                                    Console.Clear();
+                                                    SoBeliveHp += 100;
+                                                    SoBeliveCurrentHp = SoBeliveHp;
+                                                    SoBeliveAtk += 1;
+                                                    SoBeliveDef += 1;
+                                                    while (true)
+                                                    {
+                                                        if (SoBeliveCurrentHp > 0)
+                                                        {
+                                                            Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
+                                                            Console.WriteLine("뱀의 사당3");
+                                                            Console.WriteLine("광신도");
+                                                            Console.WriteLine($"Hp:{SoBeliveCurrentHp}/{SoBeliveHp}");
+                                                            Console.WriteLine($"공격력:{SoBeliveAtk} 방어력:{SoBeliveDef}");
+                                                            if (30 < SoBeliveCurrentHp && SoBeliveCurrentHp < 100)
+                                                            {
+                                                                Console.WriteLine(@" /\---/\");
+                                                                Console.WriteLine(@"<  /_\  >");
+                                                                Console.WriteLine(@" <__U__>  ");
+                                                            }
+                                                            else if (SoBeliveCurrentHp == 100)
+                                                            {
+                                                                Console.WriteLine(@" /\---/\");
+                                                                Console.WriteLine(@"<  O_O  >");
+                                                                Console.WriteLine(@" <__U__>  ");
+                                                            }
+                                                            else if (SoBeliveCurrentHp <= 30)
+                                                            {
+                                                                Console.WriteLine(@" /\---/\");
+                                                                Console.WriteLine(@"<  X_X  >");
+                                                                Console.WriteLine(@" <__U__>  ");
+                                                            }
+                                                            Console.WriteLine(" ____________    ____________");
+                                                            Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
+                                                            var attack = Console.ReadKey(intercept: true);
+                                                            if (attack.Key == ConsoleKey.Enter)
+                                                            {
+                                                                if (player.Def + player.ADef > SoBeliveAtk)
+                                                                {
+                                                                    PlayerCurrentHp -= 1;
+                                                                    if (player.Atk + player.WAtk < SoBeliveDef)
+                                                                    {
+                                                                        SoBeliveCurrentHp -= 1;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    SoBeliveCurrentHp -= ((player.Atk + player.WAtk) - SoBeliveDef);
+                                                                    if (player.Atk + player.WAtk < SoBeliveDef)
+                                                                    {
+                                                                        SoBeliveCurrentHp -= 1;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
+                                                                    }
+                                                                }
+                                                                Console.Clear();
+                                                            }
+                                                            else if (attack.Key == ConsoleKey.Escape)
+                                                            {
+                                                                Battle();
+                                                                break;
+                                                            }
+                                                        }
+                                                        else if (PlayerCurrentHp <= 0)
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("패배하였습니다.");
+                                                            player.Gold -= SoBeliveHp / 2;
+                                                            Console.WriteLine($"{SoBeliveHp / 2}골드를 잃었습니다.");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine(" ______________");
+                                                            Console.WriteLine("/|돌아가기(esc)|");
+                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                            {
+                                                                FixTitle();
+                                                                break;
+                                                            }
+                                                        }
+                                                        else if (SoBeliveCurrentHp <= 0)
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("광신도를 물리쳤습니다.");
+                                                            player.Exp += SoBeliveHp / 20;
+                                                            player.Gold += SoBeliveHp;
+                                                            Console.WriteLine($"경험치{SoBeliveHp / 20}  획득");
+                                                            Console.WriteLine($"골드 {SoBeliveHp} 획득");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine("\n");
+                                                            Console.WriteLine(" ______________     ____________");
+                                                            Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
+                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                            {
+                                                                Battle();
+                                                                break;
+                                                            }
+                                                            else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
+                                                            {
+                                                                Console.WriteLine("이 앞은 보스 고대의 뱀(추천레벨 10+)가 존재합니다.");
+                                                                Console.WriteLine("정말 들어가시겠습니까?");
+                                                                Console.WriteLine("\n");
+                                                                Console.WriteLine(" ________________    ______________");
+                                                                Console.WriteLine("/|들어가기(enter)|  /|돌아가기(esc)|");
+                                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                                {
+                                                                    Battle();
+                                                                    break;
+                                                                }
+                                                                else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
+                                                                {
+                                                                    Console.Clear();
+                                                                    int AcientHp = 10000;
+                                                                    int AcientAtk = 500;
+                                                                    int AcientDef = 500;
+                                                                    int AcientCurrentHp = AcientHp;
+                                                                    int PlayerKingCurrentHp = player.Hp;
+                                                                    while (true)
+                                                                    {
+                                                                        if (AcientCurrentHp > 0)
+                                                                        {
+                                                                            Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerKingCurrentHp}/{player.Hp}");
+                                                                            Console.WriteLine("보스의 방3");
+                                                                            Console.WriteLine("고대의 뱀 ");
+                                                                            Console.WriteLine($"Hp:{AcientCurrentHp}/{AcientHp}");
+                                                                            Console.WriteLine($"공격력:{AcientAtk} 방어력:{AcientDef}");
+                                                                            if ((AcientHp / 10) * 4 < AcientCurrentHp)
+                                                                            {
+                                                                                Console.ForegroundColor = ConsoleColor.Gray;
+                                                                                Console.WriteLine("???");
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                                                                Console.WriteLine("턴마다 공격력 증가");
+                                                                            }
+                                                                            Console.ResetColor();
+                                                                            if ((AcientHp / 10) * 3 < AcientCurrentHp && AcientCurrentHp < AcientHp)
+                                                                            {
+                                                                                Console.WriteLine(@"______");
+                                                                                Console.Write(@" \  / ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"         ________    ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"   ______  ");
+                                                                                Console.Write(@" |  |      ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"   /        \   ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    \  /   ");
+                                                                                Console.Write(@" |  |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"     |          |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"   |  |   ");
+                                                                                Console.Write(@" |  |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"      \  \  /  /     ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"  |  |   ");
+                                                                                Console.Write(@" |  |    ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"      |_    _|     ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"   |  |  ");
+                                                                                Console.Write(@" |  |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"       / \  /  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"     |  |   ");
+                                                                                Console.Write(@" |  |     ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"    /   ||  /    ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    |  |");
+                                                                                Console.Write(@" |  |    ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"    /    /\/     ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"     |  |");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"  __ /    _/ ________  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |  |   ");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@" /  |      /         \  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"|  |    ");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@"/  _ \     \----/     / ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"|  |   ");
+                                                                                Console.Write(@" |__|  ");
+                                                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                                                Console.Write(@" \/ \________________/ ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |__|   ");
+                                                                                Console.WriteLine(@"  \___      _-----------_     ___/");
+                                                                                Console.WriteLine(@"   \  |    ||           ||   |  /");
+                                                                                Console.WriteLine(@"    \  \    @===========@   /  /");
+                                                                                Console.WriteLine(@"     \ |\      \=====/     /| /");
+                                                                                Console.WriteLine(@"      / _/-----------------\_ \");
+                                                                                Console.WriteLine(@"     |_/---------------------\_|");
+                                                                                Console.WriteLine(@"    _/-------------------------\_");
+                                                                            }
+                                                                            else if (AcientCurrentHp == 5000)
+                                                                            {
+                                                                                Console.WriteLine(@"______                 ");
+                                                                                Console.WriteLine(@" \  /                         ______  ");
+                                                                                Console.WriteLine(@" |  |                          \  /   ");
+                                                                                Console.WriteLine(@" |  |                          |  |   ");
+                                                                                Console.WriteLine(@" |  |                          |  |   ");
+                                                                                Console.Write(@" |  | ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@"       _____     "); 
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"        |  |  ");
+                                                                                Console.Write(@" |  |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@"    /     -------  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    |  |   ");
+                                                                                Console.Write(@" |  |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@"  /              \_  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"  |  |");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@"  /       \   /     \  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |  |");
+                                                                                Console.Write(@" |  | ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@"  |   _ _   |_-     /__ ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |  |   ");
+                                                                                Console.Write(@" |  | ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@"   \       /       /   \ ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"|  |    ");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@" / |_   _|            /");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |  |   ");
+                                                                                Console.Write(@" |__|   ");
+                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                                                Console.Write(@" \/ \_/____________/  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |__|   ");
+                                                                                Console.WriteLine(@"  \___      _-----------_     ___/");
+                                                                                Console.WriteLine(@"   \  |    ||           ||   |  /");
+                                                                                Console.WriteLine(@"    \  \    @===========@   /  /");
+                                                                                Console.WriteLine(@"     \ |\      \=====/     /| /");
+                                                                                Console.WriteLine(@"      / _/-----------------\_ \");
+                                                                                Console.WriteLine(@"     |_/---------------------\_|");
+                                                                                Console.WriteLine(@"     /-------------------------\_");
+                                                                            }
+                                                                            else if (AcientCurrentHp <= (AcientHp / 10) * 4)
+                                                                            {
+                                                                                Console.WriteLine(@"______                 ");
+                                                                                Console.WriteLine(@" \  /          /\/\/\/\       ______  ");
+                                                                                Console.WriteLine(@" |  |         /  /  \  \       \  /   ");
+                                                                                Console.WriteLine(@" |  |        |          |      |  |   ");
+                                                                                Console.WriteLine(@" |  |         \  \  /  /       |  |   ");
+                                                                                Console.WriteLine(@" |  |          |_    _|        |  |  ");
+                                                                                Console.WriteLine(@" |  |          / \  /  |       |  |   ");
+                                                                                Console.WriteLine(@" |  |         /   ||  /        |  |");
+                                                                                Console.WriteLine(@" |  |        /  \ /\/          |  |");
+                                                                                Console.WriteLine(@" |  |    __ / /  _/ ________   |  |   ");
+                                                                                Console.WriteLine(@" |  |   /  |      /         \  |  |    ");
+                                                                                Console.WriteLine(@" |  |  /  _ \  \  \----/  / /  |  |   ");
+                                                                                Console.WriteLine(@" |__|   \/ \______________/    |__|   ");
+                                                                                Console.WriteLine(@"  \___      _-----------_     ___/");
+                                                                                Console.WriteLine(@"   \  |    ||           ||   |  /");
+                                                                                Console.WriteLine(@"    \  \    @===========@   /  /");
+                                                                                Console.WriteLine(@"     \ |\      \=====/     /| /");
+                                                                                Console.WriteLine(@"      / _/-----------------\_ \");
+                                                                                Console.WriteLine(@"     |_/---------------------\_|");
+                                                                                Console.WriteLine(@"     /-------------------------\_");
+                                                                            }
+                                                                            Console.ResetColor();
+                                                                            Console.WriteLine(" ____________    ____________");
+                                                                            Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
+                                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
+                                                                            {
+                                                                                if (player.Def + player.ADef > AcientAtk)
+                                                                                {
+                                                                                    PlayerCurrentHp -= 1;
+                                                                                    if (player.Atk + player.WAtk < AcientDef)
+                                                                                    {
+                                                                                        AcientCurrentHp -= 1;
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - AcientAtk);
+                                                                                    }
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    AcientCurrentHp -= ((player.Atk + player.WAtk) - AcientDef);
+                                                                                    if (player.Atk + player.WAtk < AcientDef)
+                                                                                    {
+                                                                                        AcientCurrentHp -= 1;
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - AcientAtk);
+                                                                                    }
+                                                                                }
+                                                                                AcientAtk *= 2;
+                                                                                Console.Clear();
+                                                                                if (AcientCurrentHp < 0)
+                                                                                {
+                                                                                    if (AC.ACWolf == false)
+                                                                                    {
+                                                                                        Random random = new Random();
+                                                                                        int rn = random.Next(1, 11);
+                                                                                        if (rn == 1)
+                                                                                        {
+                                                                                            AC.ACWolf = true;
+                                                                                            Console.Clear();
+                                                                                            Console.WriteLine("달빛 늑대를 물리쳤습니다.");
+                                                                                            player.Exp += AcientHp / 10;
+                                                                                            player.Gold += AcientHp;
+                                                                                            Console.WriteLine("경험치 500 획득");
+                                                                                            Console.WriteLine("골드 5000 획득");
+                                                                                            Console.WriteLine("달빛 늑대의 증표 획득");
+                                                                                            Console.WriteLine("\n");
+                                                                                            Console.WriteLine("\n");
+                                                                                            Console.WriteLine("\n");
+                                                                                            Console.WriteLine(" ______________");
+                                                                                            Console.WriteLine("/|돌아가기(esc)|");
+                                                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                                                            {
+                                                                                                Battle();
+                                                                                                break;
+                                                                                            }
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            Console.Clear();
+                                                                                            Console.WriteLine("달빛 늑대를 물리쳤습니다.");
+                                                                                            player.Exp += AcientHp / 10;
+                                                                                            player.Gold += AcientHp;
+                                                                                            Console.WriteLine("경험치 500 획득");
+                                                                                            Console.WriteLine("골드 5000 획득");
+                                                                                            Console.WriteLine("\n");
+                                                                                            Console.WriteLine("\n");
+                                                                                            Console.WriteLine("\n");
+                                                                                            Console.WriteLine(" ______________");
+                                                                                            Console.WriteLine("/|돌아가기(esc)|");
+                                                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                                                            {
+                                                                                                Battle();
+                                                                                                break;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        Console.Clear();
+                                                                                        Console.WriteLine("달빛 늑대 를 물리쳤습니다.");
+                                                                                        player.Exp += AcientHp / 10;
+                                                                                        player.Gold += AcientHp;
+                                                                                        Console.WriteLine("경험치 500 획득");
+                                                                                        Console.WriteLine("골드 5000 획득");
+                                                                                        Console.WriteLine("\n");
+                                                                                        Console.WriteLine("\n");
+                                                                                        Console.WriteLine("\n");
+                                                                                        Console.WriteLine(" ______________");
+                                                                                        Console.WriteLine("/|돌아가기(esc)|");
+                                                                                    }
+                                                                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
+                                                                                    {
+                                                                                        Battle();
+                                                                                        break;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (start.Key == ConsoleKey.Escape)
+                    {
+                        FixTitle();
+                    }
+                    else if (start.Key == ConsoleKey.RightArrow)
+                    {
+
+                    }
                 }
             }
             else if (start.Key == ConsoleKey.Escape)
@@ -2196,68 +2854,330 @@ namespace TextRPG
                     {
                         if (num > 0)
                         {
-                            if (w1 == 1)
+                            for (int i = 1; i < num; i++)
                             {
-                                Console.WriteLine("나무 검");
-                                Console.WriteLine("공격력 + 100 ");
-                                Console.WriteLine("설명:");
-                                Console.WriteLine("     조잡한 성능. 나무검에게 뭘 바라나? ");
-                                Console.WriteLine("     고작 나무검의 성능을 뛰어나게 만들 수 있는 능력자면  ");
-                                Console.WriteLine("     나무검을 안만들었다. 몽둥이나 다름없다. ");
-                            }
-                            if (w2 == 2)
-                            {
-                                Console.WriteLine("돌 검");
-                                Console.WriteLine("공격력 + 100 ");
-                                Console.WriteLine("설명:");
-                                Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
-                                Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
-                            }
-                            if (w3 == 3)
-                            {
-                                Console.WriteLine("철 검");
-                                Console.WriteLine("공격력 + 100 ");
-                                Console.WriteLine("설명:");
-                                Console.WriteLine("     검이라고 봐줄만한 검. ");
-                                Console.WriteLine("     평민도 이정도는 살 수 있다.");
-                            }
-                            if (w4 == 4)
-                            {
+                                if (w1 == i)
+                                {
+                                    Console.WriteLine("나무 검");
+                                    Console.WriteLine("공격력 + 100 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     조잡한 성능. 나무검에게 뭘 바라나? ");
+                                    Console.WriteLine("     고작 나무검의 성능을 뛰어나게 만들 수 있는 능력자면  ");
+                                    Console.WriteLine("     나무검을 안만들었다. 몽둥이나 다름없다. ");
 
-                            }
-                            if (w5 == 5)
-                            {
-
-                            }
-                            if (w6 == 6)
-                            {
-
-                            }
-                            if (w7 == 7)
-                            {
-
-                            }
-                            if (w8 == 8)
-                            {
-
+                                }
+                                if (w2 == i)
+                                {
+                                    Console.WriteLine("돌 검");
+                                    Console.WriteLine("공격력 + 5,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
+                                    Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
+                                }
+                                if (w3 == i)
+                                {
+                                    Console.WriteLine("철 검");
+                                    Console.WriteLine("공격력 + 250,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     검이라고 봐줄만한 검. ");
+                                    Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                                }
+                                if (w4 == i)
+                                {
+                                    Console.WriteLine("신의 검");
+                                    Console.WriteLine("공격력 + 12,500,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                    Console.WriteLine("     신의 검을 파는게 말이 안된다.");
+                                    Console.WriteLine("     물론 아주 강하긴 하다.");
+                                }
+                                if (w5 == i)
+                                {
+                                    Console.WriteLine("일반 스태프");
+                                    Console.WriteLine("마력 + 500 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                    Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                    Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                }
+                                if (w6 == i)
+                                {
+                                    Console.WriteLine("크리스탈 스태프");
+                                    Console.WriteLine("마력 + 25,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                    Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                    Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                    Console.WriteLine("     유리라 마력이 확대된다.");
+                                }
+                                if (w7 == i)
+                                {
+                                    Console.WriteLine("다이아몬드 스태프");
+                                    Console.WriteLine("마력 + 1,250,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                    Console.WriteLine("     비싸서 아주 조그맣다.");
+                                    Console.WriteLine("     뾰족한 부분이 마력을");
+                                    Console.WriteLine("     모으는 역할을 한다.");
+                                }
+                                if (w8 == i)
+                                {
+                                    Console.WriteLine("신의 스태프");
+                                    Console.WriteLine("마력 + 625,000,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                    Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                    Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                    Console.WriteLine("     하다."                     );
+                                }
                             }
                         }
                     }
-
                 }
             }
             if (backpack.armor == true)
             {
                 if (equip.Key == ConsoleKey.A)
                 {
-
+                    int num = 0;
+                    int a1 = 0;
+                    int a2 = 0;
+                    int a3 = 0;
+                    int a4 = 0;
+                    int a5 = 0;
+                    if (backpack.wood == true)
+                    {
+                        num++;
+                        a1 = num;
+                        Console.WriteLine($"[{a1}]가죽 갑옷");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        a2 = num;
+                        Console.WriteLine($"[{a2}]사슬 갑옷");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        a3 = num;
+                        Console.WriteLine($"[{a3}]철 갑옷");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        a4 = num;
+                        Console.WriteLine($"[{a4}]전신 순금 갑옷");
+                    }
+                    if (backpack.stone == true)
+                    {
+                        num++;
+                        a5 = num;
+                        Console.WriteLine($"[{a5}]축복받은 갑옷");
+                    }
+                    var select = Console.ReadKey();
+                    if (select.Key == ConsoleKey.D1)
+                    {
+                        if (num > 0)
+                        {
+                            for (int i = 1; i < num; i++)
+                            {
+                                if (a1 == i)
+                                {
+                                    Console.WriteLine("가죽 갑옷");
+                                    Console.WriteLine("방어력 + 50 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     가리는 곳도 적다.없는 것 보단 낫지만...");
+                                    Console.WriteLine("     이정도면 돈을 받고 쓰레기 처리를 해줘야 한다");
+                                }
+                                if (a2 == i)
+                                {
+                                    Console.WriteLine("사슬 갑옷");
+                                    Console.WriteLine("방어력 + 2,500 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     체인이 녹슬었다. 공격받으면 낮은 ");
+                                    Console.WriteLine("     확률로 파상풍에 걸릴수도...");
+                                }
+                                if (a3 == i)
+                                {
+                                    Console.WriteLine("철 갑옷");
+                                    Console.WriteLine("방어력 + 125,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     무명의 수습 대장장이가 만들었다. ");
+                                    Console.WriteLine("     이걸로 드래곤에게 덤비는 놈은 없겠지.");
+                                }
+                                if (a4 == i)
+                                {
+                                    Console.WriteLine("전신 순금 갑옷");
+                                    Console.WriteLine("방어력 + 3,125,000 마력 + 6,250,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     18k 골드. 즉 순금이 아니다.");
+                                    Console.WriteLine("     금이라 좀 무르다.");
+                                    Console.WriteLine("     대신 마력이 오른다...");
+                                }
+                                if (a5 == i)
+                                {
+                                    Console.WriteLine("축복 받은 갑옷");
+                                    Console.WriteLine("방어력 + 312,500,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                    Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                    Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                }
+                            }
+                        }
+                    }
                 }
             }
             if (backpack.skill == true)
             {
                 if (equip.Key == ConsoleKey.S)
                 {
+                    if (equip.Key == ConsoleKey.W)
+                    {
+                        int num = 0;
+                        int w1 = 0;
+                        int w2 = 0;
+                        int w3 = 0;
+                        int w4 = 0;
+                        int w5 = 0;
+                        int w6 = 0;
+                        int w7 = 0;
+                        int w8 = 0;
+                        if (backpack.wood == true)
+                        {
+                            num++;
+                            w1 = num;
+                            Console.WriteLine($"[{w1}]강타");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w2 = num;
+                            Console.WriteLine($"[{w2}]암살");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w3 = num;
+                            Console.WriteLine($"[{w3}]파이어볼");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w4 = num;
+                            Console.WriteLine($"[{w4}]강림");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w5 = num;
+                            Console.WriteLine($"[{w5}]힐");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w6 = num;
+                            Console.WriteLine($"[{w6}]흡혈");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w7 = num;
+                            Console.WriteLine($"[{w7}]부활");
+                        }
+                        if (backpack.stone == true)
+                        {
+                            num++;
+                            w8 = num;
+                            Console.WriteLine($"[{w8}]힘 강화");
+                        }
+                        var select = Console.ReadKey();
+                        if (select.Key == ConsoleKey.D1)
+                        {
+                            if (num > 0)
+                            {
+                                for (int i = 1; i < num; i++)
+                                {
+                                    if (w1 == i)
+                                    {
+                                        Console.WriteLine("[PASSIVE]강타");
+                                        Console.WriteLine("공격력 X 1.5 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     말 그대로 '강'하게 친다.");
+                                        Console.WriteLine("     끝");
+                                        Console.WriteLine("     ");
 
+                                    }
+                                    if (w2 == i)
+                                    {
+                                        Console.WriteLine("돌 검");
+                                        Console.WriteLine("공격력 + 5,000 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
+                                        Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
+                                    }
+                                    if (w3 == i)
+                                    {
+                                        Console.WriteLine("철 검");
+                                        Console.WriteLine("공격력 + 250,000 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     검이라고 봐줄만한 검. ");
+                                        Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                                    }
+                                    if (w4 == i)
+                                    {
+                                        Console.WriteLine("신의 검");
+                                        Console.WriteLine("공격력 + 12,500,000 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                        Console.WriteLine("     신의 검을 파는게 말이 안된다.");
+                                        Console.WriteLine("     물론 아주 강하긴 하다.");
+                                    }
+                                    if (w5 == i)
+                                    {
+                                        Console.WriteLine("일반 스태프");
+                                        Console.WriteLine("마력 + 500 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                        Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                        Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                    }
+                                    if (w6 == i)
+                                    {
+                                        Console.WriteLine("크리스탈 스태프");
+                                        Console.WriteLine("마력 + 25,000 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                        Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                        Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                        Console.WriteLine("     유리라 마력이 확대된다.");
+                                    }
+                                    if (w7 == i)
+                                    {
+                                        Console.WriteLine("다이아몬드 스태프");
+                                        Console.WriteLine("마력 + 1,250,000 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                        Console.WriteLine("     비싸서 아주 조그맣다.");
+                                        Console.WriteLine("     뾰족한 부분이 마력을");
+                                        Console.WriteLine("     모으는 역할을 한다.");
+                                    }
+                                    if (w8 == i)
+                                    {
+                                        Console.WriteLine("신의 스태프");
+                                        Console.WriteLine("마력 + 625,000,000 ");
+                                        Console.WriteLine("설명:");
+                                        Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                        Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                        Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                        Console.WriteLine("     하다.");
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -2286,20 +3206,6 @@ namespace TextRPG
                         LvUp();
                         break;
                     }
-                    else
-                    {
-                        Console.WriteLine("경험치 부족");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine(" ______________");
-                        Console.WriteLine("/|돌아가기(esc)|");
-                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                        {
-                            FixTitle();
-                            break;
-                        }
-                    }
                 }
                 else if (player.Lv < 10)
                 {
@@ -2315,23 +3221,9 @@ namespace TextRPG
                         Console.WriteLine("Hp 100 증가");
                         Console.WriteLine("Mp 50 증가");
                         Console.WriteLine("Atk 10 증가");
-                        Console.WriteLine("Def 10 증가");
+                        Console.WriteLine("Def 5 증가");
                         Console.WriteLine(" ______________    ______________");
                         Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                    }
-                    else
-                    {
-                        Console.WriteLine("경험치 부족");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine(" ______________");
-                        Console.WriteLine("/|돌아가기(esc)|");
-                        if (Console.ReadKey(intercept:true).Key == ConsoleKey.Escape)
-                        {
-                            FixTitle();
-                            break;
-                        }
                     }
                 }
                 else
@@ -2368,20 +3260,6 @@ namespace TextRPG
                                 break;
                             }
                         }
-                        else
-                        {
-                            Console.WriteLine("경험치 부족");
-                            Console.WriteLine("\n");
-                            Console.WriteLine("\n");
-                            Console.WriteLine("\n");
-                            Console.WriteLine(" ______________");
-                            Console.WriteLine("/|돌아가기(esc)|");
-                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                            {
-                                FixTitle();
-                                break;
-                            }
-                        }
                     }
                     else
                     {
@@ -2394,14 +3272,14 @@ namespace TextRPG
                             Console.WriteLine("레벨업!");
                             player.Exp -= (player.Lv - 20) * 4000;
                             player.Lv += 1;
-                            player.Hp += 2500;
-                            player.Mp += 1250;
+                            player.Hp += 2_500;
+                            player.Mp += 1_250;
                             player.Atk += 250;
                             player.Def += 125;
-                            Console.WriteLine("Hp 1000 증가");
-                            Console.WriteLine("Mp 500 증가");
-                            Console.WriteLine("Atk 100 증가");
-                            Console.WriteLine("Def 100 증가");
+                            Console.WriteLine("Hp 2,500 증가");
+                            Console.WriteLine("Mp 1,250 증가");
+                            Console.WriteLine("Atk 250 증가");
+                            Console.WriteLine("Def 125 증가");
                             Console.WriteLine(" ______________    ______________");
                             Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
                         }
@@ -2416,13 +3294,13 @@ namespace TextRPG
                                 Console.WriteLine("레벨업!");
                                 player.Exp -= (player.Lv - 30) * 80000;
                                 player.Lv += 1;
-                                player.Hp += 10000;
-                                player.Mp += 5000;
-                                player.Atk += 1000;
+                                player.Hp += 10_000;
+                                player.Mp += 5_000;
+                                player.Atk += 1_000;
                                 player.Def += 500;
-                                Console.WriteLine("Hp 10000 증가");
-                                Console.WriteLine("Mp 5000 증가");
-                                Console.WriteLine("Atk 1000 증가");
+                                Console.WriteLine("Hp 10,000 증가");
+                                Console.WriteLine("Mp 5,000 증가");
+                                Console.WriteLine("Atk 1,000 증가");
                                 Console.WriteLine("Def 500 증가");
                                 Console.WriteLine(" ______________    ______________");
                                 Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
@@ -2438,14 +3316,14 @@ namespace TextRPG
                                     Console.WriteLine("레벨업!");
                                     player.Exp -= (player.Lv - 40) * 1600000;
                                     player.Lv += 1;
-                                    player.Hp += 100000;
-                                    player.Mp += 25000;
-                                    player.Atk += 5000;
-                                    player.Def += 2500;
-                                    Console.WriteLine("Hp 4000 증가");
-                                    Console.WriteLine("Mp 2000 증가");
-                                    Console.WriteLine("Atk 400 증가");
-                                    Console.WriteLine("Def 400 증가");
+                                    player.Hp += 100_000;
+                                    player.Mp += 25_000;
+                                    player.Atk += 5_000;
+                                    player.Def += 2_500;
+                                    Console.WriteLine("Hp 100,000 증가");
+                                    Console.WriteLine("Mp 25,000 증가");
+                                    Console.WriteLine("Atk 5,000 증가");
+                                    Console.WriteLine("Def 2,500 증가");
                                     Console.WriteLine(" ______________    ______________");
                                     Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
                                 }
@@ -2460,14 +3338,14 @@ namespace TextRPG
                                         Console.WriteLine("레벨업!");
                                         player.Exp -= (player.Lv - 50) * 32000000;
                                         player.Lv += 1;
-                                        player.Hp += 250000;
-                                        player.Mp += 125000;
-                                        player.Atk += 25000;
-                                        player.Def += 12500;
-                                        Console.WriteLine("Hp 8000 증가");
-                                        Console.WriteLine("Mp 4000 증가");
-                                        Console.WriteLine("Atk 800 증가");
-                                        Console.WriteLine("Def 800 증가");
+                                        player.Hp += 250_000;
+                                        player.Mp += 125_000;
+                                        player.Atk += 25_000;
+                                        player.Def += 12_500;
+                                        Console.WriteLine("Hp 250,000 증가");
+                                        Console.WriteLine("Mp 125,000 증가");
+                                        Console.WriteLine("Atk 25,000 증가");
+                                        Console.WriteLine("Def 12,500 증가");
                                         Console.WriteLine(" ______________    ______________");
                                         Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
                                     }
@@ -2482,14 +3360,14 @@ namespace TextRPG
                                             Console.WriteLine("레벨업!");
                                             player.Exp -= (player.Lv - 60) * 640000000;
                                             player.Lv += 1;
-                                            player.Hp += 4500000;
-                                            player.Mp += 2250000;
-                                            player.Atk += 45000;
-                                            player.Def += 22500;
-                                            Console.WriteLine("Hp 16000 증가");
-                                            Console.WriteLine("Mp 8000 증가");
-                                            Console.WriteLine("Atk 1600 증가");
-                                            Console.WriteLine("Def 1600 증가");
+                                            player.Hp += 4_500_000;
+                                            player.Mp += 2_250_000;
+                                            player.Atk += 450_000;
+                                            player.Def += 225_000;
+                                            Console.WriteLine("Hp 4,500,000 증가");
+                                            Console.WriteLine("Mp 2,250,000 증가");
+                                            Console.WriteLine("Atk 450,000 증가");
+                                            Console.WriteLine("Def 225,000 증가");
                                             Console.WriteLine(" ______________    ______________");
                                             Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
                                         }
@@ -2531,12 +3409,12 @@ namespace TextRPG
                 {
                     player.Lv += 1;
                     player.Exp -= 20;
-                    player.Hp += 4000;
-                    player.Mp += 2000;
+                    player.Hp += 4_000;
+                    player.Mp += 2_000;
                     player.Atk += 400;
                     player.Def += 200;
                     Console.WriteLine("(한계)레벨 증가");
-                    Console.WriteLine("체력 4000 증가");
+                    Console.WriteLine("체력 4,000 증가");
                     Console.WriteLine("공격력 400 증가");
                     Console.WriteLine("방어력 200 증가");
                 }
@@ -2547,13 +3425,13 @@ namespace TextRPG
                 {
                     player.Lv += 1;
                     player.Exp -= 400;
-                    player.Hp += 15000;
-                    player.Mp += 7500;
-                    player.Atk += 1500;
+                    player.Hp += 15_000;
+                    player.Mp += 7_500;
+                    player.Atk += 1_500;
                     player.Def += 750;
                     Console.WriteLine("(한계)레벨 증가");
-                    Console.WriteLine("체력 15000 증가");
-                    Console.WriteLine("공격력 1500 증가");
+                    Console.WriteLine("체력 15,000 증가");
+                    Console.WriteLine("공격력 1,500 증가");
                     Console.WriteLine("방어력 750 증가");
                 }
             }
@@ -2562,15 +3440,15 @@ namespace TextRPG
                 if (AC.ACslime == false)
                 {
                     player.Lv += 1;
-                    player.Exp -= 8000;
-                    player.Hp += 50000;
-                    player.Mp += 25000;
-                    player.Atk += 5000;
-                    player.Def += 2500;
+                    player.Exp -= 8_000;
+                    player.Hp += 50_000;
+                    player.Mp += 25_000;
+                    player.Atk += 5_000;
+                    player.Def += 2_500;
                     Console.WriteLine("(한계)레벨 증가");
-                    Console.WriteLine("체력 50000 증가");
-                    Console.WriteLine("공격력 5000 증가");
-                    Console.WriteLine("방어력 2500 증가");
+                    Console.WriteLine("체력 50,000 증가");
+                    Console.WriteLine("공격력 5,000 증가");
+                    Console.WriteLine("방어력 2,500 증가");
                 }
                 else
                 {
@@ -2586,42 +3464,42 @@ namespace TextRPG
             else if (player.Lv == 40)
             {
                 player.Lv += 1;
-                player.Exp -= 160000;
-                player.Hp += 300000;
-                player.Mp += 150000;
-                player.Atk += 30000;
-                player.Def += 15000;
+                player.Exp -= 160_000;
+                player.Hp += 300_000;
+                player.Mp += 150_000;
+                player.Atk += 30_000;
+                player.Def += 15_000;
                 Console.WriteLine("(한계)레벨 증가");
-                Console.WriteLine("체력 50000 증가");
-                Console.WriteLine("공격력 5000 증가");
-                Console.WriteLine("방어력 2500 증가");
+                Console.WriteLine("체력 50,000 증가");
+                Console.WriteLine("공격력 30,000 증가");
+                Console.WriteLine("방어력 15,000 증가");
             }
             else if (player.Lv == 50)
             {
                 player.Lv += 1;
-                player.Exp -= 3200000;
-                player.Hp += 1500000;
-                player.Mp += 750000;
-                player.Atk += 150000;
-                player.Def += 75000;
+                player.Exp -= 3_200_000;
+                player.Hp += 1_500_000;
+                player.Mp += 750_000;
+                player.Atk += 150_000;
+                player.Def += 75_000;
             }
             else if (player.Lv == 60)
             {
                 player.Lv += 1;
-                player.Exp -= 64000000;
-                player.Hp += 5000000;
-                player.Mp += 2500000;
-                player.Atk += 500000;
-                player.Def += 250000;
+                player.Exp -= 64_000_000;
+                player.Hp += 5_000_000;
+                player.Mp += 2_500_000;
+                player.Atk += 500_000;
+                player.Def += 250_000;
             }
             else if (player.Lv == 70)
             {
                 player.Lv += 1;
                 player.Exp = 0;
-                player.Hp += 45000000;
-                player.Mp += 22500000;
-                player.Atk += 4500000;
-                player.Def += 2250000;
+                player.Hp += 45_000_000;
+                player.Mp += 22_500_000;
+                player.Atk += 4_500_000;
+                player.Def += 2_250_000;
             }
         }
         public static void FixTitle()
@@ -2775,7 +3653,7 @@ namespace TextRPG
             }
             else if (player.Lv == 70)
             {
-                if (player.Exp >= 999999999)
+                if (player.Exp >= 2147483647)
                 {
                     Console.WriteLine(" ___________");
                     Console.WriteLine("|승급(Space)|");
