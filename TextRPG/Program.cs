@@ -10,7 +10,6 @@ namespace TextRPG
         private static void Main()
         {
             tutorial = false;
-            Console.WriteLine(int.MaxValue);
             Console.WriteLine("Text RPG Start");
             Console.WriteLine("Press escape to exit...");
             var start = Console.ReadKey(intercept: true);
@@ -27,7 +26,7 @@ namespace TextRPG
         {
             public string name = "NoName";
             public int Lv = 1;
-            public int Exp = 1000000;
+            public int Exp = 0;
             public int Hp = 100;
             public int Mp = 100;
             public int Atk = 10;
@@ -41,14 +40,11 @@ namespace TextRPG
             public int skill3 = 0;
             public int skill4 = 0;
             public int cooltime;
-            public Armor armor = Armor.None;
-            public WeaponType weapon = WeaponType.Fist;
-
         }
         public class Backpack
         {
             public bool Leather = false;
-            public bool Chainmail = true;
+            public bool Chainmail = false;
             public bool Fullplate = false;
             public bool God = false;
             public bool wood = false;
@@ -69,34 +65,26 @@ namespace TextRPG
             public bool tstrong = false;
             public bool weapon = false;
             public bool skill = false;
-            public bool armor = true;
+            public bool armor = false;
+        }
+        public class Equip
+        {
+            public string weapon = "없음";
+            public string armor = "없음";
+            public string skill = "없음";
         }
         public class Achievement
         {
             public bool ACslime = false;
             public bool ACWolf = false;
-        }
-        public enum Armor
-        {
-            None = 0,
-            Leather,
-            Chainmail,
-            Fullplate,
-            God
-        }
-        public enum WeaponType
-        {
-            Fist = 0,
-            wood,
-            stone,
-            iron,
-            god
+            public bool ACAcient = false; 
         }
         private static bool created = false;
         private static bool tutorial = false;
         private static Character player = new Character();
         private static Achievement AC = new Achievement();
         private static Backpack backpack = new Backpack();
+        private static Equip equip = new Equip();
         public static void Shop()
         {
             Console.Clear();
@@ -279,8 +267,8 @@ namespace TextRPG
                             Buy = Console.ReadKey(intercept: true);
                         }
                         else if (Buy.Key == ConsoleKey.D2)
-                        {   
-                            if(backpack.crystal == false)
+                        {
+                            if (backpack.crystal == false)
                             {
                                 if (player.Gold >= 75000)
                                 {
@@ -353,11 +341,6 @@ namespace TextRPG
                         else
                         {
                             FixTitle();
-                        }
-                        Buy = Console.ReadKey();
-                        if (Buy.Key != ConsoleKey.Delete)
-                        {
-                            Shop();
                         }
                     }
                     else
@@ -438,6 +421,10 @@ namespace TextRPG
         }
         public static void Battle()
         {
+            if (player.skill1 == strong)
+            {
+                player.Atk *= 3 / 2;
+            }
             Console.Clear();
             Console.WriteLine("「<--(esc)」");
             Console.WriteLine("\n");
@@ -789,12 +776,14 @@ namespace TextRPG
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
+                                                        Console.WriteLine(" ");
                                                         Console.WriteLine(@" ");
                                                         Console.WriteLine(@".,/./../,/.\.\,/.,\./ ");
                                                         Console.ResetColor();
                                                         Thread.Sleep(800);
                                                         Console.Clear();
                                                         Console.ForegroundColor = ConsoleColor.Green;
+                                                        Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
@@ -810,6 +799,7 @@ namespace TextRPG
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
+                                                        Console.WriteLine(" ");
                                                         Console.WriteLine("      _/    _");
                                                         Console.WriteLine(@"  _,/__.,/-\.,.-, ");
                                                         Console.WriteLine(@"(_______||___\/  \' ");
@@ -817,6 +807,7 @@ namespace TextRPG
                                                         Thread.Sleep(800);
                                                         Console.Clear();
                                                         Console.ForegroundColor = ConsoleColor.Green;
+                                                        Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine(" ");
                                                         Console.WriteLine("      ________");
@@ -836,7 +827,8 @@ namespace TextRPG
                                                         Thread.Sleep(800);
                                                         Console.Clear();
                                                         Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"       /""\_");
+                                                        Console.WriteLine( "        __ ");
+                                                        Console.WriteLine(@"       /  \_");
                                                         Console.WriteLine(@"      (_____) ()");
                                                         Console.WriteLine(@"     ________");
                                                         Console.WriteLine(@"    /        \");
@@ -2028,8 +2020,8 @@ namespace TextRPG
                                                                                         Console.WriteLine("달빛 늑대를 물리쳤습니다.");
                                                                                         player.Exp += LunaWolfHp / 10;
                                                                                         player.Gold += LunaWolfHp;
-                                                                                        Console.WriteLine("경험치 500 획득");
-                                                                                        Console.WriteLine("골드 5000 획득");
+                                                                                        Console.WriteLine($"경험치{LunaWolfHp/10} 획득");
+                                                                                        Console.WriteLine($"골드{LunaWolfHp} 획득");
                                                                                         Console.WriteLine("달빛 늑대의 증표 획득");
                                                                                         Console.WriteLine("\n");
                                                                                         Console.WriteLine("\n");
@@ -2048,8 +2040,8 @@ namespace TextRPG
                                                                                         Console.WriteLine("달빛 늑대를 물리쳤습니다.");
                                                                                         player.Exp += LunaWolfHp / 10;
                                                                                         player.Gold += LunaWolfHp;
-                                                                                        Console.WriteLine("경험치 500 획득");
-                                                                                        Console.WriteLine("골드 5000 획득");
+                                                                                        Console.WriteLine($"경험치{LunaWolfHp/10} 획득");
+                                                                                        Console.WriteLine($"골드{LunaWolfHp} 획득");
                                                                                         Console.WriteLine("\n");
                                                                                         Console.WriteLine("\n");
                                                                                         Console.WriteLine("\n");
@@ -2068,8 +2060,8 @@ namespace TextRPG
                                                                                     Console.WriteLine("달빛 늑대 를 물리쳤습니다.");
                                                                                     player.Exp += LunaWolfHp / 10;
                                                                                     player.Gold += LunaWolfHp;
-                                                                                    Console.WriteLine("경험치 500 획득");
-                                                                                    Console.WriteLine("골드 5000 획득");
+                                                                                    Console.WriteLine($"경험치{LunaWolfHp/10} 획득");
+                                                                                    Console.WriteLine($"골드{LunaWolfHp} 획득");
                                                                                     Console.WriteLine("\n");
                                                                                     Console.WriteLine("\n");
                                                                                     Console.WriteLine("\n");
@@ -2481,16 +2473,17 @@ namespace TextRPG
                                                                             Console.WriteLine("고대의 뱀 ");
                                                                             Console.WriteLine($"Hp:{AcientCurrentHp}/{AcientHp}");
                                                                             Console.WriteLine($"공격력:{AcientAtk} 방어력:{AcientDef}");
-                                                                            if ((AcientHp / 10) * 4 < AcientCurrentHp)
+                                                                            if ((AcientHp / 10) * 4 > AcientCurrentHp)
+                                                                            {
+                                                                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                                                                Console.WriteLine("Hp 40%이하시 턴마다 모든 능력치 상승");
+                                                                            }
+                                                                            else
                                                                             {
                                                                                 Console.ForegroundColor = ConsoleColor.Gray;
                                                                                 Console.WriteLine("???");
                                                                             }
-                                                                            else
-                                                                            {
-                                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                                Console.WriteLine("턴마다 공격력 증가");
-                                                                            }
+
                                                                             Console.ResetColor();
                                                                             if ((AcientHp / 10) * 3 < AcientCurrentHp && AcientCurrentHp < AcientHp)
                                                                             {
@@ -2621,18 +2614,66 @@ namespace TextRPG
                                                                             else if (AcientCurrentHp <= (AcientHp / 10) * 4)
                                                                             {
                                                                                 Console.WriteLine(@"______                 ");
-                                                                                Console.WriteLine(@" \  /          /\/\/\/\       ______  ");
-                                                                                Console.WriteLine(@" |  |         /  /  \  \       \  /   ");
-                                                                                Console.WriteLine(@" |  |        |          |      |  |   ");
-                                                                                Console.WriteLine(@" |  |         \  \  /  /       |  |   ");
-                                                                                Console.WriteLine(@" |  |          |_    _|        |  |  ");
-                                                                                Console.WriteLine(@" |  |          / \  /  |       |  |   ");
-                                                                                Console.WriteLine(@" |  |         /   ||  /        |  |");
-                                                                                Console.WriteLine(@" |  |        /  \ /\/          |  |");
-                                                                                Console.WriteLine(@" |  |    __ / /  _/ ________   |  |   ");
-                                                                                Console.WriteLine(@" |  |   /  |      /         \  |  |    ");
-                                                                                Console.WriteLine(@" |  |  /  _ \  \  \----/  / /  |  |   ");
-                                                                                Console.WriteLine(@" |__|   \/ \______________/    |__|   ");
+                                                                                Console.Write(@" \  /   ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"       /\/\/\/\   ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    ______  ");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"       /  /  \  \  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"     \  /   ");
+                                                                                Console.Write(@" |  |    ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"    |          |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    |  |   ");
+                                                                                Console.Write(@" |  |   ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"      \  \  /  /    ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"   |  |   ");
+                                                                                Console.Write(@" |  |     ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"     |_    _|    ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    |  |  ");
+                                                                                Console.Write(@" |  |       ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"   / \  /  | ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"      |  |   ");
+                                                                                Console.Write(@" |  |    ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"     /   ||  /    ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"    |  |");
+                                                                                Console.Write(@" |  |     ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"   /  \ /\/    ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"      |  |");
+                                                                                Console.Write(@" |  |    ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"__ / /  _/ ________ ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"  |  |   ");
+                                                                                Console.Write(@" |  |  ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@" /  |      /         \  ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@"|  |    ");
+                                                                                Console.Write(@" |  | ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@" /  _ \  \  \----/  / / ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |  |   ");
+                                                                                Console.Write(@" |__| ");
+                                                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                                                Console.Write(@"  \/ \______________/   ");
+                                                                                Console.ForegroundColor = ConsoleColor.White;
+                                                                                Console.WriteLine(@" |__|   ");
                                                                                 Console.WriteLine(@"  \___      _-----------_     ___/");
                                                                                 Console.WriteLine(@"   \  |    ||           ||   |  /");
                                                                                 Console.WriteLine(@"    \  \    @===========@   /  /");
@@ -2671,23 +2712,24 @@ namespace TextRPG
                                                                                     }
                                                                                 }
                                                                                 AcientAtk *= 2;
+                                                                                AcientDef *= 2;
                                                                                 Console.Clear();
                                                                                 if (AcientCurrentHp < 0)
                                                                                 {
-                                                                                    if (AC.ACWolf == false)
+                                                                                    if (AC.ACAcient == false)
                                                                                     {
                                                                                         Random random = new Random();
                                                                                         int rn = random.Next(1, 11);
                                                                                         if (rn == 1)
                                                                                         {
-                                                                                            AC.ACWolf = true;
+                                                                                            AC.ACAcient = true;
                                                                                             Console.Clear();
-                                                                                            Console.WriteLine("달빛 늑대를 물리쳤습니다.");
+                                                                                            Console.WriteLine("고대의 뱀을 물리쳤습니다.");
                                                                                             player.Exp += AcientHp / 10;
                                                                                             player.Gold += AcientHp;
-                                                                                            Console.WriteLine("경험치 500 획득");
-                                                                                            Console.WriteLine("골드 5000 획득");
-                                                                                            Console.WriteLine("달빛 늑대의 증표 획득");
+                                                                                            Console.WriteLine($"경험치{AcientHp/10} 획득");
+                                                                                            Console.WriteLine($"골드{AcientHp / 10} 획득");
+                                                                                            Console.WriteLine("고대의 뱀의 증표 획득");
                                                                                             Console.WriteLine("\n");
                                                                                             Console.WriteLine("\n");
                                                                                             Console.WriteLine("\n");
@@ -2702,11 +2744,11 @@ namespace TextRPG
                                                                                         else
                                                                                         {
                                                                                             Console.Clear();
-                                                                                            Console.WriteLine("달빛 늑대를 물리쳤습니다.");
+                                                                                            Console.WriteLine("고대의 뱀을 물리쳤습니다.");
                                                                                             player.Exp += AcientHp / 10;
                                                                                             player.Gold += AcientHp;
-                                                                                            Console.WriteLine("경험치 500 획득");
-                                                                                            Console.WriteLine("골드 5000 획득");
+                                                                                            Console.WriteLine($"경험치{AcientHp/10} 획득");
+                                                                                            Console.WriteLine($"골드{AcientHp} 획득");
                                                                                             Console.WriteLine("\n");
                                                                                             Console.WriteLine("\n");
                                                                                             Console.WriteLine("\n");
@@ -2722,11 +2764,11 @@ namespace TextRPG
                                                                                     else
                                                                                     {
                                                                                         Console.Clear();
-                                                                                        Console.WriteLine("달빛 늑대 를 물리쳤습니다.");
+                                                                                        Console.WriteLine("고대의 뱀을 물리쳤습니다.");
                                                                                         player.Exp += AcientHp / 10;
                                                                                         player.Gold += AcientHp;
-                                                                                        Console.WriteLine("경험치 500 획득");
-                                                                                        Console.WriteLine("골드 5000 획득");
+                                                                                        Console.WriteLine($"경험치{AcientHp/10} 획득");
+                                                                                        Console.WriteLine($"골드{AcientHp} 획득");
                                                                                         Console.WriteLine("\n");
                                                                                         Console.WriteLine("\n");
                                                                                         Console.WriteLine("\n");
@@ -2769,7 +2811,7 @@ namespace TextRPG
                 FixTitle();
             }
         }
-        public static void Equip()
+        public static void Equip2()
         {
             Console.WriteLine("가방");
             if (backpack.weapon == true)
@@ -3026,157 +3068,6 @@ namespace TextRPG
                                 }
                             }
                         }
-                    }
-                }
-            }
-            if (backpack.skill == true)
-            {
-                if (equip.Key == ConsoleKey.S)
-                {
-                    if (equip.Key == ConsoleKey.W)
-                    {
-                        int num = 0;
-                        int w1 = 0;
-                        int w2 = 0;
-                        int w3 = 0;
-                        int w4 = 0;
-                        int w5 = 0;
-                        int w6 = 0;
-                        int w7 = 0;
-                        int w8 = 0;
-                        if (backpack.wood == true)
-                        {
-                            num++;
-                            w1 = num;
-                            Console.WriteLine($"[{w1}]강타");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w2 = num;
-                            Console.WriteLine($"[{w2}]암살");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w3 = num;
-                            Console.WriteLine($"[{w3}]파이어볼");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w4 = num;
-                            Console.WriteLine($"[{w4}]강림");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w5 = num;
-                            Console.WriteLine($"[{w5}]힐");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w6 = num;
-                            Console.WriteLine($"[{w6}]흡혈");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w7 = num;
-                            Console.WriteLine($"[{w7}]부활");
-                        }
-                        if (backpack.stone == true)
-                        {
-                            num++;
-                            w8 = num;
-                            Console.WriteLine($"[{w8}]힘 강화");
-                        }
-                        var select = Console.ReadKey();
-                        if (select.Key == ConsoleKey.D1)
-                        {
-                            if (num > 0)
-                            {
-                                for (int i = 1; i < num; i++)
-                                {
-                                    if (w1 == i)
-                                    {
-                                        Console.WriteLine("[PASSIVE]강타");
-                                        Console.WriteLine("공격력 X 1.5 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     말 그대로 '강'하게 친다.");
-                                        Console.WriteLine("     끝");
-                                        Console.WriteLine("     ");
-
-                                    }
-                                    if (w2 == i)
-                                    {
-                                        Console.WriteLine("돌 검");
-                                        Console.WriteLine("공격력 + 5,000 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
-                                        Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
-                                    }
-                                    if (w3 == i)
-                                    {
-                                        Console.WriteLine("철 검");
-                                        Console.WriteLine("공격력 + 250,000 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     검이라고 봐줄만한 검. ");
-                                        Console.WriteLine("     평민도 이정도는 살 수 있다.");
-                                    }
-                                    if (w4 == i)
-                                    {
-                                        Console.WriteLine("신의 검");
-                                        Console.WriteLine("공격력 + 12,500,000 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     모조품이다. 애초에 상인이 ");
-                                        Console.WriteLine("     신의 검을 파는게 말이 안된다.");
-                                        Console.WriteLine("     물론 아주 강하긴 하다.");
-                                    }
-                                    if (w5 == i)
-                                    {
-                                        Console.WriteLine("일반 스태프");
-                                        Console.WriteLine("마력 + 500 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
-                                        Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
-                                        Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
-                                    }
-                                    if (w6 == i)
-                                    {
-                                        Console.WriteLine("크리스탈 스태프");
-                                        Console.WriteLine("마력 + 25,000 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
-                                        Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
-                                        Console.WriteLine("     당한 사람들이 많다. 그래도 ");
-                                        Console.WriteLine("     유리라 마력이 확대된다.");
-                                    }
-                                    if (w7 == i)
-                                    {
-                                        Console.WriteLine("다이아몬드 스태프");
-                                        Console.WriteLine("마력 + 1,250,000 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     아쉽지만 이건 진짜다.");
-                                        Console.WriteLine("     비싸서 아주 조그맣다.");
-                                        Console.WriteLine("     뾰족한 부분이 마력을");
-                                        Console.WriteLine("     모으는 역할을 한다.");
-                                    }
-                                    if (w8 == i)
-                                    {
-                                        Console.WriteLine("신의 스태프");
-                                        Console.WriteLine("마력 + 625,000,000 ");
-                                        Console.WriteLine("설명:");
-                                        Console.WriteLine("     모조품이다. 애초에 상인이 ");
-                                        Console.WriteLine("     신의 스태프를 파는게 말이 ");
-                                        Console.WriteLine("     안된다. 물론 아주 강하긴  ");
-                                        Console.WriteLine("     하다.");
-                                    }
-                                }
-                            }
-                        }
-
                     }
                 }
             }
@@ -3437,7 +3328,7 @@ namespace TextRPG
             }
             else if (player.Lv == 30)
             {
-                if (AC.ACslime == false)
+                if (AC.ACAcient == true)
                 {
                     player.Lv += 1;
                     player.Exp -= 8_000;
@@ -3452,13 +3343,6 @@ namespace TextRPG
                 }
                 else
                 {
-                    Console.WriteLine("미구현");
-                    Console.WriteLine(" ______________");
-                    Console.WriteLine("/|돌아가기(esc)|");
-                    if (Console.ReadKey(intercept:true).Key == ConsoleKey.Escape)
-                    {
-                        FixTitle();
-                    }
                 }
             }
             else if (player.Lv == 40)
@@ -3504,6 +3388,10 @@ namespace TextRPG
         }
         public static void FixTitle()
         {
+            if (player.skill1 == strong)
+            {
+                player.Atk /= (2 / 3);
+            }
             Console.Clear();
             Console.WriteLine("Text RPG Start");
             Console.WriteLine("Please name your character");
@@ -3689,8 +3577,8 @@ namespace TextRPG
                     Console.WriteLine("Atk: " + player.Atk + $"({player.Atk + player.WAtk})");
                     Console.WriteLine("Def: " + player.Def + $"({player.Def + player.ADef})");
                     Console.WriteLine("Gold: " + player.Gold);
-                    Console.WriteLine("Armor: " + player.armor);
-                    Console.WriteLine("Weapon: " + player.weapon);
+                    Console.WriteLine("Armor: " + equip.armor);
+                    Console.WriteLine("Weapon: " + equip.weapon);
                     Console.WriteLine(" ______________");
                     Console.WriteLine("/|돌아가기(esc)|");
                     if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
@@ -3706,7 +3594,7 @@ namespace TextRPG
                 }
                 else if (introduce.Key == ConsoleKey.E)
                 {
-                    Equip();
+                    Equip2();
                     break;
                 }
                 else if (introduce.Key == ConsoleKey.S)
