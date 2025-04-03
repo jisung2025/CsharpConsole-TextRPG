@@ -26,31 +26,35 @@ namespace TextRPG
         {
             public string name = "NoName";
             public int Lv = 1;
-            public int Exp = 0;
+            public double Exp = 0;
             public int Hp = 100;
             public int Mp = 100;
             public int Atk = 10;
             public int WAtk = 0;
-            public int Def = 0;
+            public int Def = 5;
             public int ADef = 0;
-            public int Gold = 0;
+            public int Gold = 99999999;
             public int MAtk = 0;
-            public int skill1 = 0;
-            public int skill2 = 0;
-            public int skill3 = 0;
-            public int skill4 = 0;
+            public int WMAtk = 0;
+            public string skill1 = "x";
+            public string skill2 = "x";
+            public string skill3 = "x";
+            public string skill4 = "x";
             public int cooltime;
+            public double ExpNeed = 10;
+            public int increase = 5;
         }
         public class Backpack
         {
             public bool Leather = false;
             public bool Chainmail = false;
             public bool Fullplate = false;
+            public bool Gold = false;
             public bool God = false;
             public bool wood = false;
             public bool stone = false;
             public bool iron = false;
-            public bool god = false;
+            public bool god = true;
             public bool just = false;
             public bool crystal = false;
             public bool dia = false;
@@ -77,7 +81,7 @@ namespace TextRPG
         {
             public bool ACslime = false;
             public bool ACWolf = false;
-            public bool ACAcient = false; 
+            public bool ACAcient = false;
         }
         private static bool created = false;
         private static bool tutorial = false;
@@ -85,6 +89,601 @@ namespace TextRPG
         private static Achievement AC = new Achievement();
         private static Backpack backpack = new Backpack();
         private static Equip equip = new Equip();
+        public class Enemy
+        {
+            public string name;
+            public int Hp;
+            public int Atk;
+            public int Def;
+            public bool Boss;
+        }
+        private static Enemy monster = new Enemy();
+        public static void Select()
+        {
+            Console.Clear();
+            Console.WriteLine("「<--(esc)」");
+            Console.WriteLine("\n");
+            Console.WriteLine("     슬라임 사냥터(레벨제한:0)");
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.WriteLine(" ____________      __________");
+            Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
+            var start = Console.ReadKey(intercept: true);
+            if (start.Key == ConsoleKey.Enter)
+            {
+                monster.name = "슬라임";
+                Battle();
+            }
+            if (start.Key == ConsoleKey.Escape)
+            {
+                FixTitle();
+            }
+            if (start.Key == ConsoleKey.RightArrow)
+            {
+
+                Console.Clear();
+                Console.WriteLine("「<--(esc)」");
+                Console.WriteLine("\n");
+                Console.WriteLine("     늑대 사냥터(레벨제한:11)");
+                Console.WriteLine("\n");
+                Console.WriteLine("\n");
+                Console.WriteLine(" ____________      __________");
+                Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
+                start = Console.ReadKey(intercept: true);
+                if (start.Key == ConsoleKey.Enter)
+                {
+                    monster.name = "늑대";
+                    Battle();
+                }
+                if (start.Key == ConsoleKey.Escape)
+                {
+                    FixTitle();
+                }
+                if (start.Key == ConsoleKey.RightArrow)
+                {
+                    Console.Clear();
+                    Console.WriteLine("「<--(esc)」");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("     뱀의 사당(레벨제한:21)");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("\n");
+                    Console.WriteLine(" ____________      __________");
+                    Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
+                    start = Console.ReadKey(intercept: true);
+                    if (start.Key == ConsoleKey.Enter)
+                    {
+                        monster.name = "광신도";
+                        Battle();
+                    }
+                    if (start.Key == ConsoleKey.Escape)
+                    {
+                        FixTitle();
+                    }
+                    if (start.Key == ConsoleKey.RightArrow)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("「<--(esc)」");
+                        Console.WriteLine("\n");
+                        Console.WriteLine("     뱀의 사당(레벨제한:21)");
+                        Console.WriteLine("\n");
+                        Console.WriteLine("\n");
+                        Console.WriteLine(" ____________      __________");
+                        Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
+                        start = Console.ReadKey(intercept: true);
+                        if (start.Key == ConsoleKey.Enter)
+                        {
+                            monster.name = "광신도";
+                            Battle();
+                        }
+                        if (start.Key == ConsoleKey.Escape)
+                        {
+                            FixTitle();
+                        }
+                    }
+                }
+            }
+        }
+        static int cooltime = 0;
+        static bool Boss = false;
+        static bool appear = false;
+        static bool animate = false;
+        static int PCHp = 0;
+        static int stage = 0;
+        static bool stand = false;
+        static int monsterCHp = 0;
+        static int increase = 0;
+        static string huntzone = "";
+        public static void Battle()
+        {
+            if (appear == false)
+            {
+                if (monster.name == "슬라임")
+                {
+                    monster.Hp = 100;
+                    monster.Atk = 10;
+                    monster.Def = 5;
+                    huntzone = "슬라임 사냥터";
+                }
+                else if (monster.name == "슬라임 킹")
+                {
+                    monster.Hp = 3000;
+                    monster.Atk = 300;
+                    monster.Def = 150;
+                    huntzone = "슬라임 보스방";
+                }
+                else if (monster.name == "늑대")
+                {
+                    monster.Hp = 1000;
+                    monster.Atk = 100;
+                    monster.Def = 50;
+                    huntzone = "늑대 사냥터";
+                }
+                else if (monster.name == "달빛 늑대")
+                {
+                    monster.Hp = 30000;
+                    monster.Atk = 3000;
+                    monster.Def = 1500;
+                    huntzone = "늑대 보스방";
+                }
+                else if (monster.name == "광신도")
+                {
+                    monster.Hp = 10000;
+                    monster.Atk = 1000;
+                    monster.Def = 500;
+                    huntzone = "뱀의 사당";
+                }
+                else if (monster.name == "고대 뱀")
+                {
+                    monster.Hp = 300000;
+                    monster.Atk = 30000;
+                    monster.Def = 15000;
+                    huntzone = "뱀 보스방";
+                }
+                monsterCHp = monster.Hp;
+                PCHp = player.Hp;
+                appear = true;
+                increase = monster.Def;
+                Battle();
+            }
+            else
+            {
+                if (Boss == false)
+                {
+                    if (stand == false)
+                    {
+                        Standing();
+                    }
+                    else
+                    {
+                        Console.WriteLine(" ____________   ________________   ____________ ");
+                        Console.WriteLine("/|공격(Enter)| /|스킬(BackSpace)| /|나가기(Esc)|");
+                        var attack = Console.ReadKey(intercept: true);
+                        if (attack.Key == ConsoleKey.Enter)
+                        {
+                            if (monster.Boss == false)
+                            {
+                                if (player.Atk + player.WAtk - monster.Def <= 0)
+                                {
+                                    monsterCHp -= 1;
+                                }
+                                else
+                                {
+                                    monsterCHp -= player.Atk + player.WAtk - monster.Def;
+                                }
+                                if (monster.Atk - player.Def <= 0)
+                                {
+                                    PCHp -= 1;
+                                }
+                                else
+                                {
+                                    PCHp -= monster.Atk - player.Def;
+                                }
+                            }
+                            else
+                            {
+                                if (monster.name != "슬라임 킹")
+                                {
+                                    if (player.Atk + player.WAtk - monster.Def <= 0)
+                                    {
+                                        monsterCHp -= 1;
+                                    }
+                                    else
+                                    {
+                                        monsterCHp -= player.Atk + player.WAtk - monster.Def;
+                                    }
+                                    if (monster.Atk - player.Def <= 0)
+                                    {
+                                        PCHp -= 1;
+                                    }
+                                    else
+                                    {
+                                        PCHp -= monster.Atk - player.Def;
+                                    }
+                                }
+                                else
+                                {
+                                    if (cooltime == 0)
+                                    {
+                                        if (player.Atk + player.WAtk - monster.Def <= 0)
+                                        {
+                                            monsterCHp -= 1;
+                                        }
+                                        else
+                                        {
+                                            monsterCHp -= player.Atk + player.WAtk - monster.Def;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (monster.Atk - player.Def <= 0)
+                                        {
+                                            PCHp -= 1;
+                                        }
+                                        else
+                                        {
+                                            PCHp -= monster.Atk - player.Def;
+                                        }
+                                    }
+                                    if (monster.Atk - player.Def <= 0)
+                                    {
+                                        PCHp -= 1;
+                                    }
+                                    else
+                                    {
+                                        PCHp -= monster.Atk - player.Def;
+                                    }
+                                }
+                            }
+                            stand = false;
+                            Battle();
+                        }
+                        if (attack.Key == ConsoleKey.Escape)
+                        {
+                            if (monster.Boss == true)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("보스전에서는 도망칠 수 없습니다");
+                                attack = Console.ReadKey(intercept: true);
+                                stand = false;
+                                if (attack.Key == ConsoleKey.Escape)
+                                {
+                                    Battle();
+                                }
+                                else
+                                {
+                                    Battle();
+                                }
+                            }
+                        }
+                        if (attack.Key == ConsoleKey.Backspace)
+                        {
+                            if (player.skill1 == "x")
+                            {
+                                Console.Clear();
+                                Console.WriteLine("스킬이 없습니다");
+                                attack = Console.ReadKey(intercept: true);
+                                stand = false;
+                                if (attack.Key == ConsoleKey.Escape)
+                                {
+                                    Battle();
+                                }
+                                else
+                                {
+                                    Battle();
+                                }
+                            }
+                            else
+                            {
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Animation();
+                }
+                stand = false;
+            }
+        }
+        public static void Animation()
+        {
+        }
+        public static void Standing()
+        {
+            Console.Clear();
+            Console.WriteLine("「<--(esc)」");
+            Console.WriteLine(huntzone);
+            Console.WriteLine($"{monster.name}|atk:{monster.Atk}|def:{monster.Def}");
+            Console.WriteLine(monster.Hp + @"\" + monsterCHp);
+            if (monster.Boss == false)
+            {
+                if (monsterCHp > (monster.Hp / 10) * 7)
+                {
+                    if (monster.name == "슬라임")
+                    {
+                        Console.WriteLine(@"  ____");
+                        Console.WriteLine(@" | . .\_");
+                        Console.WriteLine(@"/________\");
+                    }
+                    else if (monster.name == "늑대")
+                    {
+                        Console.WriteLine(@" /\---/\  ");
+                        Console.WriteLine(@"<  O_O  > ");
+                        Console.WriteLine(@" <__U__>  ");
+                    }
+                    else if (monster.name == "광신도")
+                    {
+                        Console.WriteLine(@"   ___");
+                        Console.WriteLine(@"  /+++\");
+                        Console.WriteLine(@" /=====\");
+                        Console.WriteLine(@"(  =_=  )");
+                        Console.WriteLine(@" \=====/  ");
+                        Console.WriteLine(@"  \___/  ");
+                    }
+                }
+                else if (monsterCHp > (monster.Hp / 10) * 2)
+                {
+                    if (monster.name == "슬라임")
+                    {
+                        Console.WriteLine(@"  ____");
+                        Console.WriteLine(@" | x x\_");
+                        Console.WriteLine(@"/________\");
+                    }
+                    else if (monster.name == "늑대")
+                    {
+                        Console.WriteLine(@" /\---/\");
+                        Console.WriteLine(@"<  /_\  >");
+                        Console.WriteLine(@" <__U__>  ");
+                    }
+                    else if (monster.name == "광신도")
+                    {
+                        Console.WriteLine(@"   ___");
+                        Console.WriteLine(@"  /+++\");
+                        Console.WriteLine(@" /=====\");
+                        Console.WriteLine(@"(__\_/__)");
+                        Console.WriteLine(@" \=====/  ");
+                        Console.WriteLine(@"  \___/  ");
+                    }
+                }
+                else
+                {
+                    if (monster.name == "슬라임")
+                    {
+                        Console.WriteLine(@"  ____");
+                        Console.WriteLine(@" | x / ___");
+                        Console.WriteLine(@"/____\/_x_/");
+                    }
+                    else if (monster.name == "늑대")
+                    {
+                        Console.WriteLine(@" /\---/\");
+                        Console.WriteLine(@"<  X_X  >");
+                        Console.WriteLine(@" <__U__>  ");
+                    }
+                    else if (monster.name == "광신도")
+                    {
+                        Console.WriteLine(@"   ___");
+                        Console.WriteLine(@"  /+++\");
+                        Console.WriteLine(@" /=====\");
+                        Console.WriteLine(@"(__0_0__)");
+                        Console.WriteLine(@" \=====/  ");
+                        Console.WriteLine(@"  \___/  ");
+                    }
+                    Console.WriteLine("이름:" + player.name);
+                    Console.WriteLine("레벨:" + player.Lv + "|" + player.Hp + @"\" + PCHp);
+                }
+            }
+            else
+            {
+                if (monster.name == "슬라임 킹")
+                {
+                }
+                else if (monster.name == "달빛 늑대")
+                {
+                }
+                else if (monster.name == "고대 뱀")
+                {
+                    if (monsterCHp == monster.Hp)
+                    {
+                        Console.WriteLine(@"______                 ");
+                        Console.WriteLine(@" \  /                         ______  ");
+                        Console.WriteLine(@" |  |                          \  /   ");
+                        Console.WriteLine(@" |  |                          |  |   ");
+                        Console.WriteLine(@" |  |                          |  |   ");
+                        Console.Write(@" |  | ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@"       _____     ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"        |  |  ");
+                        Console.Write(@" |  |   ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@"    /     -------  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    |  |   ");
+                        Console.Write(@" |  |   ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@"  /              \_  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"  |  |");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@"  /       \   /     \  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |  |");
+                        Console.Write(@" |  | ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@"  |   _ _   |_-     /__ ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |  |   ");
+                        Console.Write(@" |  | ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@"   \       /       /   \ ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"|  |    ");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@" / |_   _|            /");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |  |   ");
+                        Console.Write(@" |__|   ");
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(@" \/ \_/____________/  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |__|   ");
+                        Console.WriteLine(@"  \___      _-----------_     ___/");
+                        Console.WriteLine(@"   \  |    ||           ||   |  /");
+                        Console.WriteLine(@"    \  \    @===========@   /  /");
+                        Console.WriteLine(@"     \ |\      \=====/     /| /");
+                        Console.WriteLine(@"      / _/-----------------\_ \");
+                        Console.WriteLine(@"     |_/---------------------\_|");
+                        Console.WriteLine(@"     /-------------------------\_");
+                    }
+                    else if (monsterCHp > (monster.Hp / 10) * 4)
+                    {
+                        Console.WriteLine(@"______");
+                        Console.Write(@" \  / ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"         ________    ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"   ______  ");
+                        Console.Write(@" |  |      ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"   /        \   ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    \  /   ");
+                        Console.Write(@" |  |   ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"     |          |   ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"   |  |   ");
+                        Console.Write(@" |  |   ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"      \  \  /  /     ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"  |  |   ");
+                        Console.Write(@" |  |    ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"      |_    _|     ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"   |  |  ");
+                        Console.Write(@" |  |   ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"       / \  /  |  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"     |  |   ");
+                        Console.Write(@" |  |     ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"    /   ||  /    ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    |  |");
+                        Console.Write(@" |  |    ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"    /    /\/     ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"     |  |");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"  __ /    _/ ________  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |  |   ");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@" /  |      /         \  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"|  |    ");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@"/  _ \     \----/     / ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"|  |   ");
+                        Console.Write(@" |__|  ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(@" \/ \________________/ ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |__|   ");
+                        Console.WriteLine(@"  \___      _-----------_     ___/");
+                        Console.WriteLine(@"   \  |    ||           ||   |  /");
+                        Console.WriteLine(@"    \  \    @===========@   /  /");
+                        Console.WriteLine(@"     \ |\      \=====/     /| /");
+                        Console.WriteLine(@"      / _/-----------------\_ \");
+                        Console.WriteLine(@"     |_/---------------------\_|");
+                        Console.WriteLine(@"    _/-------------------------\_");
+                    }
+                    else
+                    {
+                        Console.WriteLine(@"______                 ");
+                        Console.Write(@" \  /   ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"       /\/\/\/\   ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    ______  ");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"       /  /  \  \  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"     \  /   ");
+                        Console.Write(@" |  |    ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"    |          |  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    |  |   ");
+                        Console.Write(@" |  |   ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"      \  \  /  /    ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"   |  |   ");
+                        Console.Write(@" |  |     ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"     |_    _|    ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    |  |  ");
+                        Console.Write(@" |  |       ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"   / \  /  | ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"      |  |   ");
+                        Console.Write(@" |  |    ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"     /   ||  /    ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"    |  |");
+                        Console.Write(@" |  |     ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"   /  \ /\/    ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"      |  |");
+                        Console.Write(@" |  |    ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"__ / /  _/ ________ ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"  |  |   ");
+                        Console.Write(@" |  |  ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@" /  |      /         \  ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@"|  |    ");
+                        Console.Write(@" |  | ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@" /  _ \  \  \----/  / / ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |  |   ");
+                        Console.Write(@" |__| ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(@"  \/ \______________/   ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(@" |__|");
+                        Console.WriteLine(@"  \___      _-----------_     ___/");
+                        Console.WriteLine(@"   \  |    ||           ||   |  /");
+                        Console.WriteLine(@"    \  \    @===========@   /  /");
+                        Console.WriteLine(@"     \ |\      \=====/     /| /");
+                        Console.WriteLine(@"      / _/-----------------\_ \");
+                        Console.WriteLine(@"     |_/---------------------\_|");
+                        Console.WriteLine(@"     /-------------------------\_");
+                    }
+                }
+                stand = true;
+                Battle();
+            }
+        }
         public static void Shop()
         {
             Console.Clear();
@@ -122,8 +721,9 @@ namespace TextRPG
                 Console.WriteLine(@" /___//__/_,          \     \<|>   |==| |--    |");
                 Console.WriteLine(@"(_______(__/            //_/       |___________|  ");
                 Console.WriteLine(@"=======================|/_/        ");
-                Console.WriteLine(" ________    ________    ________     _____________");
+                Console.WriteLine(" ________    ________    ________    ______________");
                 Console.WriteLine("/|갑옷(1)|  /|무기(2)|  /|스킬(3)|  /|돌아가기(esc)|");
+                Buy = Console.ReadKey(intercept: true);
                 if (Buy.Key == ConsoleKey.D1)
                 {
                     Console.Clear();
@@ -140,34 +740,237 @@ namespace TextRPG
                     Buy = Console.ReadKey(intercept: true);
                     if (Buy.Key == ConsoleKey.D1)
                     {
-                        if (player.Gold >= 3000)
+                        if (backpack.Leather == false)
                         {
-                            player.Gold -= 3000;
-                            backpack.Leather = true;
+                            if (player.Gold >= 3000)
+                            {
+                                player.Gold -= 3000;
+                                backpack.Leather = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D2)
                     {
-                        if (player.Gold >= 75000)
+                        if (backpack.Chainmail == false)
                         {
-                            player.Gold -= 75000;
-                            backpack.Chainmail = true;
+                            if (player.Gold >= 75000)
+                            {
+                                player.Gold -= 75000;
+                                backpack.Chainmail = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D3)
                     {
-                        if (player.Gold >= 1500000)
+                        if (backpack.Fullplate == false)
                         {
-                            player.Gold -= 1500000;
-                            backpack.Fullplate = true;
+                            if (player.Gold >= 1500000)
+                            {
+                                player.Gold -= 1500000;
+                                backpack.Fullplate = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D4)
                     {
-                        if (player.Gold >= 2000000000)
+                        if (backpack.Gold == false)
                         {
-                            player.Gold -= 2000000000;
-                            backpack.God = true;
+                            if (player.Gold >= 2000000000)
+                            {
+                                player.Gold -= 2000000000;
+                                backpack.Fullplate = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D5)
+                    {
+                        if (backpack.God == false)
+                        {
+                            if (player.Gold >= 2000000000)
+                            {
+                                player.Gold -= 2000000000;
+                                backpack.God = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.Escape)
@@ -195,34 +998,203 @@ namespace TextRPG
                     Buy = Console.ReadKey(intercept: true);
                     if (Buy.Key == ConsoleKey.D1)
                     {
-                        if (player.Gold >= 3000)
+                        if (backpack.wood == false)
                         {
-                            player.Gold -= 3000;
-                            backpack.wood = true;
+                            if (player.Gold >= 3000)
+                            {
+                                player.Gold -= 3000;
+                                backpack.wood = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D2)
                     {
-                        if (player.Gold >= 75000)
+                        if (backpack.stone == false)
                         {
-                            player.Gold -= 75000;
-                            backpack.stone = true;
+                            if (player.Gold >= 75000)
+                            {
+                                player.Gold -= 75000;
+                                backpack.stone = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                            Buy = Console.ReadKey(intercept: true);
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D3)
                     {
-                        if (player.Gold >= 1500000)
+                        if (backpack.stone == false)
                         {
-                            player.Gold -= 1500000;
-                            backpack.iron = true;
+                            if (player.Gold >= 1500000)
+                            {
+                                player.Gold -= 1500000;
+                                backpack.iron = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D4)
                     {
-                        if (player.Gold >= 2000000000)
+                        if (backpack.god == false)
                         {
-                            player.Gold -= 2000000000;
-                            backpack.god = true;
+                            if (player.Gold >= 2000000000)
+                            {
+                                player.Gold -= 2000000000;
+                                backpack.god = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("보유 골드가 부족합니다");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                                if (Buy.Key == ConsoleKey.Escape)
+                                {
+                                    Shop();
+                                }
+                                else
+                                {
+                                    Shop();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("!보유중입니다!");
+                            Console.ResetColor();
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                        }
+                        Buy = Console.ReadKey(intercept: true);
+                        if (Buy.Key == ConsoleKey.Escape)
+                        {
+                            Shop();
+                        }
+                        else
+                        {
+                            Shop();
                         }
                     }
                     else if (Buy.Key == ConsoleKey.Escape)
@@ -236,7 +1208,7 @@ namespace TextRPG
                         Console.WriteLine($"보유골드:{player.Gold}");
                         Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
                         Console.WriteLine("[1]일반 스태프(150000)");
-                        Console.WriteLine("[2]크리스탈 스태프(30000000)");
+                        Console.WriteLine("[2]크리스탈 스태프(30000000)");//D1
                         Console.WriteLine("[3]다이아몬드 스태프(60000000)");
                         Console.WriteLine("[4]신의 스태프(2000000000)");
                         Console.WriteLine("\n");
@@ -256,6 +1228,19 @@ namespace TextRPG
                                 else
                                 {
                                     Console.WriteLine("보유 골드가 부족합니다");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine(" _________");
+                                    Console.WriteLine("/|돌아가기|");
+                                    if (Buy.Key == ConsoleKey.Escape)
+                                    {
+                                        Shop();
+                                    }
+                                    else
+                                    {
+                                        Shop();
+                                    }
                                 }
                             }
                             else
@@ -263,8 +1248,21 @@ namespace TextRPG
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("!보유중입니다!");
                                 Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
                             }
                             Buy = Console.ReadKey(intercept: true);
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
                         }
                         else if (Buy.Key == ConsoleKey.D2)
                         {
@@ -279,6 +1277,19 @@ namespace TextRPG
                                 else
                                 {
                                     Console.WriteLine("보유 골드가 부족합니다");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine(" _________");
+                                    Console.WriteLine("/|돌아가기|");
+                                    if (Buy.Key == ConsoleKey.Escape)
+                                    {
+                                        Shop();
+                                    }
+                                    else
+                                    {
+                                        Shop();
+                                    }
                                 }
                             }
                             else
@@ -286,8 +1297,21 @@ namespace TextRPG
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("!보유중입니다!");
                                 Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
                             }
                             Buy = Console.ReadKey(intercept: true);
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
                         }
                         else if (Buy.Key == ConsoleKey.D3)
                         {
@@ -302,6 +1326,19 @@ namespace TextRPG
                                 else
                                 {
                                     Console.WriteLine("보유 골드가 부족합니다");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine(" _________");
+                                    Console.WriteLine("/|돌아가기|");
+                                    if (Buy.Key == ConsoleKey.Escape)
+                                    {
+                                        Shop();
+                                    }
+                                    else
+                                    {
+                                        Shop();
+                                    }
                                 }
                             }
                             else
@@ -309,6 +1346,20 @@ namespace TextRPG
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("!보유중입니다!");
                                 Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                            }
+                            Buy = Console.ReadKey(intercept: true);
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
                             }
                             Buy = Console.ReadKey(intercept: true);
                         }
@@ -325,6 +1376,19 @@ namespace TextRPG
                                 else
                                 {
                                     Console.WriteLine("보유 골드가 부족합니다");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine("");
+                                    Console.WriteLine(" _________");
+                                    Console.WriteLine("/|돌아가기|");
+                                    if (Buy.Key == ConsoleKey.Escape)
+                                    {
+                                        Shop();
+                                    }
+                                    else
+                                    {
+                                        Shop();
+                                    }
                                 }
                             }
                             else
@@ -332,6 +1396,20 @@ namespace TextRPG
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("!보유중입니다!");
                                 Console.ResetColor();
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine(" _________");
+                                Console.WriteLine("/|돌아가기|");
+                            }
+                            Buy = Console.ReadKey(intercept: true);
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
                             }
                         }
                         else if (Buy.Key == ConsoleKey.Escape)
@@ -367,7 +1445,24 @@ namespace TextRPG
                         if (player.Gold >= 20000)
                         {
                             player.Gold -= 20000;
-                            backpack.wood = true;
+                            backpack.strong = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D2)
@@ -375,7 +1470,24 @@ namespace TextRPG
                         if (player.Gold >= 1000000)
                         {
                             player.Gold -= 1000000;
-                            backpack.stone = true;
+                            backpack.amsal = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D3)
@@ -383,7 +1495,24 @@ namespace TextRPG
                         if (player.Gold >= 80000)
                         {
                             player.Gold -= 80000;
-                            backpack.iron = true;
+                            backpack.fireball = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
                         }
                     }
                     else if (Buy.Key == ConsoleKey.D4)
@@ -391,7 +1520,24 @@ namespace TextRPG
                         if (player.Gold >= 2000000000)
                         {
                             player.Gold -= 2000000000;
-                            backpack.god = true;
+                            backpack.godcom = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
                         }
                     }
                     else if (Buy.Key == ConsoleKey.RightArrow)
@@ -402,11 +1548,111 @@ namespace TextRPG
                         Console.WriteLine("<제품에 하자가 있다고? 환불은 절대 안돼!>");
                         Console.WriteLine("[1]힐(20000)");
                         Console.WriteLine("[2]흡혈(1000000)");
-                        Console.WriteLine("[3]부활(2000000000)");
+                        Console.WriteLine("[3]부활(2000000000)");//마법뎀 스킬 하나밖에 없음,스킬슬롯이 4개나 되는데 개수는 왜 8개임?
                         Console.WriteLine("[4]힘 강화(20000000)");
                         Console.WriteLine("\n");
                         Console.WriteLine(" _______________    _________    ______________");
                         Console.WriteLine("/|선택하기(번호)|  /|다음(->)|  /|돌아가기(esc)|");
+                    }
+                    if (Buy.Key == ConsoleKey.D1)
+                    {
+                        if (player.Gold >= 20000)
+                        {
+                            player.Gold -= 20000;
+                            backpack.heal = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D2)
+                    {
+                        if (player.Gold >= 1000000)
+                        {
+                            player.Gold -= 1000000;
+                            backpack.vamp = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D3)
+                    {
+                        if (player.Gold >= 80000)
+                        {
+                            player.Gold -= 80000;
+                            backpack.revival = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
+                        }
+                    }
+                    else if (Buy.Key == ConsoleKey.D4)
+                    {
+                        if (player.Gold >= 2000000000)
+                        {
+                            player.Gold -= 2000000000;
+                            backpack.tstrong = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("보유 골드가 부족합니다");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.WriteLine(" _________");
+                            Console.WriteLine("/|돌아가기|");
+                            if (Buy.Key == ConsoleKey.Escape)
+                            {
+                                Shop();
+                            }
+                            else
+                            {
+                                Shop();
+                            }
+                        }
                     }
                     else if (Buy.Key == ConsoleKey.Escape)
                     {
@@ -417,2400 +1663,17 @@ namespace TextRPG
                         FixTitle();
                     }
                 }
-            }
-        }
-        public static void Battle()
-        {
-            if (player.skill1 == strong)
-            {
-                player.Atk *= 3 / 2;
-            }
-            Console.Clear();
-            Console.WriteLine("「<--(esc)」");
-            Console.WriteLine("\n");
-            Console.WriteLine("     슬라임 사냥터(레벨제한:0)");
-            Console.WriteLine("\n");
-            Console.WriteLine("\n");
-            Console.WriteLine(" ____________      __________");
-            Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
-            var start = Console.ReadKey(intercept: true);
-            if (start.Key == ConsoleKey.Enter)
-            {
-                Console.Clear();
-                int SlimeHp = 100;
-                int SlimeAtk = 1;
-                int SlimeDef = 0;
-                int SlimeCurrentHp = SlimeHp;
-                int PlayerCurrentHp = player.Hp;
-                player.cooltime = 0;
-                while (true)
-                {
-                    if (SlimeCurrentHp > 0)
-                    {
-                        Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                        Console.WriteLine("슬라임 사냥터1");
-                        Console.WriteLine("슬라임");
-                        Console.WriteLine($"Hp:{SlimeCurrentHp}/{SlimeHp}");
-                        Console.WriteLine($"공격력:{SlimeAtk} 방어력:{SlimeDef}");
-                        if (30 < SlimeCurrentHp && SlimeCurrentHp < 100)
-                        {
-                            Console.WriteLine(@"  ____");
-                            Console.WriteLine(@" | x x\_");
-                            Console.WriteLine(@"/________\");
-                        }
-                        else if (SlimeCurrentHp == 100)
-                        {
-                            Console.WriteLine(@"  ____");
-                            Console.WriteLine(@" | . .\_");
-                            Console.WriteLine(@"/________\");
-                        }
-                        else if (SlimeCurrentHp <= 30)
-                        {
-                            Console.WriteLine(@"  ____");
-                            Console.WriteLine(@" | x / ___");
-                            Console.WriteLine(@"/____\/_x_/");
-                        }
-                        Console.WriteLine(" ____________    ____________");
-                        Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                        var attack = Console.ReadKey(intercept: true);
-                        if (attack.Key == ConsoleKey.Enter)
-                        {
-                            PlayerCurrentHp -= 1;
-                            if (player.Atk + player.WAtk < SlimeDef)
-                            {
-                                SlimeCurrentHp -= 1;
-                                if (player.Atk + player.WAtk < SlimeDef)
-                                {
-                                    SlimeCurrentHp -= 1;
-                                }
-                                else
-                                {
-                                    PlayerCurrentHp -= ((player.Def + player.ADef) - SlimeAtk);
-                                }
-                            }
-                            else
-                            {
-                                SlimeCurrentHp -= ((player.Atk + player.WAtk) - SlimeDef);
-                                if (player.Atk + player.WAtk < SlimeDef)
-                                {
-                                    SlimeCurrentHp -= 1;
-                                }
-                                else
-                                {
-                                    PlayerCurrentHp -= ((player.Def + player.ADef) - SlimeAtk);
-                                }
-                            }
-                        }
-                        else if (attack.Key == ConsoleKey.Escape)
-                        {
-                            Battle();
-                            break;
-                        }
-                        else 
-                        {
-                            FixTitle();
-                        }
-                        Console.Clear();
-                    }
-                    else if (PlayerCurrentHp <= 0)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("패배하였습니다.");
-                        player.Gold -= SlimeHp / 2;
-                        Console.WriteLine($"{SlimeHp / 2}골드를 잃었습니다.");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine(" ______________");
-                        Console.WriteLine("/|돌아가기(esc)|");
-                        if (Console.ReadKey(intercept:true).Key == ConsoleKey.Escape)
-                        {
-                            Battle();
-                            break;
-                        }
-                        else
-                        {
-                            FixTitle();
-                        }
-                    }
-                    else if (SlimeCurrentHp <= 0)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("슬라임을 물리쳤습니다.");
-                        player.Exp += SlimeHp / 20;
-                        player.Gold += SlimeHp;
-                        Console.WriteLine($"경험치{SlimeHp / 20}  획득");
-                        Console.WriteLine($"골드 {SlimeHp} 획득");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine("\n");
-                        Console.WriteLine(" ______________      ___________");
-                        Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                        var enter = Console.ReadKey(intercept: true);
-                        if (enter.Key == ConsoleKey.Escape)
-                        {
-                            Battle();
-                            break;
-                        }
-                        else if (enter.Key == ConsoleKey.Enter)
-                        {
-                            SlimeHp += 100;
-                            SlimeCurrentHp = SlimeHp;
-                            SlimeAtk += 1;
-                            SlimeDef += 1;
-                            bool loop = true;
-                            while (loop == true)
-                            {
-                                if (SlimeCurrentHp > 0)
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("슬라임 사냥터2");
-                                    Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                    Console.WriteLine("슬라임");
-                                    Console.WriteLine($"Hp:{SlimeCurrentHp}/{SlimeHp}");
-                                    Console.WriteLine($"공격력:{SlimeAtk} 방어력:{SlimeDef}");
-                                    if ((SlimeHp / 10) * 3 < SlimeCurrentHp && SlimeCurrentHp < SlimeHp)
-                                    {
-                                        Console.WriteLine(@"  ____");
-                                        Console.WriteLine(@" | x x\_");
-                                        Console.WriteLine(@"/________\");
-                                    }
-                                    else if (SlimeCurrentHp == SlimeHp)
-                                    {
-                                        Console.WriteLine(@"  ____");
-                                        Console.WriteLine(@" | . .\_");
-                                        Console.WriteLine(@"/________\");
-                                    }
-                                    else if (SlimeCurrentHp <= (SlimeHp / 10) * 3)
-                                    {
-                                        Console.WriteLine(@"  ____");
-                                        Console.WriteLine(@" | x / ___");
-                                        Console.WriteLine(@"/____\/_x_/");
-                                    }
-                                    Console.WriteLine(" ____________    ____________");
-                                    Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                    var attack = Console.ReadKey(intercept: true);
-                                    if (attack.Key == ConsoleKey.Enter)
-                                    {
-                                        Console.WriteLine($"");
-                                        if (player.Def + player.ADef > SlimeAtk)
-                                        {
-                                            PlayerCurrentHp -= 1;
-                                        }
-                                        else
-                                        {
-                                            PlayerCurrentHp -= (SlimeAtk - (player.Def + player.ADef));
-                                        }
-                                        if (player.Atk + player.WAtk < SlimeDef)
-                                        {
-                                            SlimeCurrentHp -= 1;
-                                        }
-                                        else
-                                        {
-                                            SlimeCurrentHp -= ((player.Atk + player.WAtk) - SlimeDef);
-                                        }
-                                    }
-                                    else if (attack.Key == ConsoleKey.Escape)
-                                    {
-                                        Battle();
-                                        loop = false;
-                                    }
-                                    else
-                                    {
-                                        FixTitle();
-                                        loop = false;
-                                    }
-                                }
-                                else if (SlimeCurrentHp <= 0)
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("슬라임을 물리쳤습니다.");
-                                    player.Exp += SlimeHp / 20;
-                                    player.Gold += SlimeHp;
-                                    Console.WriteLine($"경험치{SlimeHp / 20}  획득");
-                                    Console.WriteLine($"골드 {SlimeHp} 획득");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine(" ______________      ___________");
-                                    Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                    enter = Console.ReadKey(intercept: true);
-                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                    {
-                                        Battle();
-                                        loop = false;
-                                    }
-                                    else if (enter.Key == ConsoleKey.Enter)
-                                    {
-                                        Console.Clear();
-                                        SlimeHp += 100;
-                                        SlimeCurrentHp = SlimeHp;
-                                        SlimeAtk += 1;
-                                        SlimeDef += 1;
-                                        bool loop_3 = true;
-                                        while (loop_3 == true)
-                                        {
-                                            if (SlimeCurrentHp > 0)
-                                            {
-                                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                                Console.WriteLine("슬라임 사냥터3");
-                                                Console.WriteLine("슬라임");
-                                                Console.WriteLine($"Hp:{SlimeCurrentHp}/{SlimeHp}");
-                                                Console.WriteLine($"공격력:{SlimeAtk} 방어력:{SlimeDef}");
-                                                if ((SlimeHp / 10) * 3 < SlimeCurrentHp && SlimeCurrentHp < SlimeHp)
-                                                {
-                                                    Console.WriteLine(@"  ____");
-                                                    Console.WriteLine(@" | x x\_");
-                                                    Console.WriteLine(@"/________\");
-                                                }
-                                                else if (SlimeCurrentHp == SlimeHp)
-                                                {
-                                                    Console.WriteLine(@"  ____");
-                                                    Console.WriteLine(@" | . .\_");
-                                                    Console.WriteLine(@"/________\");
-                                                }
-                                                else if (SlimeCurrentHp <= (SlimeHp / 10) * 3)
-                                                {
-                                                    Console.WriteLine(@"  ____");
-                                                    Console.WriteLine(@" | x / ___");
-                                                    Console.WriteLine(@"/____\/_x_/");
-                                                }
-                                                Console.WriteLine(" ____________    ____________");
-                                                Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                var attack = Console.ReadKey(intercept: true);
-                                                if (attack.Key == ConsoleKey.Enter)
-                                                {
-                                                    if (player.Def + player.ADef > SlimeAtk)
-                                                    {
-                                                        PlayerCurrentHp -= 1;
-                                                    }
-                                                    else
-                                                    {
-                                                        PlayerCurrentHp -= (SlimeAtk - (player.Def + player.ADef));
-                                                    }
-                                                    if (player.Atk + player.WAtk < SlimeDef)
-                                                    {
-                                                        SlimeCurrentHp -= 1;
-                                                    }
-                                                    else
-                                                    {
-                                                        SlimeCurrentHp -= ((player.Atk + player.WAtk) - SlimeDef);
-                                                    }
-                                                    Console.Clear();
-                                                }
-                                                else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                {
-                                                    Battle();
-                                                    loop_3 = false;
-                                                }
-                                                else
-                                                {
-                                                    FixTitle();
-                                                    loop_3 = false;
-                                                }
-                                            }
-                                            else if (PlayerCurrentHp <= 0)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("패배하였습니다.");
-                                                player.Gold -= SlimeHp / 2;
-                                                Console.WriteLine($"{SlimeHp / 2}골드를 잃었습니다.");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine(" ______________");
-                                                Console.WriteLine("/|돌아가기(esc)|");
-                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                {
-                                                    Battle();
-                                                    loop_3 = false;
-                                                }
-                                                else
-                                                {
-                                                    FixTitle();
-                                                    loop_3 = false;
-                                                }
-                                            }
-                                            else if (SlimeCurrentHp <= 0)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("슬라임을 물리쳤습니다.");
-                                                player.Exp += SlimeHp / 20;
-                                                player.Gold += SlimeHp;
-                                                Console.WriteLine($"경험치{SlimeHp / 20}  획득");
-                                                Console.WriteLine($"골드 {SlimeHp} 획득");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine(" ______________     ____________");
-                                                Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                                var next = Console.ReadKey();
-                                                if (next.Key == ConsoleKey.Escape)
-                                                {
-                                                    Battle();
-                                                    loop_3 = false;
-                                                }
-
-                                                else if (next.Key == ConsoleKey.Enter)
-                                                {
-                                                    Console.WriteLine("이 앞은 보스 슬라임 킹(추천레벨 10+)이 존재합니다.");
-                                                    Console.WriteLine("정말 들어가시겠습니까?");
-                                                    Console.WriteLine("(Hp 전체 회복, 쿨타임 초기화)");
-                                                    Console.WriteLine("\n");
-                                                    Console.WriteLine(" ________________    ______________");
-                                                    Console.WriteLine("/|들어가기(enter)|  /|돌아가기(esc)|");
-                                                    next = Console.ReadKey();
-                                                    if (next.Key == ConsoleKey.Escape)
-                                                    {
-                                                        Battle();
-                                                        loop_3 = false;
-                                                    }
-                                                    else if (next.Key == ConsoleKey.Enter)
-                                                    {
-                                                        Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(@" ");
-                                                        Console.WriteLine(@".,/./../,/.\.\,/.,\./ ");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(800);
-                                                        Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine("      __ ");
-                                                        Console.WriteLine(@"  _,/__\.,.-_.,.-,_,., ");
-                                                        Console.WriteLine(@"(__)\___\/___\//\\\____\' ");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(800);
-                                                        Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine("      _/    _");
-                                                        Console.WriteLine(@"  _,/__.,/-\.,.-, ");
-                                                        Console.WriteLine(@"(_______||___\/  \' ");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(800);
-                                                        Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine("      ________");
-                                                        Console.WriteLine(@"    /        \");
-                                                        Console.WriteLine(@"   |          |");
-                                                        Console.Write(@" _/  ");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__");
-                                                        Console.ForegroundColor = ConsoleColor.White;
-                                                        Console.Write("l  l");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__  ");
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"\_");
-                                                        Console.WriteLine(@"/________________\");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(800);
-                                                        Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine( "        __ ");
-                                                        Console.WriteLine(@"       /  \_");
-                                                        Console.WriteLine(@"      (_____) ()");
-                                                        Console.WriteLine(@"     ________");
-                                                        Console.WriteLine(@"    /        \");
-                                                        Console.WriteLine(@"   |          |");
-                                                        Console.Write(@" _/  ");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__");
-                                                        Console.ForegroundColor = ConsoleColor.White;
-                                                        Console.Write("l  l");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__  ");
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"\_");
-                                                        Console.WriteLine(@"/________________\");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(800);
-                                                        Console.Clear();
-                                                        Console.WriteLine(@" ");
-                                                        Console.WriteLine(@"              ");
-                                                        Console.WriteLine(@"     /\/\/\/\");
-                                                        Console.WriteLine(@"    /////\\\\\");
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"   |          |");
-                                                        Console.Write(@" _/  ");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__");
-                                                        Console.ForegroundColor = ConsoleColor.White;
-                                                        Console.Write("l  l");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__  ");
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"\_");
-                                                        Console.WriteLine(@"/________________\");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(100);
-                                                        Console.Clear();
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(" ");
-                                                        Console.WriteLine(@"              ");
-                                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                                        Console.WriteLine(@"     /\/\/\/\");
-                                                        Console.Write(@"    /___");
-                                                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                        Console.Write("O");
-                                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                                        Console.WriteLine(@"____\");
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"   |          |");
-                                                        Console.Write(@" _/  ");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__");
-                                                        Console.ForegroundColor = ConsoleColor.White;
-                                                        Console.Write("l  l");
-                                                        Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.Write("__  ");
-                                                        Console.ForegroundColor = ConsoleColor.Green;
-                                                        Console.WriteLine(@"\_");
-                                                        Console.WriteLine(@"/________________\");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(800);
-                                                        Console.Clear();
-                                                        Console.BackgroundColor = ConsoleColor.White;
-                                                        Console.WriteLine("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ");
-                                                        Console.ResetColor();
-                                                        Thread.Sleep(1000);
-                                                        Console.Clear();
-                                                        int SlimeKingHp = 3000;
-                                                        int SlimeKingAtk = 50 + 100;
-                                                        int SlimeKingDef = 0;
-                                                        int SlimeKingCurrentHp = SlimeKingHp;
-                                                        PlayerCurrentHp = player.Hp;
-                                                        int CoolTime = 1;
-                                                        player.cooltime = 0;
-                                                        bool loop_4 = true;
-                                                        while (loop_4 == true)
-                                                        {
-                                                            if (SlimeKingCurrentHp > 0)
-                                                            {
-                                                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                                                Console.WriteLine("보스의 방1");
-                                                                Console.WriteLine("슬라임 킹");
-                                                                Console.WriteLine($"Hp:{SlimeKingCurrentHp}/{SlimeKingHp}");
-                                                                Console.WriteLine($"공격력:{SlimeKingAtk} 방어력:{SlimeKingDef}");
-                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                Console.WriteLine("2턴마다 무적");
-                                                                Console.ResetColor();
-                                                                if (1500 < SlimeKingCurrentHp && SlimeKingCurrentHp < 5000)
-                                                                {
-                                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                    Console.WriteLine(@"     /\/\/\/\");
-                                                                    Console.Write(@"    /___");
-                                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                                    Console.Write("O");
-                                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                    Console.WriteLine(@"____\");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"   |          |");
-                                                                    Console.Write(@" _/   ");
-                                                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                                                    Console.Write(".");
-                                                                    Console.ForegroundColor = ConsoleColor.White;
-                                                                    Console.Write("l  l");
-                                                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                                                    Console.Write(".   ");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"\_");
-                                                                    Console.WriteLine(@"/________________\");
-                                                                    Console.ResetColor();
-                                                                }
-                                                                else if (SlimeKingCurrentHp >= 5000)
-                                                                {
-                                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                    Console.WriteLine(@"     /\/\/\/\");
-                                                                    Console.Write(@"    /___");
-                                                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                                    Console.Write("O");
-                                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                    Console.WriteLine(@"____\");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"   |          |");
-                                                                    Console.Write(@" _/  ");
-                                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                                    Console.Write("__");
-                                                                    Console.ForegroundColor = ConsoleColor.White;
-                                                                    Console.Write("l  l");
-                                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                                    Console.Write("__  ");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"\_");
-                                                                    Console.WriteLine(@"/________________\");
-                                                                    Console.ResetColor();
-                                                                }
-                                                                else if (SlimeKingCurrentHp <= 1500)
-                                                                {
-                                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                    Console.WriteLine(@"     /\/\/\/\");
-                                                                    Console.Write(@"    /___");
-                                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                                    Console.Write("O");
-                                                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                    Console.WriteLine(@"____\");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"   |          |");
-                                                                    Console.Write(@" _/  ");
-                                                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                                                    Console.Write("..");
-                                                                    Console.ForegroundColor = ConsoleColor.White;
-                                                                    Console.Write("l  l");
-                                                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                                                    Console.Write("..  ");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"\_");
-                                                                    Console.WriteLine(@"/____");
-                                                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                                                    Console.Write("||");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.Write("____");
-                                                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                                                    Console.Write("||");
-                                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                                    Console.WriteLine(@"____\");
-                                                                    Console.ResetColor();
-                                                                }
-                                                                Console.WriteLine(" ____________  ");
-                                                                Console.WriteLine("/|공격(enter)| ");
-                                                                var sk = Console.ReadKey();
-                                                                if (sk.Key == ConsoleKey.Enter)
-                                                                {
-                                                                    if (player.Def + player.ADef > SlimeKingAtk)
-                                                                    {
-                                                                        PlayerCurrentHp -= 1; 
-                                                                        if (CoolTime == 1)
-                                                                        {
-                                                                            if (player.Atk + player.WAtk < SlimeKingDef)
-                                                                            {
-                                                                                SlimeKingCurrentHp -= 1;
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                SlimeKingCurrentHp -= ((player.Atk + player.WAtk) - SlimeKingDef);
-                                                                            }
-                                                                            CoolTime --;
-                                                                            Console.Clear();        
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            SlimeKingCurrentHp -= 0;    
-                                                                            CoolTime ++;
-                                                                        }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        PlayerCurrentHp -= (SlimeKingAtk - (player.Def + player.ADef));
-                                                                        if (CoolTime == 1)
-                                                                        {
-                                                                            if (player.Atk + player.WAtk < SlimeKingDef)
-                                                                            {
-                                                                                SlimeKingCurrentHp -= 1;
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                SlimeKingCurrentHp -= ((player.Atk + player.WAtk) - SlimeKingDef);
-                                                                            }
-                                                                            CoolTime --;
-                                                                            Console.Clear();
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            SlimeCurrentHp -= 0;
-                                                                            CoolTime++;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.Clear();
-                                                                    Console.WriteLine("잘못된 입력");
-                                                                }
-                                                            }
-                                                            if (SlimeKingCurrentHp <= 0)
-                                                            {
-                                                                if (AC.ACslime == false)
-                                                                {
-                                                                    Random random = new Random();
-                                                                    int rn = random.Next(1, 11);
-                                                                    if (rn == 1)
-                                                                    {
-                                                                        AC.ACslime = true;
-                                                                        Console.Clear();
-                                                                        Console.WriteLine("슬라임 킹을 물리쳤습니다.");
-                                                                        player.Exp += SlimeKingHp / 10;
-                                                                        player.Gold += SlimeKingHp;
-                                                                        Console.WriteLine($"경험치 {SlimeKingHp / 10} 획득");
-                                                                        Console.WriteLine($"골드 {SlimeKingHp} 획득");
-                                                                        Console.WriteLine("슬라임의 증표 획득");
-                                                                        Console.WriteLine("\n");
-                                                                        Console.WriteLine("\n");
-                                                                        Console.WriteLine("\n");
-                                                                        Console.WriteLine(" ______________");
-                                                                        Console.WriteLine("/|돌아가기(esc)|");
-                                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                        {
-                                                                            Battle();
-                                                                            loop_4 = false;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            FixTitle();
-                                                                            loop_4 = false;
-                                                                        }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        Console.Clear();
-                                                                        Console.WriteLine("슬라임 킹을 물리쳤습니다.");
-                                                                        player.Exp += SlimeKingHp / 10;
-                                                                        player.Gold += SlimeKingHp;
-                                                                        Console.WriteLine($"경험치 {SlimeKingHp / 10} 획득");
-                                                                        Console.WriteLine($"골드 {SlimeKingHp} 획득");
-                                                                        Console.WriteLine("\n");
-                                                                        Console.WriteLine("\n");
-                                                                        Console.WriteLine("\n");
-                                                                        Console.WriteLine(" ______________");
-                                                                        Console.WriteLine("/|돌아가기(esc)|");
-                                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                        {
-                                                                            Battle();
-                                                                            loop_4 = false;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            FixTitle();
-                                                                            loop_4 = false;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.Clear();
-                                                                    Console.WriteLine("슬라임 킹을 물리쳤습니다.");
-                                                                    player.Exp += SlimeKingHp / 10;
-                                                                    player.Gold += SlimeKingHp;
-                                                                    Console.WriteLine($"경험치 {SlimeKingHp / 10} 획득");
-                                                                    Console.WriteLine($"골드 {SlimeKingHp} 획득");
-                                                                    Console.WriteLine("\n");
-                                                                    Console.WriteLine("\n");
-                                                                    Console.WriteLine("\n");
-                                                                    Console.WriteLine(" ______________");
-                                                                    Console.WriteLine("/|돌아가기(esc)|");
-                                                                }
-                                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                {
-                                                                    Battle();
-                                                                    loop_4 = false;
-                                                                }
-                                                                else
-                                                                {
-                                                                    FixTitle();
-                                                                    loop_4 = false;
-                                                                }
-                                                            }
-                                                            else if (PlayerCurrentHp <= 0)
-                                                            {
-                                                                Console.Clear();
-                                                                Console.WriteLine("패배하였습니다.");
-                                                                player.Gold -= SlimeKingHp / 2;
-                                                                Console.WriteLine($"{SlimeKingHp / 2}골드를 잃었습니다.");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine(" ______________");
-                                                                Console.WriteLine("/|돌아가기(esc)|");
-                                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                {
-                                                                    Battle();
-                                                                    loop_4 = false;
-                                                                }
-                                                                else
-                                                                {
-                                                                    FixTitle();
-                                                                    loop_4 = false;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        FixTitle();
-                                                        loop_3 = false;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    FixTitle();
-                                                    loop_3 = false;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        FixTitle();
-                                        loop = false;
-                                    }
-                                }
-                                if (PlayerCurrentHp <= 0)
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("패배하였습니다.");
-                                    player.Gold -= SlimeHp / 2;
-                                    Console.WriteLine($"{SlimeHp / 2}골드를 잃었습니다.");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine(" ______________");
-                                    Console.WriteLine("/|돌아가기(esc)|");
-                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                    {
-                                        Battle();
-                                        loop = false;
-                                    }
-                                    else
-                                    {
-                                        FixTitle();
-                                        loop = false;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            FixTitle();
-                        }
-                    }
-                }
-
-            }
-            if (start.Key == ConsoleKey.RightArrow)
-            {
-                Console.Clear();
-                Console.WriteLine("「<--(esc)」");
-                Console.WriteLine("\n");
-                Console.WriteLine("     늑대 사냥터(레벨제한:11)");
-                Console.WriteLine("\n");
-                Console.WriteLine("\n");
-                Console.WriteLine(" ____________      __________");
-                Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
-                start = Console.ReadKey(intercept: true);
-                if (start.Key == ConsoleKey.Enter)
-                {
-                    if (player.Lv < 11)
-                    {
-                        Console.WriteLine("레벨이 부족합니다");
-                        Battle();
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        int WolfHp = 2500;
-                        int WolfAtk = 500;
-                        int WolfDef = 250;
-                        int WolfCurrentHp = WolfHp;
-                        int PlayerCurrentHp = player.Hp;
-                        while (true)
-                        {
-                            if (WolfCurrentHp > 0)
-                            {
-                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                Console.WriteLine("늑대 사냥터1");
-                                Console.WriteLine("늑대");
-                                Console.WriteLine($"Hp:{WolfCurrentHp}/{WolfHp}");
-                                Console.WriteLine($"공격력:{WolfAtk} 방어력:{WolfDef}");
-                                if ((WolfHp/ 10) * 3 < WolfCurrentHp && WolfCurrentHp < WolfHp)
-                                {
-                                    Console.WriteLine(@" /\---/\");
-                                    Console.WriteLine(@"<  /_\  >");
-                                    Console.WriteLine(@" <__U__>  ");
-                                }
-                                else if (WolfCurrentHp == WolfHp)
-                                {
-                                    Console.WriteLine(@" /\---/\");
-                                    Console.WriteLine(@"<  O_O  >");
-                                    Console.WriteLine(@" <__U__>  ");
-                                }
-                                else if (WolfCurrentHp <= ( WolfHp/ 10) * 3)
-                                {
-                                    Console.WriteLine(@" /\---/\");
-                                    Console.WriteLine(@"<  X_X  >");
-                                    Console.WriteLine(@" <__U__>  ");
-                                }
-                                Console.WriteLine(" ____________    ____________");
-                                Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                var attack = Console.ReadKey(intercept: true);
-                                if (attack.Key == ConsoleKey.Enter)
-                                {
-                                    if (player.Def + player.ADef > WolfAtk)
-                                    {
-                                        PlayerCurrentHp -= 1;
-                                        if (player.Atk + player.WAtk < WolfDef)
-                                        {
-                                            WolfCurrentHp -= 1;
-                                        }
-                                        else
-                                        {
-                                            PlayerCurrentHp -= ((player.Def + player.ADef) - WolfAtk);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        WolfCurrentHp -= ((player.Atk + player.WAtk) - WolfDef);
-                                        if (player.Atk + player.WAtk < WolfDef)
-                                        {
-                                            WolfCurrentHp -= 1;
-                                        }
-                                        else
-                                        {
-                                            PlayerCurrentHp -= ((player.Def + player.ADef) - WolfAtk);
-                                        }
-                                    }
-
-                                    Console.Clear();
-                                }
-                                else if (attack.Key == ConsoleKey.Escape)
-                                {
-                                    Battle();
-                                    break;
-                                }
-                            }
-                            else if (PlayerCurrentHp <= 0)
-                            {
-                                Console.Clear();
-                                Console.WriteLine("패배하였습니다.");
-                                player.Gold -= WolfHp / 2;
-                                Console.WriteLine($"{WolfHp / 2}골드를 잃었습니다.");
-                                Console.WriteLine("\n");
-                                Console.WriteLine("\n");
-                                Console.WriteLine("\n");
-                                Console.WriteLine("\n");
-                                Console.WriteLine(" ______________");
-                                Console.WriteLine("/|돌아가기(esc)|");
-                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                {
-                                    FixTitle();
-                                    break;
-                                }
-                            }
-                            else if (WolfCurrentHp <= 0)
-                            {
-                                Console.Clear();
-                                Console.WriteLine("늑대를 물리쳤습니다.");
-                                player.Exp += WolfHp / 10;
-                                player.Gold += WolfHp;
-                                Console.WriteLine($"경험치{WolfHp / 10}  획득");
-                                Console.WriteLine($"골드 {WolfHp} 획득");
-                                Console.WriteLine("\n");
-                                Console.WriteLine("\n");
-                                Console.WriteLine("\n");
-                                Console.WriteLine(" ______________      ___________");
-                                Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                var enter = Console.ReadKey(intercept: true);
-                                if (enter.Key == ConsoleKey.Escape)
-                                {
-                                    Battle();
-                                    break;
-                                }
-                                else if (enter.Key == ConsoleKey.Enter)
-                                {
-                                    Console.Clear();
-                                    WolfHp += WolfHp;
-                                    WolfCurrentHp = WolfHp;
-                                    WolfAtk += 1;
-                                    WolfDef += 1;
-                                    while (true)
-                                    {
-                                        if (WolfCurrentHp > 0)
-                                        {
-                                            Console.WriteLine("늑대 사냥터2");
-                                            Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                            Console.WriteLine("늑대");
-                                            Console.WriteLine($"Hp:{WolfCurrentHp}/{WolfHp}");
-                                            Console.WriteLine($"공격력:{WolfAtk} 방어력:{WolfDef}");
-                                            if ((WolfHp / 10) * 3 < WolfCurrentHp && WolfCurrentHp < WolfHp)
-                                            {
-                                                Console.WriteLine(@" /\---/\");
-                                                Console.WriteLine(@"<  /_\  >");
-                                                Console.WriteLine(@" <__U__>  ");
-                                            }
-                                            else if (WolfCurrentHp == WolfHp)
-                                            {
-                                                Console.WriteLine(@" /\---/\");
-                                                Console.WriteLine(@"<  O_O  >");
-                                                Console.WriteLine(@" <__U__>  ");
-                                            }
-                                            else if (WolfCurrentHp <= (WolfHp / 10) * 3)
-                                            {
-                                                Console.WriteLine(@" /\---/\");
-                                                Console.WriteLine(@"<  X_X  >");
-                                                Console.WriteLine(@" <__U__>  ");
-                                            }
-                                            Console.WriteLine(" ____________    ____________");
-                                            Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                            var attack = Console.ReadKey(intercept: true);
-                                            if (attack.Key == ConsoleKey.Enter)
-                                            {
-                                                if (player.Def + player.ADef > WolfAtk)
-                                                {
-                                                    PlayerCurrentHp -= 1;
-                                                    if (player.Atk + player.WAtk < WolfDef)
-                                                    {
-                                                        WolfCurrentHp -= 1;
-                                                    }
-                                                    else
-                                                    {
-                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - WolfAtk);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    WolfCurrentHp -= ((player.Atk + player.WAtk) - WolfDef);
-                                                    if (player.Atk + player.WAtk < WolfDef)
-                                                    {
-                                                        WolfCurrentHp -= 1;
-                                                    }
-                                                    else
-                                                    {
-                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - WolfAtk);
-                                                    }
-                                                }
-                                                Console.Clear();
-                                            }
-                                            else if (attack.Key == ConsoleKey.Escape)
-                                            {
-                                                Battle();
-                                                break;
-                                            }
-                                        }
-                                        else if (PlayerCurrentHp <= 0)
-                                        {
-                                            Console.Clear();
-                                            Console.WriteLine("패배하였습니다.");
-                                            player.Gold -= WolfHp / 2;
-                                            Console.WriteLine($"{WolfHp / 2}골드를 잃었습니다.");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine(" ______________");
-                                            Console.WriteLine("/|돌아가기(esc)|");
-                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                            {
-                                                FixTitle();
-                                                break;
-                                            }
-                                        }
-                                        else if (WolfCurrentHp <= 0)
-                                        {
-                                            Console.Clear();
-                                            Console.WriteLine("늑대를 물리쳤습니다.");
-                                            player.Exp += WolfHp / 20;
-                                            player.Gold += WolfHp;
-                                            Console.WriteLine($"경험치{WolfHp / 20}  획득");
-                                            Console.WriteLine($"골드 {WolfHp} 획득");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine("\n");
-                                            Console.WriteLine(" ______________      ___________");
-                                            Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                            enter = Console.ReadKey(intercept: true);
-                                            if (enter.Key == ConsoleKey.Escape)
-                                            {
-                                                Battle();
-                                                break;
-                                            }
-                                            else if (enter.Key == ConsoleKey.Enter)
-                                            {
-                                                Console.Clear();
-                                                WolfHp += 100;
-                                                WolfCurrentHp = WolfHp;
-                                                WolfAtk += 1;
-                                                WolfDef += 1;
-                                                while (true)
-                                                {
-                                                    if (WolfCurrentHp > 0)
-                                                    {
-                                                        Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                                        Console.WriteLine("늑대 사냥터3");
-                                                        Console.WriteLine("늑대");
-                                                        Console.WriteLine($"Hp:{WolfCurrentHp}/{WolfHp}");
-                                                        Console.WriteLine($"공격력:{WolfAtk} 방어력:{WolfDef}");
-                                            if ((WolfHp / 10) * 3 < WolfCurrentHp && WolfCurrentHp < WolfHp)
-                                            {
-                                                Console.WriteLine(@" /\---/\");
-                                                Console.WriteLine(@"<  /_\  >");
-                                                Console.WriteLine(@" <__U__>  ");
-                                            }
-                                            else if (WolfCurrentHp == WolfHp)
-                                            {
-                                                Console.WriteLine(@" /\---/\");
-                                                Console.WriteLine(@"<  O_O  >");
-                                                Console.WriteLine(@" <__U__>  ");
-                                            }
-                                            else if (WolfCurrentHp <= (WolfHp / 10) * 3)
-                                            {
-                                                Console.WriteLine(@" /\---/\");
-                                                Console.WriteLine(@"<  X_X  >");
-                                                Console.WriteLine(@" <__U__>  ");
-                                            }
-                                                        Console.WriteLine(" ____________    ____________");
-                                                        Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                        var attack = Console.ReadKey(intercept: true);
-                                                        if (attack.Key == ConsoleKey.Enter)
-                                                        {
-                                                            if (player.Def + player.ADef > WolfAtk)
-                                                            {
-                                                                PlayerCurrentHp -= 1;
-                                                                if (player.Atk + player.WAtk < WolfDef)
-                                                                {
-                                                                    WolfCurrentHp -= 1;
-                                                                }
-                                                                else
-                                                                {
-                                                                    PlayerCurrentHp -= ((player.Def + player.ADef) - WolfAtk);
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                WolfCurrentHp -= ((player.Atk + player.WAtk) - WolfDef);
-                                                                if (player.Atk + player.WAtk < WolfDef)
-                                                                {
-                                                                    WolfCurrentHp -= 1;
-                                                                }
-                                                                else
-                                                                {
-                                                                    PlayerCurrentHp -= ((player.Def + player.ADef) - WolfAtk);
-                                                                }
-                                                            }
-                                                            Console.Clear();
-                                                        }
-                                                        else if (attack.Key == ConsoleKey.Escape)
-                                                        {
-                                                            Battle();
-                                                            break;
-                                                        }
-                                                    }
-                                                    else if (PlayerCurrentHp <= 0)
-                                                    {
-                                                        Console.Clear();
-                                                        Console.WriteLine("패배하였습니다.");
-                                                        player.Gold -= WolfHp / 2;
-                                                        Console.WriteLine($"{WolfHp / 2}골드를 잃었습니다.");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine(" ______________");
-                                                        Console.WriteLine("/|돌아가기(esc)|");
-                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                        {
-                                                            FixTitle();
-                                                            break;
-                                                        }
-                                                    }
-                                                    else if (WolfCurrentHp <= 0)
-                                                    {
-                                                        Console.Clear();
-                                                        Console.WriteLine("늑대를 물리쳤습니다.");
-                                                        player.Exp += WolfHp / 20;
-                                                        player.Gold += WolfHp;
-                                                        Console.WriteLine($"경험치{WolfHp / 20}  획득");
-                                                        Console.WriteLine($"골드 {WolfHp} 획득");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine("\n");
-                                                        Console.WriteLine(" ______________     ____________");
-                                                        Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                        {
-                                                            Battle();
-                                                            break;
-                                                        }
-                                                        else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
-                                                        {
-                                                            Console.WriteLine("이 앞은 보스 달빛 늑대(추천레벨 10+)가 존재합니다.");
-                                                            Console.WriteLine("정말 들어가시겠습니까?");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine(" ________________    ______________");
-                                                            Console.WriteLine("/|들어가기(enter)|  /|돌아가기(esc)|");
-                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                            {
-                                                                Battle();
-                                                                break;
-                                                            }
-                                                            else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
-                                                            {
-                                                                Console.Clear();
-                                                                int LunaWolfHp = 10000;
-                                                                int LunaWolfAtk = 500;
-                                                                int LunaWolfDef = 500;
-                                                                int LunaWolfCurrentHp = LunaWolfHp;
-                                                                int PlayerKingCurrentHp = player.Hp;
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine(" ");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(500);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-/");
-                                                                Console.WriteLine(@"   /  /");
-                                                                Console.WriteLine(@"  |  |");
-                                                                Console.WriteLine(@"   \  \");
-                                                                Console.WriteLine(@"     -__\");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(500);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _---/");
-                                                                Console.WriteLine(@"   /    /");
-                                                                Console.WriteLine(@"  |    |");
-                                                                Console.WriteLine(@"   \    \");
-                                                                Console.WriteLine(@"     -___\");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(500);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _----|");
-                                                                Console.WriteLine(@"   /      |");
-                                                                Console.WriteLine(@"  |       |");
-                                                                Console.WriteLine(@"   \      |");
-                                                                Console.WriteLine(@"     -____|");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(500);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-----\");
-                                                                Console.WriteLine(@"   /        \ ");
-                                                                Console.WriteLine(@"  |          | ");
-                                                                Console.WriteLine(@"   \       _/");
-                                                                Console.WriteLine(@"     -____/");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(500);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-------_");
-                                                                Console.WriteLine(@"   /           \");
-                                                                Console.WriteLine(@"  |             |");
-                                                                Console.WriteLine(@"   \           /");
-                                                                Console.WriteLine(@"     -_______-");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine("\n");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(100);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-------_");
-                                                                Console.WriteLine(@"   /           \");
-                                                                Console.WriteLine(@"  |             |");
-                                                                Console.WriteLine(@"   \           /");
-                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                Console.WriteLine(@"     -_______-");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("          ");
-                                                                Console.WriteLine("         ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine("         --");
-                                                                Console.WriteLine("          ");
-                                                                Console.WriteLine("          ");
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(100);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-------_");
-                                                                Console.WriteLine(@"   /           \");
-                                                                Console.WriteLine(@"  |             |");
-                                                                Console.WriteLine(@"   \           /");
-                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                Console.WriteLine(@"     -_______-");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine("          ");
-                                                                Console.WriteLine("         ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine("      -|-");
-                                                                Console.WriteLine("          ");
-                                                                Console.WriteLine("          ");
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(100);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-------_");
-                                                                Console.WriteLine(@"   /           \");
-                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                Console.WriteLine(@"  |             |");
-                                                                Console.WriteLine(@"   \           /");
-                                                                Console.WriteLine(@"     -_______-");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"     __|__         ");
-                                                                Console.WriteLine(@"       |         ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(100);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-------_");
-                                                                Console.WriteLine(@"   /           \");
-                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                Console.WriteLine(@"  |             |");
-                                                                Console.WriteLine(@"   \           /");
-                                                                Console.WriteLine(@"     -_______-");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"       .          ");
-                                                                Console.WriteLine(@"    ___|___         ");
-                                                                Console.WriteLine(@"       |         ");
-                                                                Console.WriteLine(@"       '          ");
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(100);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     _-------_");
-                                                                Console.WriteLine(@"   /           \");
-                                                                Console.WriteLine(@"  |             |");
-                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                Console.WriteLine(@"   \           /");
-                                                                Console.WriteLine(@"     -_______-");
-                                                                Console.ResetColor();
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"       /\             ");
-                                                                Console.WriteLine(@"    <  --  >        ");
-                                                                Console.WriteLine(@"       \/         ");
-                                                                Console.WriteLine(@"                    ");
-                                                                Console.WriteLine(@"      _--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(300);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"      _-------_");
-                                                                Console.WriteLine(@"    /           \");
-                                                                Console.WriteLine(@"   |             |");
-                                                                Console.WriteLine(@"    \           /");
-                                                                Console.WriteLine(@"      -_______-");
-                                                                Console.ResetColor();
-                                                                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                Console.WriteLine(@"     |\_  _/\   ");
-                                                                Console.WriteLine(@"     |  \/   |");
-                                                                Console.WriteLine(@"     <        \__");
-                                                                Console.WriteLine(@"     \           \");
-                                                                Console.WriteLine(@"     |           |");
-                                                                Console.WriteLine(@"     |          /");
-                                                                Console.Write(@"     |");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"_--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(300);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     ");
-                                                                Console.WriteLine(@"      _-------_");
-                                                                Console.WriteLine(@"    /           \");
-                                                                Console.WriteLine(@"   |             |");
-                                                                Console.WriteLine(@"    \           /");
-                                                                Console.ResetColor();
-                                                                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                Console.Write(@"    \_");
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.Write("-_______-");
-                                                                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                Console.WriteLine(@" /\   ");
-                                                                Console.WriteLine(@"     \ \______/       |");
-                                                                Console.WriteLine(@"     <                \_");
-                                                                Console.WriteLine(@"     \                  \");
-                                                                Console.WriteLine(@"     |                  |");
-                                                                Console.WriteLine(@"     |                 /");
-                                                                Console.Write(@"     |");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.WriteLine(@"_--\_");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(300);
-                                                                Console.Clear();
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.WriteLine(@"     ");
-                                                                Console.WriteLine(@"     ");
-                                                                Console.WriteLine(@"        _-------_");
-                                                                Console.WriteLine(@"      /           \");
-                                                                Console.WriteLine(@"     |             |");
-                                                                Console.ResetColor();
-                                                                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                Console.Write(@"    \_");
-                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                Console.Write(@"\           /");
-                                                                Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                Console.WriteLine(@" /\   ");
-                                                                Console.WriteLine(@"     \ \__________/   |");
-                                                                Console.WriteLine(@"     <                \_");
-                                                                Console.WriteLine(@"     \                  \");
-                                                                Console.WriteLine(@"     |                  |");
-                                                                Console.WriteLine(@"     |               __/");
-                                                                Console.Write(@"     |");
-                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                Console.Write(@"_--\_");
-                                                                Console.WriteLine(@"         /");
-                                                                Console.WriteLine(@"    _/ , . \_");
-                                                                Console.WriteLine(@"  _/  _  \   |");
-                                                                Console.WriteLine(@" /   /    \   \");
-                                                                Console.WriteLine(@"{______________} ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(1000);
-                                                                Console.Clear();
-                                                                Console.BackgroundColor = ConsoleColor.White;
-                                                                Console.WriteLine("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ");
-                                                                Console.ResetColor();
-                                                                Thread.Sleep(1000);
-                                                                while (true)
-                                                                {
-                                                                    if (LunaWolfCurrentHp > 0)
-                                                                    {
-                                                                        Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerKingCurrentHp}/{player.Hp}");
-                                                                        Console.WriteLine("보스의 방2");
-                                                                        Console.WriteLine("달빛 늑대 ");
-                                                                        Console.WriteLine($"Hp:{LunaWolfCurrentHp}/{LunaWolfHp}");
-                                                                        Console.WriteLine($"공격력:{LunaWolfAtk} 방어력:{LunaWolfDef}");
-                                                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                        Console.WriteLine("턴마다 공격력 증가");
-                                                                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                        if ((LunaWolfHp/10)*3 < LunaWolfCurrentHp && LunaWolfCurrentHp < LunaWolfHp)
-                                                                        {
-                                                                            Console.WriteLine(@"|\--------/|");
-                                                                            Console.Write(@"| ");
-                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                            Console.Write(@"|\    /|");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" |");
-                                                                            Console.Write(@"\ ");
-                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                            Console.Write(@"\.\  /./");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" / _");
-                                                                            Console.WriteLine(@" < \ || /  >/ |");
-                                                                            Console.WriteLine(@" /\ /__\ /|/  |  ");
-                                                                            Console.WriteLine(@"<   ----  >   | ");
-                                                                            Console.Write(@" \   |");
-                                                                            Console.ForegroundColor = ConsoleColor.Red;
-                                                                            Console.Write(@"\\\");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" >__/");
-                                                                            Console.Write(@" |  / ");
-                                                                            Console.ForegroundColor = ConsoleColor.Red;
-                                                                            Console.Write(@"|||");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" |\| ");
-                                                                            Console.WriteLine(@" \ |   _/ ");
-                                                                            Console.WriteLine(@"  /\/\/\| |");
-                                                                        }
-                                                                        else if (LunaWolfCurrentHp == LunaWolfHp)
-                                                                        {
-                                                                            Console.WriteLine(@"|\--------/|");
-                                                                            Console.Write(@"| ");
-                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                            Console.Write(@"__    __");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@"/| ");
-                                                                            Console.Write(@"\ ");
-                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                            Console.Write(@"\.\  /./");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" / _");
-                                                                            Console.WriteLine(@" < \ __ /  >/ |");
-                                                                            Console.WriteLine(@" /\ /__\ /|/  |  ");
-                                                                            Console.WriteLine(@"<   ----  >   | ");
-                                                                            Console.WriteLine(@" \   |    >__/");
-                                                                            Console.WriteLine(@" |  /     |\| ");
-                                                                            Console.WriteLine(@" \ |   _/ ");
-                                                                            Console.WriteLine(@"  /\/\/\| |");
-                                                                        }
-                                                                        else if (LunaWolfCurrentHp <= (LunaWolfHp / 10) * 3)
-                                                                        {
-                                                                            Console.WriteLine(@"|\--------/|");
-                                                                            Console.Write(@"| ");
-                                                                            Console.ForegroundColor = ConsoleColor.Red;
-                                                                            Console.Write(@"///");
-                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                            Console.Write(@"   /|");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" |");
-                                                                            Console.Write(@"\ ");
-                                                                            Console.ForegroundColor = ConsoleColor.Red;
-                                                                            Console.Write(@"|||");
-                                                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                            Console.Write(@"  /./");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" / _");
-                                                                            Console.WriteLine(@" < \ || /  >/ |");
-                                                                            Console.WriteLine(@" /\ /__\ /|/  |  ");
-                                                                            Console.WriteLine(@"<   ----  >   | ");
-                                                                            Console.Write(@" \   |");
-                                                                            Console.ForegroundColor = ConsoleColor.Red;
-                                                                            Console.Write(@"\\\");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" >__/");
-                                                                            Console.Write(@" |  / ");
-                                                                            Console.ForegroundColor = ConsoleColor.Red;
-                                                                            Console.Write(@"|||");
-                                                                            Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                                                            Console.WriteLine(@" |\| ");
-                                                                            Console.WriteLine(@" \ |   _/ ");
-                                                                            Console.WriteLine(@"  /\/\/\| |");
-                                                                        }
-                                                                        Console.ResetColor();
-                                                                        Console.WriteLine(" ____________    ____________");
-                                                                        Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
-                                                                        {
-                                                                            if (player.Def + player.ADef > LunaWolfAtk)
-                                                                            {
-                                                                                PlayerCurrentHp -= 1;
-                                                                                if (player.Atk + player.WAtk < LunaWolfDef)
-                                                                                {
-                                                                                    LunaWolfCurrentHp -= 1;
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    PlayerCurrentHp -= ((player.Def + player.ADef) - LunaWolfAtk);
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                LunaWolfCurrentHp -= ((player.Atk + player.WAtk) - LunaWolfDef);
-                                                                                if (player.Atk + player.WAtk < LunaWolfDef)
-                                                                                {
-                                                                                    LunaWolfCurrentHp -= 1;
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    PlayerCurrentHp -= ((player.Def + player.ADef) - LunaWolfAtk);
-                                                                                }
-                                                                            }
-                                                                            LunaWolfAtk *= 2;
-                                                                            Console.Clear();
-                                                                            if (LunaWolfCurrentHp < 0)
-                                                                            {
-                                                                                if (AC.ACWolf == false)
-                                                                                {
-                                                                                    Random random = new Random();
-                                                                                    int rn = random.Next(1, 11);
-                                                                                    if (rn == 1)
-                                                                                    {
-                                                                                        AC.ACWolf = true;
-                                                                                        Console.Clear();
-                                                                                        Console.WriteLine("달빛 늑대를 물리쳤습니다.");
-                                                                                        player.Exp += LunaWolfHp / 10;
-                                                                                        player.Gold += LunaWolfHp;
-                                                                                        Console.WriteLine($"경험치{LunaWolfHp/10} 획득");
-                                                                                        Console.WriteLine($"골드{LunaWolfHp} 획득");
-                                                                                        Console.WriteLine("달빛 늑대의 증표 획득");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine(" ______________");
-                                                                                        Console.WriteLine("/|돌아가기(esc)|");
-                                                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                                        {
-                                                                                            Battle();
-                                                                                            break;
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        Console.Clear();
-                                                                                        Console.WriteLine("달빛 늑대를 물리쳤습니다.");
-                                                                                        player.Exp += LunaWolfHp / 10;
-                                                                                        player.Gold += LunaWolfHp;
-                                                                                        Console.WriteLine($"경험치{LunaWolfHp/10} 획득");
-                                                                                        Console.WriteLine($"골드{LunaWolfHp} 획득");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine(" ______________");
-                                                                                        Console.WriteLine("/|돌아가기(esc)|");
-                                                                                        if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                                        {
-                                                                                            Battle();
-                                                                                            break;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    Console.Clear();
-                                                                                    Console.WriteLine("달빛 늑대 를 물리쳤습니다.");
-                                                                                    player.Exp += LunaWolfHp / 10;
-                                                                                    player.Gold += LunaWolfHp;
-                                                                                    Console.WriteLine($"경험치{LunaWolfHp/10} 획득");
-                                                                                    Console.WriteLine($"골드{LunaWolfHp} 획득");
-                                                                                    Console.WriteLine("\n");
-                                                                                    Console.WriteLine("\n");
-                                                                                    Console.WriteLine("\n");
-                                                                                    Console.WriteLine(" ______________");
-                                                                                    Console.WriteLine("/|돌아가기(esc)|");
-                                                                                }
-                                                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                                {
-                                                                                    Battle();
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else if (start.Key == ConsoleKey.Escape)
+                else if (Buy.Key == ConsoleKey.Escape)
                 {
                     FixTitle();
                 }
-                else if (start.Key == ConsoleKey.RightArrow)
-                {
-                    Console.Clear();
-                    Console.WriteLine("「<--(esc)」");
-                    Console.WriteLine("\n");
-                    Console.WriteLine("     뱀의 사당(레벨제한:21)");
-                    Console.WriteLine("\n");
-                    Console.WriteLine("\n");
-                    Console.WriteLine(" ____________      __________");
-                    Console.WriteLine("/|입장(enter)|    /|다음(-->)|");
-                    if (start.Key == ConsoleKey.Enter)
-                    {
-                        if (player.Lv < 11)
-                        {
-                            Console.WriteLine("레벨이 부족합니다");
-                            Battle();
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            int SoBeliveHp = 10000;
-                            int SoBeliveAtk = 1000;
-                            int SoBeliveDef = 500;
-                            int SoBeliveCurrentHp = SoBeliveHp;
-                            int PlayerCurrentHp = player.Hp;
-                            while (true)
-                            {
-                                if (SoBeliveCurrentHp > 0)
-                                {
-                                    Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                    Console.WriteLine("뱀의 사당1");
-                                    Console.WriteLine("광신도");
-                                    Console.WriteLine($"Hp:{SoBeliveCurrentHp}/{SoBeliveHp}");
-                                    Console.WriteLine($"공격력:{SoBeliveAtk} 방어력:{SoBeliveDef}");
-                                    if (30 < SoBeliveCurrentHp && SoBeliveCurrentHp < 100)
-                                    {
-                                        Console.WriteLine(@"   ___");
-                                        Console.WriteLine(@"  /+++\");
-                                        Console.WriteLine(@" /=====\");
-                                        Console.WriteLine(@"(__\_/__)");
-                                        Console.WriteLine(@" \=====/  ");
-                                        Console.WriteLine(@"  \___/  ");
-                                    }
-                                    else if (SoBeliveCurrentHp == 100)
-                                    {
-                                        Console.WriteLine(@"   ___");
-                                        Console.WriteLine(@"  /+++\");
-                                        Console.WriteLine(@" /=====\");
-                                        Console.WriteLine(@"(  =_=  )");
-                                        Console.WriteLine(@" \-----/  ");
-                                        Console.WriteLine(@"  \___/  ");
-                                    }
-                                    else if (SoBeliveCurrentHp <= 30)
-                                    {
-                                        Console.WriteLine(@"   ___");
-                                        Console.WriteLine(@"  /+++\");
-                                        Console.WriteLine(@" /=====\");
-                                        Console.WriteLine(@"(__0_0__)");
-                                        Console.WriteLine(@" \=====/  ");
-                                        Console.WriteLine(@"  \___/  ");
-                                    }
-                                    Console.WriteLine(" ____________    ____________");
-                                    Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                    var attack = Console.ReadKey(intercept: true);
-                                    if (attack.Key == ConsoleKey.Enter)
-                                    {
-                                        if (player.Def + player.ADef > SoBeliveAtk)
-                                        {
-                                            PlayerCurrentHp -= 1;
-                                            if (player.Atk + player.WAtk < SoBeliveDef)
-                                            {
-                                                SoBeliveCurrentHp -= 1;
-                                            }
-                                            else
-                                            {
-                                                PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            SoBeliveCurrentHp -= ((player.Atk + player.WAtk) - SoBeliveDef);
-                                            if (player.Atk + player.WAtk < SoBeliveDef)
-                                            {
-                                                SoBeliveCurrentHp -= 1;
-                                            }
-                                            else
-                                            {
-                                                PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
-                                            }
-                                        }
-
-                                        Console.Clear();
-                                    }
-                                    else if (attack.Key == ConsoleKey.Escape)
-                                    {
-                                        Battle();
-                                        break;
-                                    }
-                                }
-                                else if (PlayerCurrentHp <= 0)
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("패배하였습니다.");
-                                    player.Gold -= SoBeliveHp / 2;
-                                    Console.WriteLine($"{SoBeliveHp / 2}골드를 잃었습니다.");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine(" ______________");
-                                    Console.WriteLine("/|돌아가기(esc)|");
-                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                    {
-                                        FixTitle();
-                                        break;
-                                    }
-                                }
-                                else if (SoBeliveCurrentHp <= 0)
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("광신도를 물리쳤습니다.");
-                                    player.Exp += SoBeliveHp / 10;
-                                    player.Gold += SoBeliveHp;
-                                    Console.WriteLine($"경험치{SoBeliveHp / 10}  획득");
-                                    Console.WriteLine($"골드 {SoBeliveHp} 획득");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine("\n");
-                                    Console.WriteLine(" ______________      ___________");
-                                    Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                    var enter = Console.ReadKey(intercept: true);
-                                    if (enter.Key == ConsoleKey.Escape)
-                                    {
-                                        Battle();
-                                        break;
-                                    }
-                                    else if (enter.Key == ConsoleKey.Enter)
-                                    {
-                                        Console.Clear();
-                                        SoBeliveHp += 100;
-                                        SoBeliveCurrentHp = SoBeliveHp;
-                                        SoBeliveAtk += 1;
-                                        SoBeliveDef += 1;
-                                        while (true)
-                                        {
-                                            if (SoBeliveCurrentHp > 0)
-                                            {
-                                                Console.WriteLine("뱀의 사당2");
-                                                Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                                Console.WriteLine("광신도");
-                                                Console.WriteLine($"Hp:{SoBeliveCurrentHp}/{SoBeliveHp}");
-                                                Console.WriteLine($"공격력:{SoBeliveAtk} 방어력:{SoBeliveDef}");
-                                                if (30 < SoBeliveCurrentHp && SoBeliveCurrentHp < 100)
-                                                {
-                                                    Console.WriteLine(@" /\---/\");
-                                                    Console.WriteLine(@"<  /_\  >");
-                                                    Console.WriteLine(@" <__U__>  ");
-                                                }
-                                                else if (SoBeliveCurrentHp == 100)
-                                                {
-                                                    Console.WriteLine(@" /\---/\");
-                                                    Console.WriteLine(@"<  O_O  >");
-                                                    Console.WriteLine(@" <__U__>  ");
-                                                }
-                                                else if (SoBeliveCurrentHp <= 30)
-                                                {
-                                                    Console.WriteLine(@" /\---/\");
-                                                    Console.WriteLine(@"<  X_X  >");
-                                                    Console.WriteLine(@" <__U__>  ");
-                                                }
-                                                Console.WriteLine(" ____________    ____________");
-                                                Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                var attack = Console.ReadKey(intercept: true);
-                                                if (attack.Key == ConsoleKey.Enter)
-                                                {
-                                                    if (player.Def + player.ADef > SoBeliveAtk)
-                                                    {
-                                                        PlayerCurrentHp -= 1;
-                                                        if (player.Atk + player.WAtk < SoBeliveDef)
-                                                        {
-                                                            SoBeliveCurrentHp -= 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        SoBeliveCurrentHp -= ((player.Atk + player.WAtk) - SoBeliveDef);
-                                                        if (player.Atk + player.WAtk < SoBeliveDef)
-                                                        {
-                                                            SoBeliveCurrentHp -= 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
-                                                        }
-                                                    }
-                                                    Console.Clear();
-                                                }
-                                                else if (attack.Key == ConsoleKey.Escape)
-                                                {
-                                                    Battle();
-                                                    break;
-                                                }
-                                            }
-                                            else if (PlayerCurrentHp <= 0)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("패배하였습니다.");
-                                                player.Gold -= SoBeliveHp / 2;
-                                                Console.WriteLine($"{SoBeliveHp / 2}골드를 잃었습니다.");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine(" ______________");
-                                                Console.WriteLine("/|돌아가기(esc)|");
-                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                {
-                                                    FixTitle();
-                                                    break;
-                                                }
-                                            }
-                                            else if (SoBeliveCurrentHp <= 0)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("광신도를 물리쳤습니다.");
-                                                player.Exp += SoBeliveHp / 20;
-                                                player.Gold += SoBeliveHp;
-                                                Console.WriteLine($"경험치{SoBeliveHp / 20}  획득");
-                                                Console.WriteLine($"골드 {SoBeliveHp} 획득");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine("\n");
-                                                Console.WriteLine(" ______________      ___________");
-                                                Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                                enter = Console.ReadKey(intercept: true);
-                                                if (enter.Key == ConsoleKey.Escape)
-                                                {
-                                                    Battle();
-                                                    break;
-                                                }
-                                                else if (enter.Key == ConsoleKey.Enter)
-                                                {
-                                                    Console.Clear();
-                                                    SoBeliveHp += 100;
-                                                    SoBeliveCurrentHp = SoBeliveHp;
-                                                    SoBeliveAtk += 1;
-                                                    SoBeliveDef += 1;
-                                                    while (true)
-                                                    {
-                                                        if (SoBeliveCurrentHp > 0)
-                                                        {
-                                                            Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerCurrentHp}/{player.Hp}");
-                                                            Console.WriteLine("뱀의 사당3");
-                                                            Console.WriteLine("광신도");
-                                                            Console.WriteLine($"Hp:{SoBeliveCurrentHp}/{SoBeliveHp}");
-                                                            Console.WriteLine($"공격력:{SoBeliveAtk} 방어력:{SoBeliveDef}");
-                                                            if (30 < SoBeliveCurrentHp && SoBeliveCurrentHp < 100)
-                                                            {
-                                                                Console.WriteLine(@" /\---/\");
-                                                                Console.WriteLine(@"<  /_\  >");
-                                                                Console.WriteLine(@" <__U__>  ");
-                                                            }
-                                                            else if (SoBeliveCurrentHp == 100)
-                                                            {
-                                                                Console.WriteLine(@" /\---/\");
-                                                                Console.WriteLine(@"<  O_O  >");
-                                                                Console.WriteLine(@" <__U__>  ");
-                                                            }
-                                                            else if (SoBeliveCurrentHp <= 30)
-                                                            {
-                                                                Console.WriteLine(@" /\---/\");
-                                                                Console.WriteLine(@"<  X_X  >");
-                                                                Console.WriteLine(@" <__U__>  ");
-                                                            }
-                                                            Console.WriteLine(" ____________    ____________");
-                                                            Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                            var attack = Console.ReadKey(intercept: true);
-                                                            if (attack.Key == ConsoleKey.Enter)
-                                                            {
-                                                                if (player.Def + player.ADef > SoBeliveAtk)
-                                                                {
-                                                                    PlayerCurrentHp -= 1;
-                                                                    if (player.Atk + player.WAtk < SoBeliveDef)
-                                                                    {
-                                                                        SoBeliveCurrentHp -= 1;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    SoBeliveCurrentHp -= ((player.Atk + player.WAtk) - SoBeliveDef);
-                                                                    if (player.Atk + player.WAtk < SoBeliveDef)
-                                                                    {
-                                                                        SoBeliveCurrentHp -= 1;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - SoBeliveAtk);
-                                                                    }
-                                                                }
-                                                                Console.Clear();
-                                                            }
-                                                            else if (attack.Key == ConsoleKey.Escape)
-                                                            {
-                                                                Battle();
-                                                                break;
-                                                            }
-                                                        }
-                                                        else if (PlayerCurrentHp <= 0)
-                                                        {
-                                                            Console.Clear();
-                                                            Console.WriteLine("패배하였습니다.");
-                                                            player.Gold -= SoBeliveHp / 2;
-                                                            Console.WriteLine($"{SoBeliveHp / 2}골드를 잃었습니다.");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine(" ______________");
-                                                            Console.WriteLine("/|돌아가기(esc)|");
-                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                            {
-                                                                FixTitle();
-                                                                break;
-                                                            }
-                                                        }
-                                                        else if (SoBeliveCurrentHp <= 0)
-                                                        {
-                                                            Console.Clear();
-                                                            Console.WriteLine("광신도를 물리쳤습니다.");
-                                                            player.Exp += SoBeliveHp / 20;
-                                                            player.Gold += SoBeliveHp;
-                                                            Console.WriteLine($"경험치{SoBeliveHp / 20}  획득");
-                                                            Console.WriteLine($"골드 {SoBeliveHp} 획득");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine("\n");
-                                                            Console.WriteLine(" ______________     ____________");
-                                                            Console.WriteLine("/|돌아가기(esc)|   /|다음(enter)|");
-                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                            {
-                                                                Battle();
-                                                                break;
-                                                            }
-                                                            else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
-                                                            {
-                                                                Console.WriteLine("이 앞은 보스 고대의 뱀(추천레벨 10+)가 존재합니다.");
-                                                                Console.WriteLine("정말 들어가시겠습니까?");
-                                                                Console.WriteLine("\n");
-                                                                Console.WriteLine(" ________________    ______________");
-                                                                Console.WriteLine("/|들어가기(enter)|  /|돌아가기(esc)|");
-                                                                if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                {
-                                                                    Battle();
-                                                                    break;
-                                                                }
-                                                                else if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
-                                                                {
-                                                                    Console.Clear();
-                                                                    int AcientHp = 10000;
-                                                                    int AcientAtk = 500;
-                                                                    int AcientDef = 500;
-                                                                    int AcientCurrentHp = AcientHp;
-                                                                    int PlayerKingCurrentHp = player.Hp;
-                                                                    while (true)
-                                                                    {
-                                                                        if (AcientCurrentHp > 0)
-                                                                        {
-                                                                            Console.WriteLine($"{player.name} Lv.{player.Lv} Hp:{PlayerKingCurrentHp}/{player.Hp}");
-                                                                            Console.WriteLine("보스의 방3");
-                                                                            Console.WriteLine("고대의 뱀 ");
-                                                                            Console.WriteLine($"Hp:{AcientCurrentHp}/{AcientHp}");
-                                                                            Console.WriteLine($"공격력:{AcientAtk} 방어력:{AcientDef}");
-                                                                            if ((AcientHp / 10) * 4 > AcientCurrentHp)
-                                                                            {
-                                                                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                                                                Console.WriteLine("Hp 40%이하시 턴마다 모든 능력치 상승");
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                Console.ForegroundColor = ConsoleColor.Gray;
-                                                                                Console.WriteLine("???");
-                                                                            }
-
-                                                                            Console.ResetColor();
-                                                                            if ((AcientHp / 10) * 3 < AcientCurrentHp && AcientCurrentHp < AcientHp)
-                                                                            {
-                                                                                Console.WriteLine(@"______");
-                                                                                Console.Write(@" \  / ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"         ________    ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"   ______  ");
-                                                                                Console.Write(@" |  |      ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"   /        \   ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    \  /   ");
-                                                                                Console.Write(@" |  |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"     |          |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"   |  |   ");
-                                                                                Console.Write(@" |  |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"      \  \  /  /     ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"  |  |   ");
-                                                                                Console.Write(@" |  |    ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"      |_    _|     ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"   |  |  ");
-                                                                                Console.Write(@" |  |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"       / \  /  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"     |  |   ");
-                                                                                Console.Write(@" |  |     ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"    /   ||  /    ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    |  |");
-                                                                                Console.Write(@" |  |    ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"    /    /\/     ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"     |  |");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"  __ /    _/ ________  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |  |   ");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@" /  |      /         \  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"|  |    ");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@"/  _ \     \----/     / ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"|  |   ");
-                                                                                Console.Write(@" |__|  ");
-                                                                                Console.ForegroundColor = ConsoleColor.Green;
-                                                                                Console.Write(@" \/ \________________/ ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |__|   ");
-                                                                                Console.WriteLine(@"  \___      _-----------_     ___/");
-                                                                                Console.WriteLine(@"   \  |    ||           ||   |  /");
-                                                                                Console.WriteLine(@"    \  \    @===========@   /  /");
-                                                                                Console.WriteLine(@"     \ |\      \=====/     /| /");
-                                                                                Console.WriteLine(@"      / _/-----------------\_ \");
-                                                                                Console.WriteLine(@"     |_/---------------------\_|");
-                                                                                Console.WriteLine(@"    _/-------------------------\_");
-                                                                            }
-                                                                            else if (AcientCurrentHp == 5000)
-                                                                            {
-                                                                                Console.WriteLine(@"______                 ");
-                                                                                Console.WriteLine(@" \  /                         ______  ");
-                                                                                Console.WriteLine(@" |  |                          \  /   ");
-                                                                                Console.WriteLine(@" |  |                          |  |   ");
-                                                                                Console.WriteLine(@" |  |                          |  |   ");
-                                                                                Console.Write(@" |  | ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@"       _____     "); 
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"        |  |  ");
-                                                                                Console.Write(@" |  |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@"    /     -------  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    |  |   ");
-                                                                                Console.Write(@" |  |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@"  /              \_  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"  |  |");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@"  /       \   /     \  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |  |");
-                                                                                Console.Write(@" |  | ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@"  |   _ _   |_-     /__ ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |  |   ");
-                                                                                Console.Write(@" |  | ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@"   \       /       /   \ ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"|  |    ");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@" / |_   _|            /");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |  |   ");
-                                                                                Console.Write(@" |__|   ");
-                                                                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                                                Console.Write(@" \/ \_/____________/  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |__|   ");
-                                                                                Console.WriteLine(@"  \___      _-----------_     ___/");
-                                                                                Console.WriteLine(@"   \  |    ||           ||   |  /");
-                                                                                Console.WriteLine(@"    \  \    @===========@   /  /");
-                                                                                Console.WriteLine(@"     \ |\      \=====/     /| /");
-                                                                                Console.WriteLine(@"      / _/-----------------\_ \");
-                                                                                Console.WriteLine(@"     |_/---------------------\_|");
-                                                                                Console.WriteLine(@"     /-------------------------\_");
-                                                                            }
-                                                                            else if (AcientCurrentHp <= (AcientHp / 10) * 4)
-                                                                            {
-                                                                                Console.WriteLine(@"______                 ");
-                                                                                Console.Write(@" \  /   ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"       /\/\/\/\   ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    ______  ");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"       /  /  \  \  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"     \  /   ");
-                                                                                Console.Write(@" |  |    ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"    |          |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    |  |   ");
-                                                                                Console.Write(@" |  |   ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"      \  \  /  /    ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"   |  |   ");
-                                                                                Console.Write(@" |  |     ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"     |_    _|    ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    |  |  ");
-                                                                                Console.Write(@" |  |       ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"   / \  /  | ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"      |  |   ");
-                                                                                Console.Write(@" |  |    ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"     /   ||  /    ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"    |  |");
-                                                                                Console.Write(@" |  |     ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"   /  \ /\/    ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"      |  |");
-                                                                                Console.Write(@" |  |    ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"__ / /  _/ ________ ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"  |  |   ");
-                                                                                Console.Write(@" |  |  ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@" /  |      /         \  ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@"|  |    ");
-                                                                                Console.Write(@" |  | ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@" /  _ \  \  \----/  / / ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |  |   ");
-                                                                                Console.Write(@" |__| ");
-                                                                                Console.ForegroundColor = ConsoleColor.Red;
-                                                                                Console.Write(@"  \/ \______________/   ");
-                                                                                Console.ForegroundColor = ConsoleColor.White;
-                                                                                Console.WriteLine(@" |__|   ");
-                                                                                Console.WriteLine(@"  \___      _-----------_     ___/");
-                                                                                Console.WriteLine(@"   \  |    ||           ||   |  /");
-                                                                                Console.WriteLine(@"    \  \    @===========@   /  /");
-                                                                                Console.WriteLine(@"     \ |\      \=====/     /| /");
-                                                                                Console.WriteLine(@"      / _/-----------------\_ \");
-                                                                                Console.WriteLine(@"     |_/---------------------\_|");
-                                                                                Console.WriteLine(@"     /-------------------------\_");
-                                                                            }
-                                                                            Console.ResetColor();
-                                                                            Console.WriteLine(" ____________    ____________");
-                                                                            Console.WriteLine("/|공격(enter)|  /|떠나기(esc)|");
-                                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
-                                                                            {
-                                                                                if (player.Def + player.ADef > AcientAtk)
-                                                                                {
-                                                                                    PlayerCurrentHp -= 1;
-                                                                                    if (player.Atk + player.WAtk < AcientDef)
-                                                                                    {
-                                                                                        AcientCurrentHp -= 1;
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - AcientAtk);
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    AcientCurrentHp -= ((player.Atk + player.WAtk) - AcientDef);
-                                                                                    if (player.Atk + player.WAtk < AcientDef)
-                                                                                    {
-                                                                                        AcientCurrentHp -= 1;
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        PlayerCurrentHp -= ((player.Def + player.ADef) - AcientAtk);
-                                                                                    }
-                                                                                }
-                                                                                AcientAtk *= 2;
-                                                                                AcientDef *= 2;
-                                                                                Console.Clear();
-                                                                                if (AcientCurrentHp < 0)
-                                                                                {
-                                                                                    if (AC.ACAcient == false)
-                                                                                    {
-                                                                                        Random random = new Random();
-                                                                                        int rn = random.Next(1, 11);
-                                                                                        if (rn == 1)
-                                                                                        {
-                                                                                            AC.ACAcient = true;
-                                                                                            Console.Clear();
-                                                                                            Console.WriteLine("고대의 뱀을 물리쳤습니다.");
-                                                                                            player.Exp += AcientHp / 10;
-                                                                                            player.Gold += AcientHp;
-                                                                                            Console.WriteLine($"경험치{AcientHp/10} 획득");
-                                                                                            Console.WriteLine($"골드{AcientHp / 10} 획득");
-                                                                                            Console.WriteLine("고대의 뱀의 증표 획득");
-                                                                                            Console.WriteLine("\n");
-                                                                                            Console.WriteLine("\n");
-                                                                                            Console.WriteLine("\n");
-                                                                                            Console.WriteLine(" ______________");
-                                                                                            Console.WriteLine("/|돌아가기(esc)|");
-                                                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                                            {
-                                                                                                Battle();
-                                                                                                break;
-                                                                                            }
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            Console.Clear();
-                                                                                            Console.WriteLine("고대의 뱀을 물리쳤습니다.");
-                                                                                            player.Exp += AcientHp / 10;
-                                                                                            player.Gold += AcientHp;
-                                                                                            Console.WriteLine($"경험치{AcientHp/10} 획득");
-                                                                                            Console.WriteLine($"골드{AcientHp} 획득");
-                                                                                            Console.WriteLine("\n");
-                                                                                            Console.WriteLine("\n");
-                                                                                            Console.WriteLine("\n");
-                                                                                            Console.WriteLine(" ______________");
-                                                                                            Console.WriteLine("/|돌아가기(esc)|");
-                                                                                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                                            {
-                                                                                                Battle();
-                                                                                                break;
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        Console.Clear();
-                                                                                        Console.WriteLine("고대의 뱀을 물리쳤습니다.");
-                                                                                        player.Exp += AcientHp / 10;
-                                                                                        player.Gold += AcientHp;
-                                                                                        Console.WriteLine($"경험치{AcientHp/10} 획득");
-                                                                                        Console.WriteLine($"골드{AcientHp} 획득");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine("\n");
-                                                                                        Console.WriteLine(" ______________");
-                                                                                        Console.WriteLine("/|돌아가기(esc)|");
-                                                                                    }
-                                                                                    if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
-                                                                                    {
-                                                                                        Battle();
-                                                                                        break;
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if (start.Key == ConsoleKey.Escape)
-                    {
-                        FixTitle();
-                    }
-                    else if (start.Key == ConsoleKey.RightArrow)
-                    {
-
-                    }
-                }
             }
-            else if (start.Key == ConsoleKey.Escape)
+            else if(Buy.Key == ConsoleKey.Escape)
             {
                 FixTitle();
             }
         }
+
         public static void Equip2()
         {
             Console.WriteLine("가방");
@@ -2819,20 +1682,38 @@ namespace TextRPG
                 Console.WriteLine(" ________");
                 Console.WriteLine("/|무기(w)|");
             }
-            if (backpack.armor == true)
+            else if (backpack.armor == true)
             {
                 Console.WriteLine(" ________");
                 Console.WriteLine("/|갑옷(a)|");
             }
-            if (backpack.skill == true)
+            else if (backpack.skill == true)
             {
                 Console.WriteLine(" ________");
                 Console.WriteLine("/|스킬(s)|");
             }
-            var equip = Console.ReadKey();
-            if (backpack.weapon == true)
+            else
             {
-                if (equip.Key == ConsoleKey.W)
+                Console.WriteLine("가방이 비어있습니다");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine(" _________");
+                Console.WriteLine("/|돌아가기|");
+                var goback = Console.ReadKey();
+                if (goback.Key == ConsoleKey.Escape)
+                {
+                    FixTitle();
+                }
+                else
+                {
+                    FixTitle();
+                }
+            }
+            ConsoleKeyInfo e1quip = Console.ReadKey();
+            if (e1quip.Key == ConsoleKey.W)
+            {
+                if (backpack.weapon == true)
                 {
                     int num = 0;
                     int w1 = 0;
@@ -2855,37 +1736,37 @@ namespace TextRPG
                         w2 = num;
                         Console.WriteLine($"[{w2}]돌 검");
                     }
-                    if (backpack.stone == true)
+                    if (backpack.iron == true)
                     {
                         num++;
                         w3 = num;
                         Console.WriteLine($"[{w3}]철 검");
                     }
-                    if (backpack.stone == true)
+                    if (backpack.god == true)
                     {
                         num++;
                         w4 = num;
                         Console.WriteLine($"[{w4}]신의 검");
                     }
-                    if (backpack.stone == true)
+                    if (backpack.just == true)
                     {
                         num++;
                         w5 = num;
                         Console.WriteLine($"[{w5}]일반 스태프");
                     }
-                    if (backpack.stone == true)
+                    if (backpack.crystal == true)
                     {
                         num++;
                         w6 = num;
                         Console.WriteLine($"[{w6}]크리스탈 스태프");
                     }
-                    if (backpack.stone == true)
+                    if (backpack.dia == true)
                     {
                         num++;
                         w7 = num;
                         Console.WriteLine($"[{w7}]다이아몬드 스태프");
                     }
-                    if (backpack.stone == true)
+                    if (backpack.gods == true)
                     {
                         num++;
                         w8 = num;
@@ -2896,135 +1777,600 @@ namespace TextRPG
                     {
                         if (num > 0)
                         {
-                            for (int i = 1; i < num; i++)
+                            Console.Clear();
+                            if (w1 == 1)
                             {
-                                if (w1 == i)
-                                {
-                                    Console.WriteLine("나무 검");
-                                    Console.WriteLine("공격력 + 100 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     조잡한 성능. 나무검에게 뭘 바라나? ");
-                                    Console.WriteLine("     고작 나무검의 성능을 뛰어나게 만들 수 있는 능력자면  ");
-                                    Console.WriteLine("     나무검을 안만들었다. 몽둥이나 다름없다. ");
+                                Console.WriteLine("나무 검");
+                                Console.WriteLine("공격력 + 100 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     조잡한 성능. 나무검에게 뭘 바라나? ");
+                                Console.WriteLine("     고작 나무검의 성능을 뛰어나게 만들 수 있는 능력자면  ");
+                                Console.WriteLine("     나무검을 안만들었다. 몽둥이나 다름없다. ");
 
-                                }
-                                if (w2 == i)
+                            }
+                            if (w2 == 1)
+                            {
+                                Console.WriteLine("돌 검");
+                                Console.WriteLine("공격력 + 5,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
+                                Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
+                            }
+                            if (w3 == 1)
+                            {
+                                Console.WriteLine("철 검");
+                                Console.WriteLine("공격력 + 250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     검이라고 봐줄만한 검. ");
+                                Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                            }
+                            if (w4 == 1)
+                            {
+                                Console.WriteLine("신의 검");
+                                Console.WriteLine("공격력 + 12,500,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 검을 파는게 말이 안된다.");
+                                Console.WriteLine("     물론 아주 강하긴 하다.");
+                            }
+                            if (w5 == 1)
+                            {
+                                Console.WriteLine("일반 스태프");
+                                Console.WriteLine("마법공격력 + 500 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                            }
+                            if (w6 == 1)
+                            {
+                                Console.WriteLine("크리스탈 스태프");
+                                Console.WriteLine("마법공격력 + 25,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                Console.WriteLine("     유리라 마력이 확대된다.");
+                            }
+                            if (w7 == 1)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 1)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                        }
+                        e1quip = Console.ReadKey();
+                        if (e1quip.Key == ConsoleKey.Enter)
+                        {
+                            if (w1 == 1)
+                            {
+                                equip.weapon = "나무 검";
+                            }
+                            if (w2 == 1)
+                            {
+                                equip.weapon = "돌 검";
+                            }
+                            if (w3 == 1)
+                            {
+                                equip.weapon = "철 검";
+                            }
+                            if (w4 == 1)
+                            {
+                                equip.weapon = "신의 검";
+                            }
+                            if (w5 == 1)
+                            {
+                                equip.weapon = "일반 스태프";
+                            }
+                            if (w6 == 1)
+                            {
+                                equip.weapon = "크리스탈 스태프";
+                            }
+                            if (w7 == 1)
+                            {
+                                equip.weapon = "다이아몬드 스태프";
+                            }
+                            if (w8 == 1)
+                            {
+                                equip.weapon = "신의 스태프";
+                            }
+                            FixTitle();
+                        }
+                    }
+                    if (select.Key == ConsoleKey.D2)
+                    {
+                        if (num > 0)
+                        {
+                            Console.Clear();
+                            if (w2 == 2)
+                            {
+                                Console.WriteLine("돌 검");
+                                Console.WriteLine("공격력 + 5,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
+                                Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
+                            }
+                            if (w3 == 2)
+                            {
+                                Console.WriteLine("철 검");
+                                Console.WriteLine("공격력 + 250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     검이라고 봐줄만한 검. ");
+                                Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                            }
+                            if (w4 == 2)
+                            {
+                                Console.WriteLine("신의 검");
+                                Console.WriteLine("공격력 + 12,500,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 검을 파는게 말이 안된다.");
+                                Console.WriteLine("     물론 아주 강하긴 하다.");
+                            }
+                            if (w5 == 2)
+                            {
+                                Console.WriteLine("일반 스태프");
+                                Console.WriteLine("마법공격력 + 500 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                            }
+                            if (w6 == 2)
+                            {
+                                Console.WriteLine("크리스탈 스태프");
+                                Console.WriteLine("마법공격력 + 25,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                Console.WriteLine("     유리라 마력이 확대된다.");
+                            }
+                            if (w7 == 2)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 2)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                        }
+                    }
+                    if (select.Key == ConsoleKey.D3)
+                    {
+                        if (num > 0)
+                        {
+                            Console.Clear();
+                            if (w3 == 3)
+                            {
+                                Console.WriteLine("철 검");
+                                Console.WriteLine("공격력 + 250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     검이라고 봐줄만한 검. ");
+                                Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                            }
+                            if (w4 == 3)
+                            {
+                                Console.WriteLine("신의 검");
+                                Console.WriteLine("공격력 + 12,500,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 검을 파는게 말이 안된다.");
+                                Console.WriteLine("     물론 아주 강하긴 하다.");
+                            }
+                            if (w5 == 3)
+                            {
+                                Console.WriteLine("일반 스태프");
+                                Console.WriteLine("마법공격력 + 500 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                            }
+                            if (w6 == 3)
+                            {
+                                Console.WriteLine("크리스탈 스태프");
+                                Console.WriteLine("마법공격력 + 25,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                Console.WriteLine("     유리라 마력이 확대된다.");
+                            }
+                            if (w7 == 3)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 3)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                            e1quip = Console.ReadKey();
+                            if (e1quip.Key == ConsoleKey.Enter)
+                            {
+                                if (w3 == 3)
                                 {
-                                    Console.WriteLine("돌 검");
-                                    Console.WriteLine("공격력 + 5,000 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     그냥 날을 갈아서, 나무에 붙였다. ");
-                                    Console.WriteLine("     절삭력은 사과를 벨 수 있을 정도.");
+                                    player.WAtk = 250000;
                                 }
-                                if (w3 == i)
+                                if (w4 == 3)
                                 {
-                                    Console.WriteLine("철 검");
-                                    Console.WriteLine("공격력 + 250,000 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     검이라고 봐줄만한 검. ");
-                                    Console.WriteLine("     평민도 이정도는 살 수 있다.");
+                                    player.WAtk = 12500000;
                                 }
-                                if (w4 == i)
+                                if (w5 == 3)
                                 {
-                                    Console.WriteLine("신의 검");
-                                    Console.WriteLine("공격력 + 12,500,000 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     모조품이다. 애초에 상인이 ");
-                                    Console.WriteLine("     신의 검을 파는게 말이 안된다.");
-                                    Console.WriteLine("     물론 아주 강하긴 하다.");
+                                    player.WMAtk = 500;
                                 }
-                                if (w5 == i)
+                                if (w6 == 3)
                                 {
-                                    Console.WriteLine("일반 스태프");
-                                    Console.WriteLine("마력 + 500 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
-                                    Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
-                                    Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                    player.WMAtk = 25000;
                                 }
-                                if (w6 == i)
+                                if (w7 == 3)
                                 {
-                                    Console.WriteLine("크리스탈 스태프");
-                                    Console.WriteLine("마력 + 25,000 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
-                                    Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
-                                    Console.WriteLine("     당한 사람들이 많다. 그래도 ");
-                                    Console.WriteLine("     유리라 마력이 확대된다.");
+                                    player.WMAtk = 1250000;
                                 }
-                                if (w7 == i)
+                                if (w8 == 3)
                                 {
-                                    Console.WriteLine("다이아몬드 스태프");
-                                    Console.WriteLine("마력 + 1,250,000 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     아쉽지만 이건 진짜다.");
-                                    Console.WriteLine("     비싸서 아주 조그맣다.");
-                                    Console.WriteLine("     뾰족한 부분이 마력을");
-                                    Console.WriteLine("     모으는 역할을 한다.");
-                                }
-                                if (w8 == i)
-                                {
-                                    Console.WriteLine("신의 스태프");
-                                    Console.WriteLine("마력 + 625,000,000 ");
-                                    Console.WriteLine("설명:");
-                                    Console.WriteLine("     모조품이다. 애초에 상인이 ");
-                                    Console.WriteLine("     신의 스태프를 파는게 말이 ");
-                                    Console.WriteLine("     안된다. 물론 아주 강하긴  ");
-                                    Console.WriteLine("     하다."                     );
+                                    player.WMAtk = 625000000;
                                 }
                             }
                         }
                     }
-                }
-            }
-            if (backpack.armor == true)
-            {
-                if (equip.Key == ConsoleKey.A)
-                {
-                    int num = 0;
-                    int a1 = 0;
-                    int a2 = 0;
-                    int a3 = 0;
-                    int a4 = 0;
-                    int a5 = 0;
-                    if (backpack.wood == true)
-                    {
-                        num++;
-                        a1 = num;
-                        Console.WriteLine($"[{a1}]가죽 갑옷");
-                    }
-                    if (backpack.stone == true)
-                    {
-                        num++;
-                        a2 = num;
-                        Console.WriteLine($"[{a2}]사슬 갑옷");
-                    }
-                    if (backpack.stone == true)
-                    {
-                        num++;
-                        a3 = num;
-                        Console.WriteLine($"[{a3}]철 갑옷");
-                    }
-                    if (backpack.stone == true)
-                    {
-                        num++;
-                        a4 = num;
-                        Console.WriteLine($"[{a4}]전신 순금 갑옷");
-                    }
-                    if (backpack.stone == true)
-                    {
-                        num++;
-                        a5 = num;
-                        Console.WriteLine($"[{a5}]축복받은 갑옷");
-                    }
-                    var select = Console.ReadKey();
-                    if (select.Key == ConsoleKey.D1)
+                    if (select.Key == ConsoleKey.D4)
                     {
                         if (num > 0)
                         {
-                            for (int i = 1; i < num; i++)
+                            Console.Clear();
+                            if (w4 == 4)
                             {
-                                if (a1 == i)
+                                Console.WriteLine("신의 검");
+                                Console.WriteLine("공격력 + 12,500,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 검을 파는게 말이 안된다.");
+                                Console.WriteLine("     물론 아주 강하긴 하다.");
+                            }
+                            if (w5 == 4)
+                            {
+                                Console.WriteLine("일반 스태프");
+                                Console.WriteLine("마법공격력 + 500 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                            }
+                            if (w6 == 4)
+                            {
+                                Console.WriteLine("크리스탈 스태프");
+                                Console.WriteLine("마법공격력 + 25,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                Console.WriteLine("     유리라 마력이 확대된다.");
+                            }
+                            if (w7 == 4)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 4)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                            e1quip = Console.ReadKey();
+                            if (e1quip.Key == ConsoleKey.Enter)
+                            {
+                                if (w1 == 4)
+                                {
+                                    player.WAtk = 100;
+                                }
+                                if (w2 == 4)
+                                {
+                                    player.WAtk = 5000;
+                                }
+                                if (w3 == 4)
+                                {
+                                    player.WAtk = 250000;
+                                }
+                                if (w4 == 4)
+                                {
+                                    player.WAtk = 12500000;
+                                }
+                                if (w5 == 4)
+                                {
+                                    player.WMAtk = 500;
+                                }
+                                if (w6 == 4)
+                                {
+                                    player.WMAtk = 25000;
+                                }
+                                if (w7 == 4)
+                                {
+                                    player.WMAtk = 1250000;
+                                }
+                                if (w8 == 4)
+                                {
+                                    player.WMAtk = 625000000;
+                                }
+                            }
+                        }
+                    }
+                    if (select.Key == ConsoleKey.D5)
+                    {
+                        if (num > 0)
+                        {
+                            Console.Clear();
+                            if (w5 == 5)
+                            {
+                                Console.WriteLine("일반 스태프");
+                                Console.WriteLine("마법공격력 + 500 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                            }
+                            if (w6 == 5)
+                            {
+                                Console.WriteLine("크리스탈 스태프");
+                                Console.WriteLine("마법공격력 + 25,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                Console.WriteLine("     유리라 마력이 확대된다.");
+                            }
+                            if (w7 == 5)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 5)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+
+                            e1quip = Console.ReadKey();
+                            if (e1quip.Key == ConsoleKey.Enter)
+                            {
+                                if (w5 == 5)
+                                {
+                                    player.WMAtk = 500;
+                                }
+                                if (w6 == 5)
+                                {
+                                    player.WMAtk = 25000;
+                                }
+                                if (w7 == 5)
+                                {
+                                    player.WMAtk = 1250000;
+                                }
+                                if (w8 == 5)
+                                {
+                                    player.WMAtk = 625000000;
+                                }
+                            }
+                        }
+                    }
+                    if (select.Key == ConsoleKey.D6)
+                    {
+                        if (num > 0)
+                        {
+                            Console.Clear();
+                            if (w6 == 6)
+                            {
+                                Console.WriteLine("크리스탈 스태프");
+                                Console.WriteLine("마법공격력 + 25,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     크리스탈 처럼 생긴 색유리다.");
+                                Console.WriteLine("     싸다고 무턱대고 샀다가 사기");
+                                Console.WriteLine("     당한 사람들이 많다. 그래도 ");
+                                Console.WriteLine("     유리라 마력이 확대된다.");
+                            }
+                            if (w7 == 6)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 6)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                            e1quip = Console.ReadKey();
+                            if (e1quip.Key == ConsoleKey.Enter)
+                            {
+                                if (w6 == 6)
+                                {
+                                    player.WMAtk = 25000;
+                                }
+                                if (w7 == 6)
+                                {
+                                    player.WMAtk = 1250000;
+                                }
+                                if (w8 == 6)
+                                {
+                                    player.WMAtk = 625000000;
+                                }
+                            }
+                        }
+                    }
+                    if (select.Key == ConsoleKey.D7)
+                    {
+                        if (num > 0)
+                        {
+                            if (w7 == 7)
+                            {
+                                Console.WriteLine("다이아몬드 스태프");
+                                Console.WriteLine("마법공격력 + 1,250,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     아쉽지만 이건 진짜다.");
+                                Console.WriteLine("     비싸서 아주 조그맣다.");
+                                Console.WriteLine("     뾰족한 부분이 마력을");
+                                Console.WriteLine("     모으는 역할을 한다.");
+                            }
+                            if (w8 == 7)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                            e1quip = Console.ReadKey();
+                            if (e1quip.Key == ConsoleKey.Enter)
+                            {
+                                if (w7 == 7)
+                                {
+                                    player.WMAtk = 1250000;
+                                }
+                                if (w8 == 8)
+                                {
+                                    player.WMAtk = 625000000;
+                                }
+                            }
+                        }
+                    }
+                    if (select.Key == ConsoleKey.D8)
+                    {
+                        if (num > 0)
+                        {
+                            Console.Clear();
+                            if (w8 == 8)
+                            {
+                                Console.WriteLine("신의 스태프");
+                                Console.WriteLine("마법공격력 + 625,000,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     모조품이다. 애초에 상인이 ");
+                                Console.WriteLine("     신의 스태프를 파는게 말이 ");
+                                Console.WriteLine("     안된다. 물론 아주 강하긴  ");
+                                Console.WriteLine("     하다.");
+                            }
+                            e1quip = Console.ReadKey();
+                            if (e1quip.Key == ConsoleKey.Enter)
+                            {
+                                player.WMAtk = 625000000;
+                            }
+                        }
+                    }
+                }
+                else if (e1quip.Key == ConsoleKey.A)
+                {
+                    if (backpack.armor == true)
+                    {
+                        int num = 0;
+                        int a1 = 0;
+                        int a2 = 0;
+                        int a3 = 0;
+                        int a4 = 0;
+                        int a5 = 0;
+                        if (backpack.Leather == true)
+                        {
+                            num++;
+                            a1 = num;
+                            Console.WriteLine($"[{a1}]가죽 갑옷");
+                        }
+                        if (backpack.Chainmail == true)
+                        {
+                            num++;
+                            a2 = num;
+                            Console.WriteLine($"[{a2}]사슬 갑옷");
+                        }
+                        if (backpack.Fullplate == true)
+                        {
+                            num++;
+                            a3 = num;
+                            Console.WriteLine($"[{a3}]풀 플레이트 갑옷");
+                        }
+                        if (backpack.Gold == true)
+                        {
+                            num++;
+                            a4 = num;
+                            Console.WriteLine($"[{a4}]전신 순금 갑옷");
+                        }
+                        if (backpack.God== true)
+                        {
+                            num++;
+                            a5 = num;
+                            Console.WriteLine($"[{a5}]축복받은 갑옷");
+                        }
+                        var select = Console.ReadKey();
+                        if (select.Key == ConsoleKey.D1)
+                        {
+                            if (num > 0)
+                            {
+                                if (a1 == 1)
                                 {
                                     Console.WriteLine("가죽 갑옷");
                                     Console.WriteLine("방어력 + 50 ");
@@ -3032,7 +2378,7 @@ namespace TextRPG
                                     Console.WriteLine("     가리는 곳도 적다.없는 것 보단 낫지만...");
                                     Console.WriteLine("     이정도면 돈을 받고 쓰레기 처리를 해줘야 한다");
                                 }
-                                if (a2 == i)
+                                if (a2 == 1)
                                 {
                                     Console.WriteLine("사슬 갑옷");
                                     Console.WriteLine("방어력 + 2,500 ");
@@ -3040,15 +2386,15 @@ namespace TextRPG
                                     Console.WriteLine("     체인이 녹슬었다. 공격받으면 낮은 ");
                                     Console.WriteLine("     확률로 파상풍에 걸릴수도...");
                                 }
-                                if (a3 == i)
+                                if (a3 == 1)
                                 {
-                                    Console.WriteLine("철 갑옷");
+                                    Console.WriteLine("풀 플레이트 갑옷");
                                     Console.WriteLine("방어력 + 125,000 ");
                                     Console.WriteLine("설명:");
                                     Console.WriteLine("     무명의 수습 대장장이가 만들었다. ");
                                     Console.WriteLine("     이걸로 드래곤에게 덤비는 놈은 없겠지.");
                                 }
-                                if (a4 == i)
+                                if (a4 == 1)
                                 {
                                     Console.WriteLine("전신 순금 갑옷");
                                     Console.WriteLine("방어력 + 3,125,000 마력 + 6,250,000 ");
@@ -3057,7 +2403,7 @@ namespace TextRPG
                                     Console.WriteLine("     금이라 좀 무르다.");
                                     Console.WriteLine("     대신 마력이 오른다...");
                                 }
-                                if (a5 == i)
+                                if (a5 == 1)
                                 {
                                     Console.WriteLine("축복 받은 갑옷");
                                     Console.WriteLine("방어력 + 312,500,000 ");
@@ -3068,6 +2414,126 @@ namespace TextRPG
                                 }
                             }
                         }
+                        if (select.Key == ConsoleKey.D2)
+                        {
+                            if (num > 0)
+                            {
+                                if (a2 == 1)
+                                {
+                                    Console.WriteLine("사슬 갑옷");
+                                    Console.WriteLine("방어력 + 2,500 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     체인이 녹슬었다. 공격받으면 낮은 ");
+                                    Console.WriteLine("     확률로 파상풍에 걸릴수도...");
+                                }
+                                if (a3 == 1)
+                                {
+                                    Console.WriteLine("철 갑옷");
+                                    Console.WriteLine("방어력 + 125,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     무명의 수습 대장장이가 만들었다. ");
+                                    Console.WriteLine("     이걸로 드래곤에게 덤비는 놈은 없겠지.");
+                                }
+                                if (a4 == 1)
+                                {
+                                    Console.WriteLine("전신 순금 갑옷");
+                                    Console.WriteLine("방어력 + 3,125,000 마력 + 6,250,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     18k 골드. 즉 순금이 아니다.");
+                                    Console.WriteLine("     금이라 좀 무르다.");
+                                    Console.WriteLine("     대신 마력이 오른다...");
+                                }
+                                if (a5 == 1)
+                                {
+                                    Console.WriteLine("축복 받은 갑옷");
+                                    Console.WriteLine("방어력 + 312,500,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                    Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                    Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                }
+                            }
+                        }
+                        if (select.Key == ConsoleKey.D3)
+                        {
+                            if (num > 0)
+                            {
+                                if (a3 == 1)
+                                {
+                                    Console.WriteLine("철 갑옷");
+                                    Console.WriteLine("방어력 + 125,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     무명의 수습 대장장이가 만들었다. ");
+                                    Console.WriteLine("     이걸로 드래곤에게 덤비는 놈은 없겠지.");
+                                }
+                                if (a4 == 1)
+                                {
+                                    Console.WriteLine("전신 순금 갑옷");
+                                    Console.WriteLine("방어력 + 3,125,000 마력 + 6,250,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     18k 골드. 즉 순금이 아니다.");
+                                    Console.WriteLine("     금이라 좀 무르다.");
+                                    Console.WriteLine("     대신 마력이 오른다...");
+                                }
+                                if (a5 == 1)
+                                {
+                                    Console.WriteLine("축복 받은 갑옷");
+                                    Console.WriteLine("방어력 + 312,500,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                    Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                    Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                }
+                            }
+                        }
+                        if (select.Key == ConsoleKey.D4)
+                        {
+                            if (num > 0)
+                            {
+                                if (a4 == 1)
+                                {
+                                    Console.WriteLine("전신 순금 갑옷");
+                                    Console.WriteLine("방어력 + 3,125,000 마력 + 6,250,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     18k 골드. 즉 순금이 아니다.");
+                                    Console.WriteLine("     금이라 좀 무르다.");
+                                    Console.WriteLine("     대신 마력이 오른다...");
+                                }
+                                if (a5 == 1)
+                                {
+                                    Console.WriteLine("축복 받은 갑옷");
+                                    Console.WriteLine("방어력 + 312,500,000 ");
+                                    Console.WriteLine("설명:");
+                                    Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                    Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                    Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                                }
+                            }
+                        }
+                        if (select.Key == ConsoleKey.D5)
+                        {
+                            if (num > 0)
+                            {
+                                Console.WriteLine("축복 받은 갑옷");
+                                Console.WriteLine("방어력 + 312,500,000 ");
+                                Console.WriteLine("설명:");
+                                Console.WriteLine("     그냥 막대기다. 마력이 아주 조금 ");
+                                Console.WriteLine("     담겨있지만 오래된 돌멩이 수준의 ");
+                                Console.WriteLine("     마력이며 초보 마법사도 안쓴다.");
+                            }
+                        }
+                    }
+                }
+                if (1 == 1)
+                {
+                    if (backpack.skill == true)
+                    {
+                        int num = 0;
+                        int s1 = 0;
+                        int s2 = 0;
+                        int s3 = 0;
+                        int s4 = 0;
+                        int s5 = 0;
                     }
                 }
             }
@@ -3080,18 +2546,47 @@ namespace TextRPG
                 if (player.Lv == 1)
                 {
                     Console.WriteLine("레벨업!");
-                    player.Exp -= 10;
+                    player.Exp -= player.ExpNeed;
                     player.Lv += 1;
-                    player.Hp += 100;
-                    player.Mp += 50;
-                    player.Atk += 10;
-                    player.Def += 10;
-                    Console.WriteLine("Hp 100 증가");
-                    Console.WriteLine("Mp 50 증가");
-                    Console.WriteLine("Atk 10 증가");
-                    Console.WriteLine("Def 10 증가");
+                    player.Hp += player.increase*20;
+                    player.Mp += player.increase * 10;
+                    player.Atk += player.increase * 2;
+                    player.Def += player.increase;
+                    Console.WriteLine($"체력 {player.increase * 20} 증가");
+                    Console.WriteLine($"마력 {player.increase * 10} 증가");
+                    Console.WriteLine($"공격력 {player.increase * 2} 증가");
+                    Console.WriteLine($"방어력 {player.increase} 증가");
                     Console.WriteLine(" ______________    ______________");
                     Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
+                    if (player.Lv < 10)
+                    {
+                        player.ExpNeed += 100;
+                    }
+                    else if (player.Lv < 20)
+                    {
+                        player.ExpNeed += 2000;
+                    }
+                    else if (player.Lv < 30)
+                    {
+                        player.ExpNeed += 40000;
+                    }
+                    else if (player.Lv < 40)
+                    {
+                        player.ExpNeed += 800000;
+                    }
+                    else if (player.Lv < 50)
+                    {
+                        player.ExpNeed += 16000000;
+                    }
+                    else if (player.Lv < 60)
+                    {
+                        player.ExpNeed += 320000000;
+                    }
+                    else if (player.Lv < 70)
+                    {
+                        player.ExpNeed += 6400000000;
+                    }
+                    //long은 정수형 변수로 2^63까지 표현 가능
                     if (Console.ReadKey(intercept: true).Key == ConsoleKey.Spacebar)
                     {
                         LvUp();
@@ -3115,170 +2610,6 @@ namespace TextRPG
                         Console.WriteLine("Def 5 증가");
                         Console.WriteLine(" ______________    ______________");
                         Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                    }
-                }
-                else
-                {
-                    if (player.Lv == 10)
-                    {
-                        Console.WriteLine("승급필요");
-                    }
-                    else if (player.Lv < 20)
-                    {
-                        Console.WriteLine("레벨업!");
-                        if (player.Exp >= (player.Lv - 10) * 200)
-                        {
-                            player.Exp -= (player.Lv - 10) * 200;
-                            player.Lv += 1;
-                            player.Hp += 500;
-                            player.Mp += 250;
-                            player.Atk += 50;
-                            player.Def += 25;
-                            Console.WriteLine("Hp 500 증가");
-                            Console.WriteLine("Mp 250 증가");
-                            Console.WriteLine("Atk 50 증가");
-                            Console.WriteLine("Def 25 증가");
-                            Console.WriteLine(" ______________    ______________");
-                            Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Spacebar)
-                            {
-                                LvUp();
-                                break;
-                            }
-                            else if (Console.ReadKey(intercept : true).Key == ConsoleKey.Escape)
-                            {
-                                FixTitle(); 
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (player.Lv == 20)
-                        {
-                            Console.WriteLine("승급필요");
-                        }
-                        else if (player.Lv < 30)
-                        {
-                            Console.WriteLine("레벨업!");
-                            player.Exp -= (player.Lv - 20) * 4000;
-                            player.Lv += 1;
-                            player.Hp += 2_500;
-                            player.Mp += 1_250;
-                            player.Atk += 250;
-                            player.Def += 125;
-                            Console.WriteLine("Hp 2,500 증가");
-                            Console.WriteLine("Mp 1,250 증가");
-                            Console.WriteLine("Atk 250 증가");
-                            Console.WriteLine("Def 125 증가");
-                            Console.WriteLine(" ______________    ______________");
-                            Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                        }
-                        else
-                        {
-                            if (player.Lv == 30)
-                            {
-                                Console.WriteLine("승급필요");
-                            }
-                            else if (player.Lv < 40)
-                            {
-                                Console.WriteLine("레벨업!");
-                                player.Exp -= (player.Lv - 30) * 80000;
-                                player.Lv += 1;
-                                player.Hp += 10_000;
-                                player.Mp += 5_000;
-                                player.Atk += 1_000;
-                                player.Def += 500;
-                                Console.WriteLine("Hp 10,000 증가");
-                                Console.WriteLine("Mp 5,000 증가");
-                                Console.WriteLine("Atk 1,000 증가");
-                                Console.WriteLine("Def 500 증가");
-                                Console.WriteLine(" ______________    ______________");
-                                Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                            }
-                            else
-                            {
-                                if (player.Lv == 40)
-                                {
-                                    Console.WriteLine("승급필요");
-                                }
-                                else if (player.Lv < 50)
-                                {
-                                    Console.WriteLine("레벨업!");
-                                    player.Exp -= (player.Lv - 40) * 1600000;
-                                    player.Lv += 1;
-                                    player.Hp += 100_000;
-                                    player.Mp += 25_000;
-                                    player.Atk += 5_000;
-                                    player.Def += 2_500;
-                                    Console.WriteLine("Hp 100,000 증가");
-                                    Console.WriteLine("Mp 25,000 증가");
-                                    Console.WriteLine("Atk 5,000 증가");
-                                    Console.WriteLine("Def 2,500 증가");
-                                    Console.WriteLine(" ______________    ______________");
-                                    Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                                }
-                                else
-                                {
-                                    if (player.Lv == 50)
-                                    {
-                                        Console.WriteLine("승급필요");
-                                    }
-                                    else if (player.Lv < 60)
-                                    {
-                                        Console.WriteLine("레벨업!");
-                                        player.Exp -= (player.Lv - 50) * 32000000;
-                                        player.Lv += 1;
-                                        player.Hp += 250_000;
-                                        player.Mp += 125_000;
-                                        player.Atk += 25_000;
-                                        player.Def += 12_500;
-                                        Console.WriteLine("Hp 250,000 증가");
-                                        Console.WriteLine("Mp 125,000 증가");
-                                        Console.WriteLine("Atk 25,000 증가");
-                                        Console.WriteLine("Def 12,500 증가");
-                                        Console.WriteLine(" ______________    ______________");
-                                        Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                                    }
-                                    else
-                                    {
-                                        if (player.Lv == 60)
-                                        {
-                                            Console.WriteLine("승급필요");
-                                        }
-                                        else if (player.Lv < 70)
-                                        {
-                                            Console.WriteLine("레벨업!");
-                                            player.Exp -= (player.Lv - 60) * 640000000;
-                                            player.Lv += 1;
-                                            player.Hp += 4_500_000;
-                                            player.Mp += 2_250_000;
-                                            player.Atk += 450_000;
-                                            player.Def += 225_000;
-                                            Console.WriteLine("Hp 4,500,000 증가");
-                                            Console.WriteLine("Mp 2,250,000 증가");
-                                            Console.WriteLine("Atk 450,000 증가");
-                                            Console.WriteLine("Def 225,000 증가");
-                                            Console.WriteLine(" ______________    ______________");
-                                            Console.WriteLine("/|레벨업(Space)|  /|돌아가기(esc)|");
-                                        }
-                                        else
-                                        {
-                                            if (player.Lv == 70)
-                                            {
-                                                Console.WriteLine("더이상 레벨업이 불가합니다");
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine("경험치가 부족합니다");
-                                                FixTitle();
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
                 var LvU = Console.ReadKey(intercept: true);
@@ -3388,9 +2719,69 @@ namespace TextRPG
         }
         public static void FixTitle()
         {
-            if (player.skill1 == strong)
+            if (backpack.Leather == true || backpack.Chainmail == true || backpack.Fullplate == true || backpack.God == true || backpack.Gold == true)
             {
-                player.Atk /= (2 / 3);
+                backpack.armor = true;
+            }
+            if (backpack.wood == true || backpack.stone == true || backpack.iron == true || backpack.god == true || backpack.just == true||backpack.crystal||backpack.dia||backpack.gods)
+            {
+                backpack.weapon = true;
+            }
+            if (backpack.strong||backpack.amsal||backpack.fireball||backpack.godcom||backpack.heal||backpack.vamp||backpack.revival||backpack.tstrong)
+            {
+                backpack.skill = true;
+            }
+            if (equip.armor == "가죽 갑옷")
+            {
+                player.ADef = 50;
+            }
+            if (equip.armor == "사슬 갑옷")
+            {
+                player.ADef = 2500;
+            }
+            if (equip.armor == "철 갑옷")
+            {
+                player.ADef = 125000;
+            }
+            if (equip.armor == "전신 순금 갑옷")
+            {
+                player.ADef = 3125000;
+            }
+            if (equip.armor == "축복받은 갑옷")
+            {
+                player.ADef = 312500000;
+            }
+            if (equip.weapon == "나무 검")
+            {
+                player.WAtk = 100;
+            }
+            if (equip.weapon == "돌 검")
+            {
+                player.WAtk = 5000;
+            }
+            if (equip.weapon == "철 검")
+            {
+                player.WAtk = 250000;
+            }
+            if (equip.weapon == "신의 검")
+            {
+                player.WAtk = 12500000;
+            }
+            if (equip.weapon == "일반 스태프")
+            {
+                player.WMAtk = 500;
+            }
+            if (equip.weapon == "크리스탈 스태프")
+            {
+                player.WMAtk = 25000;
+            }
+            if (equip.weapon == "다이아몬드 스태프")
+            {
+                player.WMAtk = 1250000;
+            }
+            if (equip.weapon == "신의 스태프")
+            {
+                player.WMAtk = 625000000;
             }
             Console.Clear();
             Console.WriteLine("Text RPG Start");
@@ -3425,135 +2816,32 @@ namespace TextRPG
             {
                 player.Gold = 0;
             }
-            if (player.Lv < 10)
-            {
-                if (player.Exp >= player.Lv * 10)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if (player.Lv == 10)
-            {
-                if (player.Exp >= 100)
-                {
-                    Console.WriteLine(" ___________ ");
-                    Console.WriteLine("|승급(Space)|");
-                    Console.WriteLine(" =========== ");
-                }
-            }
-            else if (player.Lv < 20)
-            {
-                if (player.Exp >= (player.Lv - 10) * 200)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if
-                (player.Lv == 20)
-            {
-                if (player.Exp >= 2000)
-                {
-                    Console.WriteLine(" ___________ ");
-                    Console.WriteLine("|승급(Space)|");
-                    Console.WriteLine(" =========== ");
-                }
-            }
-            else if (player.Lv < 30)
-            {
-                if (player.Exp >= (player.Lv - 20) * 4000)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if (player.Lv == 30)
-            {
-                if (player.Exp >= 40000)
-                {
-                    Console.WriteLine(" ___________ ");
-                    Console.WriteLine("|승급(Space)|");
-                    Console.WriteLine(" =========== ");
-                }
-            }
-            else if (player.Lv < 40)
-            {
-                if (player.Exp >= (player.Lv - 30) * 80000)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if (player.Lv == 40)
-            {
-                if (player.Exp >= 800000)
-                {
-                    Console.WriteLine(" ___________ ");
-                    Console.WriteLine("|승급(Space)|");
-                    Console.WriteLine(" =========== ");
-                }
-            }
-            else if (player.Lv < 50)
-            {
-                if (player.Exp >= (player.Lv - 40) * 1600000)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if (player.Lv == 50)
-            {
-                if (player.Exp >= 16000000)
-                Console.WriteLine(" ___________ ");
-                Console.WriteLine("|승급(Space)|");
-                Console.WriteLine(" =========== ");
-            }
-            else if (player.Lv < 60)
-            {
-                if (player.Exp >= (player.Lv - 50) * 32000000)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if (player.Lv == 60)
-            {
-                if (player.Exp >= 320000000)
-                Console.WriteLine(" ___________ ");
-                Console.WriteLine("|승급(Space)|");
-                Console.WriteLine(" =========== ");
-            }
-            else if (player.Lv < 70)
-            {
-                if (player.Exp >= (player.Lv - 60) * 640000000)
-                {
-                    Console.WriteLine(" _____________ ");
-                    Console.WriteLine("|레벨업(Space)|");
-                    Console.WriteLine(" ============= ");
-                }
-            }
-            else if (player.Lv == 70)
-            {
-                if (player.Exp >= 2147483647)
-                {
-                    Console.WriteLine(" ___________");
-                    Console.WriteLine("|승급(Space)|");
-                    Console.WriteLine(" =========== ");
-                }
-            }
-           
+            
             var introduce = Console.ReadKey(intercept: true);
             if (player.Gold < 0)
             {
                 player.Gold = 0;
             }
+            if (player.Exp > player.ExpNeed)
+            {
+                if (player.Lv == 10 || player.Lv == 20 || player.Lv == 30 || player.Lv == 40 || player.Lv == 50 || player.Lv == 60 || player.Lv == 70)
+                {
+                    Console.WriteLine(@"       /\/\/\");
+                    Console.WriteLine(@"  __,./-    -\.,__");
+                    Console.WriteLine(@" |  승급(space)   |");
+                    Console.WriteLine(@" \--..________..--/");
+                    Console.WriteLine(@"  \______________/");
+                }
+                else
+                {
+
+                    Console.WriteLine(@"        /\");
+                    Console.WriteLine(@"  __,./-  -\.,__");
+                    Console.WriteLine(@" |레벨업(space)|");
+                    Console.WriteLine(@"  --..______..--");
+                }
+            }
+
             while (true)
             {
                 if (introduce.Key == ConsoleKey.I)
@@ -3575,10 +2863,15 @@ namespace TextRPG
                     Console.WriteLine("Hp: " + player.Hp);
                     Console.WriteLine("Mp: " + player.Mp);
                     Console.WriteLine("Atk: " + player.Atk + $"({player.Atk + player.WAtk})");
+                    Console.WriteLine("MagicAtk: " + player.MAtk + $"({player.MAtk + player.WMAtk})");
                     Console.WriteLine("Def: " + player.Def + $"({player.Def + player.ADef})");
                     Console.WriteLine("Gold: " + player.Gold);
                     Console.WriteLine("Armor: " + equip.armor);
                     Console.WriteLine("Weapon: " + equip.weapon);
+                    Console.WriteLine("Skill 1: " + player.skill1);
+                    Console.WriteLine("Skill 2: " + player.skill2);
+                    Console.WriteLine("Skill 3: " + player.skill3);
+                    Console.WriteLine("Skill 4: " + player.skill4);
                     Console.WriteLine(" ______________");
                     Console.WriteLine("/|돌아가기(esc)|");
                     if (Console.ReadKey(intercept: true).Key == ConsoleKey.Escape)
@@ -3589,11 +2882,12 @@ namespace TextRPG
                 }
                 else if (introduce.Key == ConsoleKey.B)
                 {
-                    Battle();
+                    Select();
                     break;
                 }
                 else if (introduce.Key == ConsoleKey.E)
                 {
+                    Console.Clear();
                     Equip2();
                     break;
                 }
